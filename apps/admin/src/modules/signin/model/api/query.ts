@@ -1,24 +1,21 @@
-import { useMutation,} from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { index } from './service';
 import { ISigninForm } from '../types/signin.interface';
 import { ITokens } from '@autoball-frontend/shared-types';
 import { AxiosError } from 'axios';
-
+import { IServerError } from '../../../../shared/interfaces/server-error';
+import { ApiOperationState } from '../../../../shared/interfaces/api-operation-state.interface';
 
 export const useSignin = (): {
   mutate: (data: ISigninForm) => void;
-  isSuccess: boolean;
-  isError: boolean;
-  isPending: boolean;
-  error: AxiosError<{ detail: string }> | null;
-} => {
+} & ApiOperationState => {
   const { mutate, isSuccess, isError, isPending, error } = useMutation<
     ITokens,
-    AxiosError<{ detail: string }>,
+    AxiosError<IServerError>,
     ISigninForm
   >({
     mutationFn: (data: ISigninForm) => index(data),
-    onSuccess: () => console.log('error'),
+    onSuccess: (data) => localStorage.setItem('accessToken', data.access_token),
   });
 
   return { mutate, isSuccess, isError, isPending, error: error || null };

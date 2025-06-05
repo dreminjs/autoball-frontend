@@ -1,5 +1,12 @@
 type uuid = string
 
+export interface IUser {
+  id: string; // UUID формат
+  name: string;
+  email: string;
+  phone_number: string;
+}
+
 export interface ICarBrand {
   id: uuid,
   name: string,
