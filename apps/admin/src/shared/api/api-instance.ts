@@ -6,6 +6,9 @@ import errorCatch from "./api-error";
 export const instance = axios.create({
     baseURL: API_URL,
     withCredentials: true,
+	headers: {
+		"Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+	}
 });
 
 
