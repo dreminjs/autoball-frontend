@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
-import { Header } from '../header';
 import { Container } from '../container';
+import { Header } from '../header/ui';
+import { MenuDrawer } from '../drawer/ui/menu-drawer';
 
 export const Layout = () => {
   return (
@@ -9,6 +10,7 @@ export const Layout = () => {
       <Container>
         <Outlet />
       </Container>
+      <MenuDrawer />
     </>
   );
 };

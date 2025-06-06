@@ -19,9 +19,7 @@ instance.interceptors.response.use(
 	async error => {
 		const originalRequest = error.config
 		if (
-			(error.response.status === 401 ||
-				errorCatch(error) === 'jwt expired ' ||
-				errorCatch(error) === 'jwt must be provided') &&
+			(error.response.status === 401) &&
 			error.config &&
 			!error.config._isRetry &&
 			retryCount < 2
@@ -29,7 +27,7 @@ instance.interceptors.response.use(
 			originalRequest._isRetry = true
 			retryCount += 1
 			try {
-				return instance.get("tokens")
+				return instance.post("auth/refresh")
 			} catch (error: any) {
 				if (errorCatch(error) === 'jwt expired') {
 					// set auth false

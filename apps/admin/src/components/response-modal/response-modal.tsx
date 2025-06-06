@@ -45,8 +45,12 @@ export const ResponseModal: FC<IProps> = ({ isOpen, message, states }) => {
   };
 
   return (
-    <Modal className='max-w-[300px]' open={showModal} onClose={() => setShowModal(false)}>
-      <div className={`p-4 rounded-md ${getModalStyle()}`}>
+    <Modal
+      className="fixed inset-0 flex items-center justify-center"
+      open={showModal}
+      onClose={() => setShowModal(false)}
+    >
+      <div className={`p-4 rounded-md w-[300px] ${getModalStyle()}`}>
         <p>{getMessage()}</p>
       </div>
     </Modal>
