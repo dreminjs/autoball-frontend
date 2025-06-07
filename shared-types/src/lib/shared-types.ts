@@ -101,7 +101,4 @@ export enum OrderStatuses {
   closed,
 }
 
-export enum ProductCondition {
-  new,
-  used
-}
+export type ProductCondition = "used" | "new"

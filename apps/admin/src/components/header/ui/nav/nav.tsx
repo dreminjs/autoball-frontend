@@ -4,23 +4,21 @@ import { NavItem } from './nav-item';
 
 interface IProps {
   ulClassName?: string;
-  navClassName?: string
+  navClassName?: string;
 }
 
 export const Navigation: FC<IProps> = ({
   ulClassName = 'hidden sm:flex items-center gap-5',
   navClassName,
-}) => {
-  return (
-    <nav className={navClassName}>
-      <ul className={ulClassName}>
-        {items.map((item) => (
-          <NavItem {...item} />
-        ))}
-        <li>
-          <button className='text-lg sm:text-base'>Выйти</button>
-        </li>
-      </ul>
-    </nav>
-  );
-};
+}) => (
+  <nav className={navClassName}>
+    <ul className={ulClassName}>
+      {items.map((item, idx) => (
+        <NavItem key={idx} {...item} />
+      ))}
+      <li>
+        <button className="text-lg md:text-xl">Выйти</button>
+      </li>
+    </ul>
+  </nav>
+);

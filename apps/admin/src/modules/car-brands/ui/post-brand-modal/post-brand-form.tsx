@@ -3,7 +3,7 @@ import { CarBrandForm } from '../../model/types/car-brand';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { carBrandSchema } from '../../model/schemas/car-brand.schema';
 import { useEffect } from 'react';
-import { usePostCarBrand } from '../../api/queries';
+import { usePostCarBrand } from '../../../../shared/api/brand/queries';
 import Snackbar from '@mui/material/Snackbar';
 
 export const PostBrandForm = ({ isLoading }: { isLoading?: boolean }) => {

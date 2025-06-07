@@ -1,7 +1,7 @@
 import { ICarBrand } from '@autoball-frontend/shared-types';
 import Modal from '@mui/material/Modal';
 import { FC } from 'react';
-import { useDeleteCarBrand } from '../../api/queries';
+import { useDeleteCarBrand } from '../../../../shared/api/brand/queries';
 
 type Props = {
   isOpen: boolean;

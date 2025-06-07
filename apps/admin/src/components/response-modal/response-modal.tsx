@@ -18,8 +18,6 @@ interface IProps {
 export const ResponseModal: FC<IProps> = ({ isOpen, message, states }) => {
   const [showModal, setShowModal] = useState(false);
 
-  console.log(isOpen, message);
-
   useEffect(() => {
     if (isOpen) {
       setShowModal(true);

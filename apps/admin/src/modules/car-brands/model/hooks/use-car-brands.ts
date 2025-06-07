@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useGetCarBrands } from '../../api/queries';
+import { useGetCarBrands } from '../../../../shared/api/brand/queries';
 
 export const useCarBrands = () => {
   const [search, setSearch] = useState('');

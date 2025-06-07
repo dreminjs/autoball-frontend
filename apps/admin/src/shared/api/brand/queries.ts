@@ -1,12 +1,12 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '../../../shared/constants';
+import { SERVICE_URLS } from '../../constants';
 import { createOne, deleteOne, findMany } from './service';
-import { ApiOperationState } from '../../../shared/interfaces/api-operation-state.interface';
+import { ApiOperationState } from '../../interfaces/api-operation-state.interface';
 import { ICarBrand } from '@autoball-frontend/shared-types';
-import { IServerError } from '../../../shared/interfaces/server-error';
+import { IServerError } from '../../interfaces/server-error';
 import { AxiosError } from 'axios';
-import { FiltrationDto } from '../dto/filtration.dto';
-import { CarBrandForm } from '../model/types/car-brand';
+import { FiltrationDto } from '../../interfaces/brands/filtration.dto';
+import { CarBrandForm } from '../../../modules/car-brands/model/types/car-brand';
 
 export const useGetCarBrands = ({
   search,
@@ -17,7 +17,7 @@ export const useGetCarBrands = ({
     ICarBrand[],
     AxiosError<IServerError>
   >({
-    queryKey: [QUERY_KEYS.carbrand],
+    queryKey: [SERVICE_URLS.carbrand],
     queryFn: () => findMany({ search }),
   });
 
@@ -39,7 +39,7 @@ export const usePostCarBrand = (): {
     CarBrandForm
   >({
     mutationFn: (data: CarBrandForm) => createOne(data),
-    mutationKey: [QUERY_KEYS.carbrand],
+    mutationKey: [SERVICE_URLS.carbrand],
   });
 
   return {
@@ -60,7 +60,7 @@ export const useDeleteCarBrand = (): {
     string
   >({
     mutationFn: (id: string) => deleteOne(id),
-    mutationKey: [QUERY_KEYS.carbrand],
+    mutationKey: [SERVICE_URLS.carbrand],
   });
 
   return { mutate, isError, isPending, isSuccess, error };

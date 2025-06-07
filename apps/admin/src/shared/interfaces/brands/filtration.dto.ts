@@ -1,7 +1,3 @@
-
-
-
-
 export type FiltrationDto = {
-    search: string
-}
+  search: string;
+};

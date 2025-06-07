@@ -13,7 +13,7 @@ export const Header = () => {
   return (
     <header className="py-4 bg-[#bcd6e5] mb-5">
       <Container className="flex items-center justify-between">
-        <img src={logo} alt={'autoball logo'} className="w-[75px] h-[75px]" />
+        <img src={logo} alt={'autoball logo'} className="w-[75px] h-[75px] md:w-[100px] md:h-[100px]" />
         {!isAuth && <Navigation />}
         <button onClick={() => setMenuDrawerVisible(true)} className="block sm:hidden">
           <img
