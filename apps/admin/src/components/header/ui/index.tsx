@@ -1,9 +1,9 @@
 import logo from '../../../assets/autoball-logo.png';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { Navigation } from './nav/nav';
-import Container from '@mui/material/Container';
 import { authAtom } from '../../../store/auth.atom';
 import { mobileMenuVisibleAtom } from '../../../store/menu.atom';
+import { Container } from '../../container';
 
 export const Header = () => {
   const isAuth = useAtomValue(authAtom);
@@ -11,7 +11,7 @@ export const Header = () => {
   const setMenuDrawerVisible = useSetAtom(mobileMenuVisibleAtom)
 
   return (
-    <header className="py-4 bg-[#bcd6e5] mb-5">
+    <header className="py-4 bg-gradient-to-r from-[#e6f0f7] to-[#d4e3ed] text-[#2d3748] mb-5 print:hidden">
       <Container className="flex items-center justify-between">
         <img src={logo} alt={'autoball logo'} className="w-[75px] h-[75px] md:w-[100px] md:h-[100px]" />
         {!isAuth && <Navigation />}

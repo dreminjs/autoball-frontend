@@ -10,5 +10,7 @@ export const useChooseBrand = () => {
     newValue: (ICarBrand & { type: 'delete' | 'edit' }) | null
   ) => setChoosedBrand(newValue);
 
-  return { choosedBrand, onChooseBrand: handleChooseBrand };
+  const handleCancel = () => setChoosedBrand(null)
+
+  return { choosedBrand, onChooseBrand: handleChooseBrand, onCancel: handleCancel };
 };

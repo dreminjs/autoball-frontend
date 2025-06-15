@@ -5,7 +5,7 @@ export const Container: FC<PropsWithChildren & { className?: string }> = ({
   className
 }) => {
   return (
-    <div className={`w-full sm:w-[90%] md:w-[75%] xl:w-[55%] mx-auto px-2 ${className}`}>
+    <div className={`w-full md:w-[95%] 2xl:w-[70%] mx-auto px-2 ${className ? className : ""}`}>
       {children}
     </div>
   );
