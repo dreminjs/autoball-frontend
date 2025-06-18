@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 export const useChooseBrand = () => {
   const [choosedBrand, setChoosedBrand] = useState<
-    ((ICarBrand | null) & { type: 'delete' | 'edit' }) | null
+    ((ICarBrand) & { type: 'delete' | 'edit' }) | null
   >(null);
 
   const handleChooseBrand = (

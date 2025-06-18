@@ -11,5 +11,10 @@ export const createOne = async (data: CarBrandFormDto) => {
 };
 
 export const findOne = async (id: string): Promise<ICarBrand> => {
-  return (await instance.get(`${SERVICE_URLS.carbrand}/id`)).data
+  return (await instance.get(`${SERVICE_URLS.carbrand}/${id}`)).data
+}
+
+
+export const editOne = async (id: string): Promise<ICarBrand> => {
+  return await instance.put("")
 }

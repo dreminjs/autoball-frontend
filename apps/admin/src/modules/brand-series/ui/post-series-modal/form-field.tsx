@@ -1,5 +1,5 @@
 import { UseFormRegister } from 'react-hook-form';
-import { ICreateCarSeriesForm } from '../../../model/types/carseries.interface';
+import { ICreateCarSeriesForm } from '../../model/types/carseries.interface';
 import { FC } from 'react';
 
 interface IProps {

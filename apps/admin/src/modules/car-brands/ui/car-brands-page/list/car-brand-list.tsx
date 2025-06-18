@@ -11,8 +11,8 @@ interface IProps {
 
 export const CarBrandList: FC<IProps> = ({ data, onChoose }) => {
   return (
-    <ul className="">
-      {data?.map((el) => (
+    <ul>
+      {data?.map((el,idx) => (
         <>
           {el.items.map((item) => (
             <CarBrandItem key={item.id} {...item} onChoose={onChoose} />

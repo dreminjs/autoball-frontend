@@ -28,8 +28,12 @@ export const checkboxesAtom = atom<string[]>();
 
 export const countItemsAtom = atom<number>(5)
 
+export const brandIdAtom = atom<string | null>(null)
 
-productsStore.sub(isPrintedStatusAtom, () => console.log("Changed"))
+productsStore.sub(brandIdAtom, () => console.log("Changed"))
+
+productsStore.set(brandIdAtom, null)
+
 productsStore.set(isPrintedStatusAtom, null)
 
 productsStore.set(countItemsAtom, 5)

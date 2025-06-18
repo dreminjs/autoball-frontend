@@ -30,7 +30,7 @@ interface IProps {
   onClose: () => void;
 }
 
-export const PostBrandForm: FC<IProps> = ({ isLoading, refetch }) => {
+export const PostBrandForm: FC<IProps> = ({ isLoading, refetch, onClose }) => {
   const filename = useMemo(() => generateRandomString(), []);
 
   const {
@@ -61,11 +61,10 @@ export const PostBrandForm: FC<IProps> = ({ isLoading, refetch }) => {
   useEffect(() => {
     if (postCarBrandIsSuccess) {
       reset();
-      refetch()
-        .then(() => reset())
-        .then();
+      refetch();
+      onClose();
     }
-  }, [postCarBrandIsSuccess, reset]);
+  }, [onClose, postCarBrandIsSuccess, refetch, reset]);
 
   const { data: urlData } = useGetPresignUrl({
     content_type: watch('brand_logo')?.type,

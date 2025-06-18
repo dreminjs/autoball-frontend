@@ -39,12 +39,6 @@ interface IProps {
 
 export const PostBrandModal: FC<IProps> = ({ isOpen, onClose, refetch, isSuccess }) => {
 
-  useEffect(() => {
-    if(isSuccess){
-      refetch().then(() => onClose())
-    }
-  },[isSuccess, onClose, refetch])
-
   return (
     <Modal
       open={isOpen}

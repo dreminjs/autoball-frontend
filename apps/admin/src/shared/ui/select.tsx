@@ -1,11 +1,11 @@
 import { FC } from 'react';
 
-type Value = string | number | boolean
+type TValue = string | number | boolean
 
 interface IProps {
   label: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  options: { value: Value, title: string }[];
+  options: { value: TValue, title: string }[];
 }
 
 export const Select: FC<IProps> = ({ label, onChange, options }) => {

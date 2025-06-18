@@ -43,3 +43,9 @@ export const useGetBrand = (
 
   return { data, isError, isPending, isSuccess, error };
 };
+
+export const useEditBrand = () => {
+  
+    
+  return {}
+}

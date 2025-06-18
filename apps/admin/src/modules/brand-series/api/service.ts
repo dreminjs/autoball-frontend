@@ -14,5 +14,6 @@ export const findManyByBrandId = async (
 };
 
 export const createOne = async (data: ICreateCarSeriesDto): Promise<ICarSeries> => {
+
   return await instance.post(`${SERVICE_URLS.carseries}`, data);
 };

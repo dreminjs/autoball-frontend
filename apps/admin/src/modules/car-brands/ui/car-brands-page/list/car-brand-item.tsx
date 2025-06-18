@@ -9,6 +9,9 @@ type IProps = ICarBrand & {
 };
 
 export const CarBrandItem: FC<IProps> = ({ name, picture, onChoose, id }) => {  
+  
+
+
   return (
     <li className="border border-gray-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 bg-white mb-5">
       <div className="flex items-center justify-between flex-wrap p-4">
@@ -46,8 +49,8 @@ export const CarBrandItem: FC<IProps> = ({ name, picture, onChoose, id }) => {
             aria-label="Edit"
           >
             <img
-              className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity"
-              src="/editing.png"
+              className="w-8 h-6 opacity-70 hover:opacity-100 transition-opacity"
+              src="/editing.svg"
               alt="Edit"
             />
           </button>
@@ -64,8 +67,8 @@ export const CarBrandItem: FC<IProps> = ({ name, picture, onChoose, id }) => {
             }
           >
             <img
-              className="w-6 h-6 opacity-70 hover:opacity-100 transition-opacity"
-              src="/deleting.png"
+              className="w-8 h-6 opacity-70 hover:opacity-100 transition-opacity"
+              src="/deleting.svg"
               alt="Delete"
             />
           </button>

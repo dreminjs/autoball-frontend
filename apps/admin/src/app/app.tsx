@@ -9,6 +9,8 @@ import { PostProductPage, ProductsPage, productsStore } from '../modules/product
 import { Provider } from 'jotai';
 import { carBrandsStore } from '../modules/car-brands/model/store-page';
 import { CarBrandSeriesPage } from '../modules/brand-series/ui/car-brand-series-page';
+import { DevTools } from 'jotai-devtools'
+import 'jotai-devtools/styles.css'
 
 export function App() {
   return (
@@ -24,6 +26,7 @@ export function App() {
               index
               element={
                 <Provider store={carBrandsStore}>
+                  <DevTools store={carBrandsStore} />
                   <CarBrandsPage />
                 </Provider>
               }

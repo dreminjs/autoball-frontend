@@ -1,11 +1,12 @@
 import Drawer from '@mui/material/Drawer';
-import { FC, useState } from 'react';
-// import { ChooseCondition } from './choose-condition';
+import { FC } from 'react';
+// import { ChooseCondition } from './choose-condition'; mb in the future
 import { ChooseFuel } from './choose-fuel';
 import { ChooseBody } from './choose-body';
 import { ChooseGearbox } from './choose-gearbox';
 import { ChooseCountItems } from './choose-count-items';
 import { ChoosePrintedStatus } from './choose-printed-status';
+import { ChooseBrand } from './brand';
 
 interface IProps {
   isOpen: boolean;
@@ -14,14 +15,13 @@ interface IProps {
 
 export const CarPartsFilterDrawer: FC<IProps> = ({ isOpen, onClose }) => {
 
-  const [choosedBrandId, setChoosedBrandId] = useState<string | null>(null);
 
   return (
     <Drawer open={isOpen} onClose={onClose}>
       <div className="px-[50px] py-5">
+        <ChooseBrand />
         <ChooseCountItems />
         <ChoosePrintedStatus />
-        { /* <ChooseCondition /> */ }
         <ChooseFuel />
         <ChooseBody />
         <ChooseGearbox />

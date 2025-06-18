@@ -3,14 +3,13 @@ import { Toolbar } from './toolbar';
 import { DeleteBrandModal } from './delete-modal/';
 import { PostBrandModal } from './post-modal';
 import { EditBrandModal } from './edit-modal';
-import { useCarBrands, useChooseBrand  } from '../../model/hooks';
+import { useCarBrands, useChooseBrand } from '../../model/hooks';
 import { useState } from 'react';
 
 export const CarBrandsPage = () => {
   const { choosedBrand, onChooseBrand, onCancel } = useChooseBrand();
 
-  const { onChangeSearchValue, search, data, refetch, states } =
-    useCarBrands();
+  const { onChangeSearchValue, search, data, refetch, states } = useCarBrands();
 
   const [isPostBrandVisible, setIsPostBrandVisible] = useState(false);
 
@@ -29,8 +28,10 @@ export const CarBrandsPage = () => {
       </div>
       <PostBrandModal
         refetch={refetch}
+        onClose={() => setIsPostBrandVisible(false)}
         isOpen={isPostBrandVisible}
-        onClose={() => setIsPostBrandVisible(false)} isSuccess={false}      />
+        isSuccess={states.isSuccess}
+      />
       <DeleteBrandModal
         refetch={refetch}
         brand={{ id: choosedBrand?.id, name: choosedBrand?.name }}
