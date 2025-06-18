@@ -12,6 +12,10 @@ export const items = [
   },
   {
     name: 'Бренды',
-    to: PAGE_URLS['car-brands'],
+    inner: [
+      { name: 'Машин', to: PAGE_URLS['car-brands'] },
+      { name: 'Шин', to: PAGE_URLS['tier-brands'] },
+      { name: 'Дисков', to: PAGE_URLS['disc-brands'] },
+    ],
   },
 ] as INavItem[];

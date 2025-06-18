@@ -5,6 +5,8 @@ export const PAGE_URLS = {
     "signin": "/",
     "orders": "orders",
     "car-brands": "car-brands",
+    "tier-brands": "tier-brands",
+    "disc-brands": "disc-brands",
     "product": "product",
     "carseries": "carseries"
 } as const

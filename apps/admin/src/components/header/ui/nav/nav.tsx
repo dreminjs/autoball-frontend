@@ -12,7 +12,7 @@ export const Navigation: FC<IProps> = ({
   navClassName,
 }) => (
   <nav className={navClassName}>
-    <ul className={ulClassName}>
+    <ul className={`${ulClassName} relative`}>
       {items.map((item, idx) => (
         <NavItem key={idx} {...item} />
       ))}
