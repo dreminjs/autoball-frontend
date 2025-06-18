@@ -5,13 +5,17 @@ import { PostBrandModal } from './post-modal';
 import { EditBrandModal } from './edit-modal';
 import { useCarBrands, useChooseBrand } from '../../model/hooks';
 import { useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 export const CarBrandsPage = () => {
   const { choosedBrand, onChooseBrand, onCancel } = useChooseBrand();
 
-  const { onChangeSearchValue, search, data, refetch, states } = useCarBrands();
-
   const [isPostBrandVisible, setIsPostBrandVisible] = useState(false);
+
+  const { ref, inView } = useInView();
+
+  const { onChangeSearchValue, search, data, refetch, states } =
+    useCarBrands(inView);
 
   return (
     <>
@@ -22,6 +26,7 @@ export const CarBrandsPage = () => {
           search={search}
         />
         <CarBrandList
+          libRef={ref}
           data={data?.pages}
           onChoose={(data) => onChooseBrand(data)}
         />

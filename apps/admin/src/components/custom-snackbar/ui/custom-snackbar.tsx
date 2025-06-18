@@ -3,7 +3,6 @@ import Snackbar from '@mui/material/Snackbar';
 import { FC } from 'react';
 
 type IProps = {
-  onClose: () => void;
   isOpen: boolean;
   message: string;
 } & AlertProps;
@@ -15,7 +14,7 @@ export const CustomSnackbar: FC<IProps> = ({
   message,
 }) => {
   return (
-    <Snackbar open={isOpen} autoHideDuration={6000} onClose={onClose}>
+    <Snackbar open={isOpen} autoHideDuration={4000}>
       <Alert
         onClose={onClose}
         severity={severity}

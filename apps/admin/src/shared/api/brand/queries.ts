@@ -1,4 +1,12 @@
-import { InfiniteData, QueryObserverResult, RefetchOptions, useInfiniteQuery, useMutation } from '@tanstack/react-query';
+import {
+  FetchNextPageOptions,
+  InfiniteData,
+  InfiniteQueryObserverResult,
+  QueryObserverResult,
+  RefetchOptions,
+  useInfiniteQuery,
+  useMutation,
+} from '@tanstack/react-query';
 import { SERVICE_URLS } from '../../constants';
 import { deleteOne, findMany } from './service';
 import { ApiOperationState } from '../../interfaces/api-operation-state.interface';
@@ -10,21 +18,34 @@ import { IInfiteScrollResponse } from '../../interfaces/server-response';
 
 export const useGetCarBrands = ({
   search,
-}: FiltrationDto): {
-  data?: InfiniteData<IInfiteScrollResponse<ICarBrand>>,
-  refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<InfiniteData<IInfiteScrollResponse<ICarBrand>>>>
+}: Omit<FiltrationDto,"cursor">): {
+  data?: InfiniteData<IInfiteScrollResponse<ICarBrand>>;
+  fetchNextPage: (
+    options?: FetchNextPageOptions
+  ) => Promise<
+    InfiniteQueryObserverResult<
+      InfiniteData<IInfiteScrollResponse<ICarBrand>>,
+      AxiosError<IServerError>
+    >
+  >;
+  refetch: (
+    options?: RefetchOptions
+  ) => Promise<
+    QueryObserverResult<InfiniteData<IInfiteScrollResponse<ICarBrand>>>
+  >;
 } & ApiOperationState => {
-  const { isError, isPending, isSuccess, data, error, refetch } = useInfiniteQuery<
-    IInfiteScrollResponse<ICarBrand>,
-    AxiosError<IServerError>
-  >({
-    queryKey: [SERVICE_URLS.carbrand, search],
-    queryFn: () => findMany({ search }),
-    refetchOnWindowFocus: false,
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) =>
-      lastPage.next_cursor,
-  });
+  const { isError, isPending, isSuccess, data, error, refetch, fetchNextPage } =
+    useInfiniteQuery<
+      IInfiteScrollResponse<ICarBrand>,
+      AxiosError<IServerError>
+    >({
+      queryKey: [SERVICE_URLS.carbrand, search],
+      queryFn: ({ pageParam }) => findMany({ search, cursor: pageParam }),
+      refetchOnWindowFocus: false,
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) =>
+        lastPage.next_cursor,
+    });
 
   return {
     refetch,
@@ -32,6 +53,7 @@ export const useGetCarBrands = ({
     isError,
     isPending,
     isSuccess,
+    fetchNextPage,
     error: error || null,
   };
 };

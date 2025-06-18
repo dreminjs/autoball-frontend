@@ -19,6 +19,11 @@ import {
   QueryObserverResult,
   InfiniteData,
 } from '@tanstack/react-query';
+import { CustomSnackbar } from '../../../../../components';
+import {
+  getSnackbarSeverity,
+  getSnackbarMessage,
+} from '../../../model/lib/helpers';
 
 interface IProps {
   isLoading?: boolean;
@@ -74,6 +79,14 @@ export const PostBrandForm: FC<IProps> = ({ isLoading, refetch, onClose }) => {
   const preview = watch('brand_logo')
     ? URL.createObjectURL(watch('brand_logo'))
     : null;
+
+  const isOpen =
+    postPhotoIsSuccess ||
+    postPhotoIsPending ||
+    postPhotoIsError ||
+    postCarBrandIsError ||
+    postCarBrandIsPending ||
+    postCarBrandIsSuccess;
 
   return (
     <>
@@ -159,14 +172,20 @@ export const PostBrandForm: FC<IProps> = ({ isLoading, refetch, onClose }) => {
           </button>
         </div>
       </form>
-      <Snackbar
-        open={
-          postCarBrandIsSuccess ||
-          postCarBrandIsPending ||
-          postCarBrandIsSuccess
-        }
-        autoHideDuration={1000}
-        message="Note archived"
+      <CustomSnackbar
+        isOpen={isOpen}
+        severity={getSnackbarSeverity({
+            isError: postPhotoIsError || postCarBrandIsError,
+            isPending: postCarBrandIsPending
+        })}
+        message={getSnackbarMessage({
+          postCarBrandIsPending,
+          postPhotoIsPending,
+          postCarBrandIsError,
+          postPhotoIsError,
+          postCarBrandIsSuccess,
+          postPhotoIsSuccess,
+        })}
       />
     </>
   );
