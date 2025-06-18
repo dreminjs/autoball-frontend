@@ -1,7 +1,5 @@
-import { AlertColor, AlertPropsColorOverrides } from "@mui/material/Alert";
-import { OverridableStringUnion } from "@mui/types";
 
-interface SnackbarStates {
+interface IPostCarBrandSnackbarStates {
   postCarBrandIsPending: boolean;
   postPhotoIsPending: boolean;
   postCarBrandIsError: boolean;
@@ -10,19 +8,15 @@ interface SnackbarStates {
   postPhotoIsSuccess: boolean;
 }
 
-export const getSnackbarSeverity = ({
-  isError,
-  isPending,
-}: {
-  isError: boolean;
+interface IDeleteCarBrandSnackbarStates {
+  isSuccess: boolean;
   isPending: boolean;
-}): OverridableStringUnion<AlertColor, AlertPropsColorOverrides> => {
-  if (isError) return 'error';
-  if (isPending) return 'info';
-  return "success"
-};
+  isError: boolean;
+}
 
-export const getSnackbarMessage = (states: SnackbarStates): string => {
+export const getPostCarBrandSnackbarMessage = (
+  states: IPostCarBrandSnackbarStates
+): string | null => {
   const {
     postCarBrandIsPending,
     postPhotoIsPending,
@@ -32,11 +26,28 @@ export const getSnackbarMessage = (states: SnackbarStates): string => {
     postPhotoIsSuccess,
   } = states;
 
-  if (postCarBrandIsPending) return "Отправка данных о марке автомобиля...";
-  if (postPhotoIsPending) return "Отправка фотографии...";
-  if (postCarBrandIsError) return "Ошибка при отправке данных о марке автомобиля";
-  if (postPhotoIsError) return "Ошибка при отправке фотографии";
-  if (postCarBrandIsSuccess) return "Данные о марке автомобиля успешно отправлены";
-  if (postPhotoIsSuccess) return "Фотография успешно отправлена";
-  return "";
+  if (postCarBrandIsPending) return 'Отправка данных о марке автомобиля...';
+  if (postPhotoIsPending) return 'Отправка фотографии...';
+  if (postCarBrandIsError)
+    return 'Ошибка при отправке данных о марке автомобиля';
+  if (postPhotoIsError) return 'Ошибка при отправке фотографии';
+  if (postCarBrandIsSuccess)
+    return 'Данные о марке автомобиля успешно отправлены';
+  if (postPhotoIsSuccess) return 'Фотография успешно отправлена';
+  return null;
+};
+
+export const getDeleteCarBrandSnackbarMessage = (
+  states: IDeleteCarBrandSnackbarStates
+): string | null => {
+  switch (true) {
+    case states.isError:
+      return 'Что-то пошло не так!';
+    case states.isSuccess:
+      return 'Успех!';
+    case states.isPending:
+      return 'Загрузка';
+    default:
+      return null;
+  }
 };

@@ -1,22 +1,25 @@
 import Alert, { AlertProps } from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 type IProps = {
   isOpen: boolean;
-  message: string;
+  message: string | null
 } & AlertProps;
 
 export const CustomSnackbar: FC<IProps> = ({
   isOpen,
-  onClose,
   severity,
   message,
 }) => {
+
+  useEffect(() => {
+    console.log(message)
+  },[message])
+
   return (
-    <Snackbar open={isOpen} autoHideDuration={4000}>
+    <Snackbar open={isOpen} autoHideDuration={3000}>
       <Alert
-        onClose={onClose}
         severity={severity}
         variant="filled"
         sx={{ width: '100%' }}

@@ -12,7 +12,7 @@ type Props = {
 export const Button: FC<Props> = ({
   onClick,
   children,
-  variant = 'blue',
+  variant = 'default',
   ...props
 }) => {
   return (

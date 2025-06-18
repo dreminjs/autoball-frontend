@@ -5,6 +5,7 @@ import {
   QueryObserverResult,
   RefetchOptions,
   useInfiniteQuery,
+  UseMutateFunction,
   useMutation,
 } from '@tanstack/react-query';
 import { SERVICE_URLS } from '../../constants';
@@ -59,9 +60,10 @@ export const useGetCarBrands = ({
 };
 
 export const useDeleteCarBrand = (): {
-  mutate: (id: string) => void;
+  mutate: UseMutateFunction<ICarBrand, AxiosError<IServerError>, string, unknown>
+  reset: () => void
 } & ApiOperationState => {
-  const { mutate, isError, isPending, isSuccess, error } = useMutation<
+  const { mutate, isError, isPending, isSuccess, error, reset } = useMutation<
     ICarBrand,
     AxiosError<IServerError>,
     string
@@ -70,7 +72,7 @@ export const useDeleteCarBrand = (): {
     mutationKey: [SERVICE_URLS.carbrand],
   });
 
-  return { mutate, isError, isPending, isSuccess, error };
+  return { mutate, isError, isPending, isSuccess, error, reset };
 };
 
 export const useEditCarBrand = () => {

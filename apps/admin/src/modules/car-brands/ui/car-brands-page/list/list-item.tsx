@@ -10,8 +10,6 @@ type IProps = ICarBrand & {
 
 export const CarBrandItem: FC<IProps> = ({ name, picture, onChoose, id }) => {  
   
-
-
   return (
     <li className="border border-gray-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 bg-white mb-5">
       <div className="flex items-center justify-between flex-wrap p-4">

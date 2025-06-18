@@ -25,5 +25,6 @@ export const QUERY_KEYS = {
     "signin": "sign-in",
     "me": "me",
     "brand": "brand",
-    "post":"post"
+    "post":"post",
+    "edit":"edit"
 } as const

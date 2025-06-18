@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FC, useEffect, useMemo } from 'react';
-import Snackbar from '@mui/material/Snackbar';
 import { usePostCarBrand } from '../../../api/queries';
 import { carBrandSchema } from '../../../model/schemas/car-brand.schema';
 import { CarBrandForm } from '../../../model/types/car-brand';
@@ -9,34 +8,24 @@ import {
   useGetPresignUrl,
   usePostPhoto,
 } from '../../../../../shared/api/s3/queries';
-import {
-  generateRandomString,
-  IInfiteScrollResponse,
-} from '../../../../../shared';
-import { ICarBrand } from '@autoball-frontend/shared-types';
-import {
-  RefetchOptions,
-  QueryObserverResult,
-  InfiniteData,
-} from '@tanstack/react-query';
+import { generateRandomString } from '../../../../../shared';
 import { CustomSnackbar } from '../../../../../components';
 import {
-  getSnackbarSeverity,
-  getSnackbarMessage,
+  getPostCarBrandSnackbarMessage,
 } from '../../../model/lib/helpers';
+import { useQueryClient } from '@tanstack/react-query';
+import { SERVICE_URLS } from '../../../../../shared/constants';
+import { useSnackbarVisible } from '../../../../../shared/hooks/use-snackbar-visible';
+import { getSnackbarSeverity } from '../../../../../shared/lib/get-snackbar-severity';
 
 interface IProps {
   isLoading?: boolean;
-  refetch: (
-    options?: RefetchOptions
-  ) => Promise<
-    QueryObserverResult<InfiniteData<IInfiteScrollResponse<ICarBrand>>>
-  >;
   onClose: () => void;
 }
 
-export const PostBrandForm: FC<IProps> = ({ isLoading, refetch, onClose }) => {
+export const PostBrandForm: FC<IProps> = ({ isLoading, onClose }) => {
   const filename = useMemo(() => generateRandomString(), []);
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -63,13 +52,15 @@ export const PostBrandForm: FC<IProps> = ({ isLoading, refetch, onClose }) => {
     isSuccess: postPhotoIsSuccess,
   } = usePostPhoto();
 
-  useEffect(() => {
-    if (postCarBrandIsSuccess) {
-      reset();
-      refetch();
-      onClose();
-    }
-  }, [onClose, postCarBrandIsSuccess, refetch, reset]);
+  const { snackbarOpen, onHideSnackbar } = useSnackbarVisible({
+    state:
+      postCarBrandIsError ||
+      postPhotoIsError ||
+      postCarBrandIsPending ||
+      postPhotoIsPending ||
+      postCarBrandIsSuccess ||
+      postPhotoIsSuccess,
+  });
 
   const { data: urlData } = useGetPresignUrl({
     content_type: watch('brand_logo')?.type,
@@ -80,24 +71,36 @@ export const PostBrandForm: FC<IProps> = ({ isLoading, refetch, onClose }) => {
     ? URL.createObjectURL(watch('brand_logo'))
     : null;
 
-  const isOpen =
-    postPhotoIsSuccess ||
-    postPhotoIsPending ||
-    postPhotoIsError ||
-    postCarBrandIsError ||
-    postCarBrandIsPending ||
-    postCarBrandIsSuccess;
+  const handleOnSuccess = () => {
+    queryClient.invalidateQueries({
+      queryKey: [SERVICE_URLS.carbrand],
+    });
+
+    setTimeout(() => {
+      onClose();
+      onHideSnackbar();
+    }, 1500);
+  };
+
+  const hadlePostSubmit = (data: CarBrandForm) => {
+    postCarBrand(
+      { name: data.name, picture: `${filename}` },
+      {
+        onSuccess: handleOnSuccess,
+      }
+    );
+    postPhoto({
+      brand_logo: data.brand_logo,
+      url: urlData?.url,
+      filename: `${filename}`,
+    });
+  };
 
   return (
     <>
       <form
         onSubmit={handleSubmit((data) => {
-          postCarBrand({ name: data.name, picture: `${filename}` });
-          postPhoto({
-            brand_logo: data.brand_logo,
-            url: urlData?.url,
-            filename: `${filename}`,
-          });
+          hadlePostSubmit(data);
         })}
         className="space-y-6"
       >
@@ -153,7 +156,6 @@ export const PostBrandForm: FC<IProps> = ({ isLoading, refetch, onClose }) => {
             </p>
           )}
         </div>
-
         <div className="flex justify-end gap-3 pt-4">
           <button
             type="button"
@@ -173,12 +175,13 @@ export const PostBrandForm: FC<IProps> = ({ isLoading, refetch, onClose }) => {
         </div>
       </form>
       <CustomSnackbar
-        isOpen={isOpen}
+        isOpen={snackbarOpen}
         severity={getSnackbarSeverity({
-            isError: postPhotoIsError || postCarBrandIsError,
-            isPending: postCarBrandIsPending
+          isError: postPhotoIsError || postCarBrandIsError,
+          isPending: postCarBrandIsPending,
+          isSuccess: postCarBrandIsSuccess,
         })}
-        message={getSnackbarMessage({
+        message={getPostCarBrandSnackbarMessage({
           postCarBrandIsPending,
           postPhotoIsPending,
           postCarBrandIsError,

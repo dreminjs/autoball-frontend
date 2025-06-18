@@ -1,4 +1,4 @@
 
 
 
-export * from "./car-brand-list"
+export * from "./list"

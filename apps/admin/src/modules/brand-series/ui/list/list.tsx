@@ -1,12 +1,16 @@
 import { FC } from 'react';
 import { useGetCarSeriesByBrandId } from '../../api/queries';
 import { ListItem } from './list-item';
+import { ICarSeries } from '@autoball-frontend/shared-types';
 
 interface IProps {
   brandId: string | null;
+  onChoose:  (newValue: (ICarSeries & {
+    type: "delete" | "edit";
+}) | null) => void
 }
 
-export const List: FC<IProps> = ({ brandId }) => {
+export const List: FC<IProps> = ({ brandId, onChoose }) => {
   const { data, isError, isPending, error } = useGetCarSeriesByBrandId(brandId);
 
   if (isPending) return <div className="text-center py-4">Loading...</div>;
@@ -22,9 +26,9 @@ export const List: FC<IProps> = ({ brandId }) => {
     );
 
   return (
-    <ul className="divide-y divide-gray-200">
+    <ul className="divide-y divide-gray-200 overflow-y-scroll h-[75vh]">
       {data.map((series) => (
-        <ListItem key={series.id} {...series} />
+        <ListItem onChoose={onChoose} key={series.id} {...series} />
       ))}
     </ul>
   );

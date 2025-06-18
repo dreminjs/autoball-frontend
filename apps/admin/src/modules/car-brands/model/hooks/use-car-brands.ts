@@ -29,13 +29,13 @@ export const useCarBrands = (inView: boolean) => {
   return {
     onChangeSearchValue: handleChangeSearchValue,
     data,
-    error,
     search,
     refetch,
     states: {
       isError,
       isPending,
       isSuccess,
+      error,
     },
   };
 };

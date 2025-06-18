@@ -13,7 +13,7 @@ export const findMany = async (
 
   if(dto.cursor !== undefined && typeof dto.cursor === "number") queryParams.set('cursor', String(dto.cursor))
 
-  queryParams.set('take',"5")
+  queryParams.set('take',"10")
 
   return (await instance.get(`${SERVICE_URLS.carbrand}?${queryParams}`)).data;
 };

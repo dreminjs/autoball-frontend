@@ -1,5 +1,5 @@
 import { ICarBrand } from '@autoball-frontend/shared-types';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { UseMutateFunction, useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { SERVICE_URLS } from '../../../shared/constants';
 import { ApiOperationState } from '../../../shared/interfaces/api-operation-state.interface';
@@ -8,7 +8,7 @@ import { CarBrandFormDto } from '../model/types/car-brand';
 import { createOne, findOne } from './servies';
 
 export const usePostCarBrand = (): {
-  mutate: (data: CarBrandFormDto) => void;
+  mutate: UseMutateFunction<ICarBrand, AxiosError<IServerError>, CarBrandFormDto>
 } & ApiOperationState => {
   const { mutate, isError, isPending, isSuccess, error } = useMutation<
     ICarBrand,

@@ -5,10 +5,15 @@ import { ProtectedRoutes } from '../providers/protected-routes';
 import { OrdersPage } from '../modules/orders';
 import { PAGE_URLS, QUERY_KEYS } from '../shared/constants';
 import { CarBrandsPage } from '../modules/car-brands';
-import { PostProductPage, ProductsPage, productsStore } from '../modules/products';
+import {
+  PostProductPage,
+  ProductsPage,
+  productsStore,
+} from '../modules/products';
 import { Provider } from 'jotai';
 import { carBrandsStore } from '../modules/car-brands/model/store-page';
 import { CarBrandSeriesPage } from '../modules/brand-series/ui/car-brand-series-page';
+import { brandSeriesStore } from '../modules/brand-series/model/store-page';
 
 export function App() {
   return (
@@ -30,7 +35,11 @@ export function App() {
             />
             <Route
               path={PAGE_URLS['carseries']}
-              element={<CarBrandSeriesPage />}
+              element={
+                <Provider store={brandSeriesStore}>
+                  <CarBrandSeriesPage />
+                </Provider>
+              }
             />
           </Route>
           <Route path={PAGE_URLS['product']}>
@@ -42,10 +51,7 @@ export function App() {
                 </Provider>
               }
             />
-            <Route
-              path={`${QUERY_KEYS.post}`}
-              element={<PostProductPage />}
-            />
+            <Route path={`${QUERY_KEYS.post}`} element={<PostProductPage />} />
           </Route>
         </Route>
       </Route>
