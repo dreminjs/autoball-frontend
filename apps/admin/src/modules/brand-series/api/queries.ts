@@ -2,6 +2,7 @@ import {
   UseMutateFunction,
   useMutation,
   useQuery,
+  useQueryClient,
 } from '@tanstack/react-query';
 import { ApiOperationState } from '../../../shared/interfaces/api-operation-state.interface';
 import { ICarSeries } from '@autoball-frontend/shared-types';
@@ -51,19 +52,20 @@ export const usePostCarSeries = (): {
   return { mutate, isSuccess, isPending, isError, error };
 };
 
-export const useDeleteCarSeries = (): {
+export const useDeleteCarSeries = (brandId?: string): {
   mutate: UseMutateFunction<ICarSeries, AxiosError<IServerError>, string>;
 } & ApiOperationState => {
-  const { isError, isPending, isSuccess, mutate, error } = useMutation<
-    ICarSeries,
-    AxiosError<IServerError>,
-    string
-  >({
+  const queryClient = useQueryClient();
+
+  return useMutation<ICarSeries, AxiosError<IServerError>, string>({
     mutationKey: [SERVICE_URLS.carseries],
     mutationFn: (id: string) => deleteOne(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [SERVICE_URLS.carseries, brandId],
+      });
+    },
   });
-
-  return { isError, isPending, isSuccess, mutate, error };
 };
 
 export const useEditCarSeries = (): {

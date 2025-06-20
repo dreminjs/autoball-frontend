@@ -2,6 +2,7 @@ import Modal from '@mui/material/Modal';
 import { FC } from 'react';
 import { EditBrandForm } from './edit-brand-form';
 import { IWheelComponentBrand } from '@autoball-frontend/shared-types';
+import { ModalLayout } from '../../../../../shared';
 
 interface IProps {
   isOpen: boolean;
@@ -28,10 +29,9 @@ const icon = (
 
 export const EditBrandModal: FC<IProps> = ({ isOpen, onClose, brand }) => {
   return (
-    <Modal
-      open={isOpen}
+    <ModalLayout
+      isOpen={isOpen}
       onClose={onClose}
-      className="flex items-center justify-center p-5 z-50"
     >
       <div className="relative max-w-[500px] w-full overflow-y-auto bg-white rounded-lg shadow-xl z-50 p-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">
@@ -46,6 +46,6 @@ export const EditBrandModal: FC<IProps> = ({ isOpen, onClose, brand }) => {
           {icon}
         </button>
       </div>
-    </Modal>
+    </ModalLayout>
   );
 };

@@ -11,3 +11,5 @@ export * from "./actions"
 export * from "./interfaces/api-operation-state.interface"
 
 export * from "./lib/get-snackbar-message"
+
+export * from "./ui/modal-layout"

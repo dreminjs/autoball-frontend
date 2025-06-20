@@ -14,7 +14,11 @@ import { Provider } from 'jotai';
 import { carBrandsStore } from '../modules/car-brands/model/atoms';
 import { CarBrandSeriesPage } from '../modules/brand-series/ui/car-brand-series-page';
 import { brandSeriesStore } from '../modules/brand-series/model/atoms';
-import { DiscBrandPage, TireBrandPage, wheelComponentsStore } from '../modules/wheel/';
+import {
+  DiscBrandPage,
+  TireBrandPage,
+  wheelComponentsStore,
+} from '../modules/wheel/';
 
 export function App() {
   return (
@@ -23,14 +27,7 @@ export function App() {
         <Route path="/" element={<SigninPage />} />
         <Route element={<ProtectedRoutes />}>
           <Route path={PAGE_URLS.orders} element={<OrdersPage />} />
-          <Route
-            path={PAGE_URLS['carseries']}
-            element={
-              <Provider store={brandSeriesStore}>
-                <CarBrandSeriesPage />
-              </Provider>
-            }
-          />
+
           <Route path={PAGE_URLS['product']}>
             <Route
               index
@@ -61,15 +58,24 @@ export function App() {
               </Provider>
             }
           />
-          <Route
-            index
-            path={`${QUERY_KEYS.car}`}
-            element={
-              <Provider store={carBrandsStore}>
-                <CarBrandsPage />
-              </Provider>
-            }
-          />
+          <Route path={`${QUERY_KEYS.car}`}>
+            <Route
+              index
+              element={
+                <Provider store={carBrandsStore}>
+                  <CarBrandsPage />
+                </Provider>
+              }
+            />
+            <Route
+              path={PAGE_URLS['carseries']}
+              element={
+                <Provider store={brandSeriesStore}>
+                  <CarBrandSeriesPage />
+                </Provider>
+              }
+            />
+          </Route>
         </Route>
       </Route>
     </Routes>

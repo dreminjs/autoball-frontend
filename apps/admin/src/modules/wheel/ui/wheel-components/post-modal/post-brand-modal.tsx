@@ -4,6 +4,7 @@ import { PostBrandForm } from './post-brand-form';
 import { useAtom } from 'jotai';
 import { isPostWheelComponentBrandModalVisibleAtom } from '../../../model/atoms';
 import { IWheelComponentBrand } from '@autoball-frontend/shared-types';
+import { ModalLayout } from '../../../../../shared';
 
 const logo = (
   <svg
@@ -31,10 +32,9 @@ export const PostBrandModal = () => {
   const handleClose = () => setIsPostWheelComponentBrandModalVisible(false)
 
   return (
-    <Modal
-      open={isPostWheelComponentBrandModalVisible}
+    <ModalLayout
+      isOpen={isPostWheelComponentBrandModalVisible}
       onClose={handleClose}
-      className="flex items-center justify-center p-5 z-50"
     >
       <div className="relative max-w-[500px] w-full overflow-y-auto bg-white rounded-lg shadow-xl z-50 p-6">
         <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6">
@@ -51,6 +51,6 @@ export const PostBrandModal = () => {
           {logo}
         </button>
       </div>
-    </Modal>
+    </ModalLayout>
   );
 };

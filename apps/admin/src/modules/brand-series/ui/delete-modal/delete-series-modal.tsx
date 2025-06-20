@@ -10,10 +10,13 @@ interface IProps {
 }
 
 export const DeleteSeriesModal: FC<IProps> = ({ isOpen, onClose, series }) => {
-  const { mutate } = useDeleteCarSeries();
-    // TODO: IMPLEMEMENT LATER
+  const { mutate } = useDeleteCarSeries(series.car_brand_id);
   return (
-    <Modal open={isOpen} onClose={onClose}>
+    <Modal
+      open={isOpen}
+      onClose={onClose}
+      className="flex items-center justify-center p-5 z-50"
+    >
       <div className="relative max-w-[500px] w-full overflow-y-auto bg-white rounded-lg shadow-xl z-50 p-6">
         <h2 className="text-xl font-bold text-gray-800 mb-6 text-center">
           Вы уверены, что хотите удалить:{' '}
@@ -23,14 +26,7 @@ export const DeleteSeriesModal: FC<IProps> = ({ isOpen, onClose, series }) => {
         <div className="flex justify-center space-x-4">
           <button
             className="px-6 py-2 bg-red-500 text-white font-medium rounded-md hover:bg-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
-            onClick={() =>
-              series.id &&
-              mutate(series.id, {
-                onSuccess: () => {
-                  console.log('Success');
-                },
-              })
-            }
+            onClick={() => series.id && mutate(series.id)}
           >
             Да, удалить
           </button>
