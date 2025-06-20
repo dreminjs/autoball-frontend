@@ -15,7 +15,7 @@ export const SelectNavItems: FC<IProps> = ({
   const location = useLocation();
 
   return (
-    <ul className="pl-4 absolute top-[45px]">
+    <ul className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-md py-1 min-w-[160px]">
       {inner.map((item) => (
         <li key={item.to}>
           <Link
@@ -24,11 +24,7 @@ export const SelectNavItems: FC<IProps> = ({
               toggleIsDropdownOpen();
               toggleIsMenuVisibility();
             }}
-            className={`block text-center mt-2 px-3 py-2 rounded-lg  hover:bg-blue-50 hover:text-blue-600 ${
-              location.pathname === `/${item.to}`
-                ? 'text-blue-600 bg-blue-50'
-                : ''
-            }`}
+            className="block px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition-colors"
           >
             {item.name}
           </Link>

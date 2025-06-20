@@ -8,7 +8,9 @@ export const PAGE_URLS = {
     "tier-brands": "tier-brands",
     "disc-brands": "disc-brands",
     "product": "product",
-    "carseries": "carseries"
+    "carseries": "carseries",
+    "tire": "tire",
+    "disc": "disc"
 } as const
 
 

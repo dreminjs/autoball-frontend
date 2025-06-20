@@ -25,7 +25,7 @@ export const NavItem: FC<Props> = ({ to, name, inner }) => {
     setIsMobileMenuVisible((prev) => !prev);
 
   return (
-    <li className="mb-[25px] sm:m-0">
+    <li className="mb-[25px] sm:m-0 relative">
       {to ? (
         <Link
           to={to}
@@ -52,7 +52,6 @@ export const NavItem: FC<Props> = ({ to, name, inner }) => {
                 <ChevronDown size={18} />
               ))}
           </button>
-
           {inner.length > 0 && isDropdownOpen && (
             <SelectNavItems
               inner={inner}

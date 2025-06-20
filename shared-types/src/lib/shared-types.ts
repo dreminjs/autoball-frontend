@@ -60,6 +60,11 @@ export interface ITokens {
   refresh_token: string;
 }
 
+export interface IWheelComponentBrand {
+  id: uuid
+  name: string
+}
+
 export type Role = 'admin' | 'owner' | 'worker' | 'seo' | 'client';
 
 export type BodyType = 
@@ -87,3 +92,15 @@ export type OrderStatus = 'open' | 'closed';
 export type FuelType = 'gasoline' | 'diesel' | 'hybrid' | 'electric';
 
 export type ProductCondition = 'used' | 'new';
+
+
+
+export interface IWithPagatination<T> {
+  items: T[]
+  total_count: number
+}
+
+export interface IInfiteScrollResponse<T> {
+  items: T[];
+  next_cursor: null | number;
+}
