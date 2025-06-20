@@ -65,6 +65,12 @@ export interface IWheelComponentBrand {
   name: string
 }
 
+export interface IInfiteScrollQueryParameters {
+  search: string
+  cursor: unknown
+  limit: number
+}
+
 export type Role = 'admin' | 'owner' | 'worker' | 'seo' | 'client';
 
 export type BodyType = 

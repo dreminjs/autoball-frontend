@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { usePostCarBrand } from '../../../api/queries';
 import { carBrandSchema } from '../../../model/schemas/car-brand.schema';
 import { CarBrandForm } from '../../../model/types/car-brand';

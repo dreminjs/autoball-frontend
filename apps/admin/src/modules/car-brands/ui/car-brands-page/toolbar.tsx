@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Button } from '../../../../components/buttons';
 import { useSetAtom } from 'jotai';
-import { isPostCarBrandModalVisibleAtom } from '../../model/store-page';
+import { isPostCarBrandModalVisibleAtom } from '../../model/atoms';
 
 interface IProps {
   onChangeSearchValue: (e: string) => void;
@@ -24,7 +24,7 @@ export const Toolbar: FC<IProps> = ({
         placeholder="Поиск брендов..."
         className="px-4 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500 transition-colors duration-200 w-full sm:w-[40%] mb-2"
       />
-      <Button onClick={() => setIsPostCarBrandModalVisible(true)}>Добавить Бренд</Button>
+      <Button variant="blue" onClick={() => setIsPostCarBrandModalVisible(true)}>Добавить Бренд</Button>
     </div>
   );
 };

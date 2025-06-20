@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { useGetCarBrands } from '../../../../../../shared/api/brand/queries';
 import { List } from './list';
+import { useGetCarBrands } from '../../../../../car-brands/api/queries';
 
 export const ChooseBrand = () => {
   const [search, setSearch] = useState('');
 
-  const { data } = useGetCarBrands({ search });
+  const { data } = useGetCarBrands({ search, limit: 10 });
 
   return (
     <div className="border border-gray-200 rounded-lg p-4 flex flex-col max-w-xs shadow-sm mb-5">

@@ -4,7 +4,7 @@ import { AxiosError } from 'axios';
 import { IServerError } from '../../../../shared/interfaces/server-error';
 import { IProduct } from '@autoball-frontend/shared-types';
 import { IInfiteScrollResponse } from '../../../../shared';
-import { conditionAtom, countItemsAtom, isPrintedStatusAtom } from '../store-page';
+import { conditionAtom, countItemsAtom, isPrintedStatusAtom } from '../atoms-page';
 import { useAtomValue } from 'jotai';
 import { ApiOperationState } from '../../../../shared/interfaces/api-operation-state.interface';
 
@@ -18,7 +18,7 @@ export const useGetProducts = (): {
 
   const isPrintedStatus = useAtomValue(isPrintedStatusAtom)
 
-  const { data, isError, isSuccess, isPending, error } = useInfiniteQuery<
+return useInfiniteQuery<
     IInfiteScrollResponse<IProduct>,
     AxiosError<IServerError>
   >({
@@ -29,11 +29,5 @@ export const useGetProducts = (): {
       lastPage.next_cursor,
   });
 
-  return {
-    data,
-    error,
-    isError,
-    isSuccess,
-    isPending,
-  };
+
 };

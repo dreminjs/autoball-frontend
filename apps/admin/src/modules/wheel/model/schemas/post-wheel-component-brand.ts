@@ -7,5 +7,4 @@ export const PostWheelComponentBrandSchema = z.object({
   name: z.string().min(1, "Название обязательно"),
 });
 
-
 export type IPostWheelComponentBrand = z.infer<typeof PostWheelComponentBrandSchema>

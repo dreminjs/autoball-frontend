@@ -10,7 +10,7 @@ interface IProps {
 }
 
 export const DeleteSeriesModal: FC<IProps> = ({ isOpen, onClose, series }) => {
-  const { mutate } = useDeleteCarSeries(series.id);
+  const { mutate } = useDeleteCarSeries();
     // TODO: IMPLEMEMENT LATER
   return (
     <Modal open={isOpen} onClose={onClose}>

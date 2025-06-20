@@ -1,6 +1,6 @@
 import { useSetAtom } from 'jotai';
 import { Select } from '../../../../../shared/ui/select';
-import { isPrintedStatusAtom } from '../../../model/store-page';
+import { isPrintedStatusAtom } from '../../../model/atoms-page';
 
 export const ChoosePrintedStatus = () => {
   const setIsPrintedStatus = useSetAtom(isPrintedStatusAtom);

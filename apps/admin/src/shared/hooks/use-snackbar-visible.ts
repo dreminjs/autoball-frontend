@@ -6,7 +6,6 @@ export const useSnackbarVisible = ({ state }: { state: boolean }) => {
   const handleHideSnackbar = () => setSnackbarOpen(false);
 
   useEffect(() => {
-    console.log(state)
     setSnackbarOpen(state);
   }, [state]);
 

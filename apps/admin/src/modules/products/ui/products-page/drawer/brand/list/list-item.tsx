@@ -1,7 +1,7 @@
 import { ICarBrand } from '@autoball-frontend/shared-types';
 import { useAtom } from 'jotai';
 import { FC } from 'react';
-import { brandIdAtom } from '../../../../../model/store-page';
+import { brandIdAtom } from '../../../../../model/atoms-page';
 
 type IProps = Omit<ICarBrand, 'picture' | 'id'> & { id: string | null };
 

@@ -10,8 +10,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { SERVICE_URLS } from '../../../../shared/constants';
 import { useSnackbarVisible } from '../../../../shared/hooks/use-snackbar-visible';
 import { CustomSnackbar } from '../../../../components';
-import { getSnackbarMessage } from '../../../../shared/lib/get-message-snackbar';
 import { getSnackbarSeverity } from '../../../../shared/lib/get-snackbar-severity';
+import { getSnackbarMessage } from '../../../../shared';
 
 interface IProps {
   onClose: () => void;
@@ -84,22 +84,24 @@ export const Form: FC<IProps> = ({ onClose }) => {
           Отправить
         </button>
       </form>
-      <CustomSnackbar
-        isOpen={snackbarOpen}
-        severity={getSnackbarSeverity({
-          isError,
-          isSuccess,
-          isPending,
-        })}
-        message={getSnackbarMessage(
-          {
+        <CustomSnackbar
+          isOpen={snackbarOpen}
+          severity={getSnackbarSeverity({
             isError,
             isSuccess,
             isPending,
-          },
-          { error: error?.response?.data.detail }
-        )}
-      />
-    </>
+          })}
+          message={getSnackbarMessage(
+            {
+              isError,
+              isSuccess,
+              isPending,
+            },
+            {
+              error: error?.message || 'Erorr!',
+            }
+          )}
+        />
+      </>
   );
 };

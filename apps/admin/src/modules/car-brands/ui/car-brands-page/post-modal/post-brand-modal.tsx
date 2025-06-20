@@ -2,7 +2,7 @@ import Modal from '@mui/material/Modal';
 import { FC } from 'react';
 import { PostBrandForm } from './post-brand-form';
 import { useAtom, useSetAtom } from 'jotai';
-import { isPostCarBrandModalVisibleAtom } from '../../../model/store-page';
+import { isPostCarBrandModalVisibleAtom } from '../../../model/atoms';
 
 const logo = (
   <svg

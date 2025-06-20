@@ -1,6 +1,6 @@
 import { useSetAtom } from 'jotai';
 import { Select } from '../../../../../shared/ui/select';
-import { countItemsAtom } from '../../../model/store-page';
+import { countItemsAtom } from '../../../model/atoms-page';
 
 export const ChooseCountItems = () => {
   const setCountItems = useSetAtom(countItemsAtom);

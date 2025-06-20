@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Button } from '../../../components/buttons';
 import { useSetAtom } from 'jotai';
-import { isPostBrandSeriesModalVisibleAtom } from '../model/store-page';
+import { isPostBrandSeriesModalVisibleAtom } from '../model/atoms';
 
 interface IProps {
   brandName: string | null;

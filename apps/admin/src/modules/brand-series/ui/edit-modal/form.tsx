@@ -9,10 +9,10 @@ import { Button } from '../../../../components/buttons';
 import { useSnackbarVisible } from '../../../../shared/hooks/use-snackbar-visible';
 import { useEditCarSeries } from '../../api/queries';
 import { CustomSnackbar } from '../../../../components';
-import { getSnackbarMessage } from '../../../../shared/lib/get-message-snackbar';
 import { getSnackbarSeverity } from '../../../../shared/lib/get-snackbar-severity';
 import { useQueryClient } from '@tanstack/react-query';
 import { SERVICE_URLS } from '../../../../shared/constants';
+import { getSnackbarMessage } from '../../../../shared';
 
 interface IProps {
   series: Partial<ICarSeries>;
@@ -104,7 +104,7 @@ export const Form: FC<IProps> = ({ series, onClose }) => {
             isSuccess,
             isPending,
           },
-          { error: error?.response?.data.detail }
+          { error: error?.response?.data.detail || "error" }
         )}
       />
     </>

@@ -1,48 +1,88 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useQuery,
+  useMutation,
+  useInfiniteQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { instance } from '../../../shared/api/api-instance';
 import {
   IInfiteScrollResponse,
   IWheelComponentBrand,
 } from '@autoball-frontend/shared-types';
 import { IPostWheelComponentBrand } from '../model/schemas/post-wheel-component-brand';
-
-const API_URL = new Location().pathname;
+import { getComponentBrandType } from '../../../shared/lib/get-component-brand-type';
+import { AxiosError } from 'axios';
+import { IServerError } from '../../../shared/interfaces/server-error';
 
 export const useGetWheelBrands = (params = {}) => {
-  return useQuery<IInfiteScrollResponse<IWheelComponentBrand>>({
-    queryKey: [API_URL, params],
+  const path = getComponentBrandType();
+  return useInfiniteQuery<
+    IInfiteScrollResponse<IWheelComponentBrand>,
+    AxiosError<IServerError>
+  >({
+    queryKey: [path, params],
     queryFn: async () => {
-      return (await instance.get(API_URL, { params })).data;
+      return (await instance.get(path, { params })).data;
     },
+    refetchOnWindowFocus: false,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) =>
+      lastPage.next_cursor,
   });
 };
 
 export const useGetWheelBrand = (id: string) => {
+  const path = getComponentBrandType();
+
   return useQuery<IWheelComponentBrand>({
-    queryKey: [API_URL, id],
+    queryKey: [path, id],
     queryFn: async () => {
-      return (await instance.get(`${API_URL}/${id}`)).data;
+      return (await instance.get(`${path}/${id}`)).data;
     },
     enabled: !!id,
   });
 };
 
 export const useDeleteWheelBrand = () => {
+  const path = getComponentBrandType();
+  const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: (id: string) => instance.delete(`${API_URL}/${id}`),
+    mutationFn: (id: string) => instance.delete(`${path}/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [path],
+      });
+    },
   });
 };
 
-export const useCreateWheelBrand = () => {
+export const usePostWheelBrand = () => {
+  const path = getComponentBrandType();
+
+  const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: (brand: IPostWheelComponentBrand) =>
-      instance.post(API_URL, brand),
+    mutationFn: (brand: IPostWheelComponentBrand) => instance.post(path, brand),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [path],
+      });
+    },
   });
 };
 
-export const useUpdateWheelBrand = () => {
+export const useEditWheelBrand = () => {
+  const path = getComponentBrandType();
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: (brand: Partial<IPostWheelComponentBrand>) =>
-      instance.put(`${API_URL}/${brand.id}`, brand),
+      instance.put(`${path}/${brand.id}`, brand),
+     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [path],
+      });
+    },
   });
 };

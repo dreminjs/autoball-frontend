@@ -1,4 +1,4 @@
-import { PAGE_URLS } from '../../../shared/constants';
+import { PAGE_URLS, QUERY_KEYS } from '../../../shared/constants';
 import { INavItem } from './types/nav-item';
 
 export const items = [
@@ -13,9 +13,9 @@ export const items = [
   {
     name: 'Бренды',
     inner: [
-      { name: 'Машин', to: PAGE_URLS['car-brands'] },
-      { name: 'Шин', to: PAGE_URLS['tier-brands'] },
-      { name: 'Дисков', to: PAGE_URLS['disc-brands'] },
+      { name: 'Машин', to: `${PAGE_URLS["brand"]}/${QUERY_KEYS.car}` },
+      { name: 'Шин', to: `${PAGE_URLS["brand"]}/${QUERY_KEYS.tire}` },
+      { name: 'Дисков', to: `${PAGE_URLS["brand"]}/${QUERY_KEYS.disc}` },
     ],
   },
 ] as INavItem[];

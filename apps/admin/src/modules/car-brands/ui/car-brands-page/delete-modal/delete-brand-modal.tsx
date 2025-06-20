@@ -1,7 +1,6 @@
 import { ICarBrand } from '@autoball-frontend/shared-types';
 import Modal from '@mui/material/Modal';
 import { FC } from 'react';
-import { useDeleteCarBrand } from '../../../../../shared/api/brand/queries';
 import { SERVICE_URLS } from '../../../../../shared/constants';
 import { useQueryClient } from '@tanstack/react-query';
 import { CustomSnackbar } from '../../../../../components';
@@ -10,6 +9,7 @@ import {
   getDeleteCarBrandSnackbarMessage,
 } from '../../../model/lib/helpers';
 import { getSnackbarSeverity } from '../../../../../shared/lib/get-snackbar-severity';
+import { useDeleteCarBrand } from '../../../api/queries';
 
 type Props = {
   isOpen: boolean;

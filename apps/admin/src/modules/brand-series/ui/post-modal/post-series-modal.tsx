@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import { FC } from 'react';
 import { Form } from './form';
 import { useAtom } from 'jotai';
-import { isPostBrandSeriesModalVisibleAtom } from '../../model/store-page';
+import { isPostBrandSeriesModalVisibleAtom } from '../../model/atoms';
 
 export const PostSeriesModal: FC = () => {
   const [isPostBrandSeriesModalVisible, setIsPostBrandSeriesModalVisible] =

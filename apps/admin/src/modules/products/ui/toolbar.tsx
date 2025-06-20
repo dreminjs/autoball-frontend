@@ -1,6 +1,6 @@
 import { useAtom, useAtomValue } from 'jotai';
 import { FC } from 'react';
-import { checkboxesAtom, showScanCheckboxesAtom } from '../model/store-page';
+import { checkboxesAtom, showScanCheckboxesAtom } from '../model/atoms-page';
 import { Button, CustomLink } from '../../../components/buttons';
 
 interface IProps {

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useGetCarBrands } from '../../../../shared/api/brand/queries';
+import { useGetCarBrands } from '../../api/queries';
 
 export const useCarBrands = (inView: boolean) => {
   const [search, setSearch] = useState('');
@@ -9,6 +9,7 @@ export const useCarBrands = (inView: boolean) => {
   const { data, isError, isPending, isSuccess, error, refetch, fetchNextPage } =
     useGetCarBrands({
       search,
+      limit: 10
     });
 
   const handleChangeSearchValue = (newValue: string) => setSearch(newValue);

@@ -2,7 +2,6 @@ import {
   UseMutateFunction,
   useMutation,
   useQuery,
-  useQueryClient,
 } from '@tanstack/react-query';
 import { ApiOperationState } from '../../../shared/interfaces/api-operation-state.interface';
 import { ICarSeries } from '@autoball-frontend/shared-types';
