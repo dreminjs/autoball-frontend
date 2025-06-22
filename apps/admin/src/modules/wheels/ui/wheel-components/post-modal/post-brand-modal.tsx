@@ -1,10 +1,6 @@
-import Modal from '@mui/material/Modal';
-import { FC } from 'react';
 import { PostBrandForm } from './post-brand-form';
-import { useAtom } from 'jotai';
-import { isPostWheelComponentBrandModalVisibleAtom } from '../../../model/atoms';
-import { ICarPart } from '@autoball-frontend/shared-types';
 import { ModalLayout } from '../../../../../shared';
+import { useWheelComponentBrandModal } from '../../../model/hooks/use-wheel-component-brand-modal';
 
 const logo = (
   <svg
@@ -23,32 +19,22 @@ const logo = (
   </svg>
 );
 
-
-
 export const PostBrandModal = () => {
-
-  const [isPostWheelComponentBrandModalVisible, setIsPostWheelComponentBrandModalVisible] = useAtom(isPostWheelComponentBrandModalVisibleAtom)
-
-  const handleClose = () => setIsPostWheelComponentBrandModalVisible(false)
+  const { isModalVisible, closeModal } = useWheelComponentBrandModal();
 
   return (
-    <ModalLayout
-      isOpen={isPostWheelComponentBrandModalVisible}
-      onClose={handleClose}
-    >
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6">
-          Добавить новый бренд
-        </h2>
-        <PostBrandForm
-          onClose={handleClose}
-        />
-        <button
-          onClick={handleClose}
-          className="absolute top-4 right-4 p-2 text-gray-500 hover:text-gray-700 transition-colors"
-          aria-label="Close"
-        >
-          {logo}
-        </button>
+    <ModalLayout isOpen={isModalVisible} onClose={closeModal}>
+      <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6">
+        Добавить новый бренд
+      </h2>
+      <PostBrandForm />
+      <button
+        onClick={closeModal}
+        className="absolute top-4 right-4 p-2 text-gray-500 hover:text-gray-700 transition-colors"
+        aria-label="Close"
+      >
+        {logo}
+      </button>
     </ModalLayout>
   );
 };

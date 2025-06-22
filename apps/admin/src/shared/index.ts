@@ -17,3 +17,5 @@ export * from "./ui/modal-layout"
 export * from "./lib/cross-store"
 
 export * from "./interfaces/mutate-args.dto"
+
+export * from "./interfaces/choosed-item"

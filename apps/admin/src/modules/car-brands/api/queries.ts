@@ -4,53 +4,58 @@ import {
   IInfiteScrollResponse,
 } from '@autoball-frontend/shared-types';
 import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-  QueryObserverResult,
-  RefetchOptions,
   useInfiniteQuery,
-  UseMutateFunction,
   useMutation,
   useQuery,
+  useQueryClient,
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { SERVICE_URLS } from '../../../shared/constants';
 import { ApiOperationState } from '../../../shared/interfaces/api-operation-state.interface';
 import { IServerError } from '../../../shared/interfaces/server-error';
 import { CarBrandFormDto } from '../model/types/car-brand';
-import { createOne, findMany, findOne } from './servies';
-import { deleteOne } from '../../brand-series/api/service';
-import { useSetAtom } from 'jotai';
+import { createOne, deleteOne, findMany, findOne } from './servies';
+import { useCarBrandModal } from '../model/hooks/use-car-brand-modal';
+import { useNotificationActions } from '../../notifications';
+import { useChooseBrand } from '../model/hooks';
 
-export const usePostCarBrand = (): {
-  mutate: UseMutateFunction<
+export const usePostCarBrand = () => {
+  const queryClient = useQueryClient();
+
+  const { addError, addSuccess, remove, addInfo } = useNotificationActions();
+
+  const { closeModal } = useCarBrandModal();
+
+  const { mutate, ...props } = useMutation<
     ICarBrand,
     AxiosError<IServerError>,
     CarBrandFormDto
-  >;
-} & ApiOperationState => {
-
-  // const addNotification = useSetAtom(addNotificationAtom)
-
-  return useMutation<ICarBrand, AxiosError<IServerError>, CarBrandFormDto>({
+  >({
     mutationFn: (data: CarBrandFormDto) => createOne({ ...data }),
     mutationKey: [SERVICE_URLS.carbrand],
-    onSuccess:() => {
-      // addNotification({
-      //   message: 'Успех!',
-      //   type: "success",
-      //   duration: 3000
-      // })
+    onSuccess: () => {
+      closeModal();
+      remove('info');
+      queryClient.invalidateQueries({
+        queryKey: [SERVICE_URLS.carbrand],
+      });
+      addSuccess();
     },
-    onError:(data) => {
-      //  addNotification({
-      //   message: data.response?.data.detail || "Error!",
-      //   type: "success",
-      //   duration: 3000
-      // })
-    }
+    onError: (data) => {
+      closeModal();
+      remove('info');
+      queryClient.invalidateQueries({
+        queryKey: [SERVICE_URLS.carbrand],
+      });
+      addError();
+    },
   });
+
+  const handleMutate = (data: CarBrandFormDto) => {
+    addInfo();
+    mutate(data);
+  };
+  return { ...props, mutate: handleMutate };
 };
 
 export const useGetBrand = (
@@ -80,35 +85,41 @@ export const useGetCarBrands = ({
   });
 };
 
-export const useDeleteCarBrand = (): {
-  mutate: UseMutateFunction<
+export const useDeleteCarBrand = () => {
+  const queryClient = useQueryClient();
+
+  const { addError, addSuccess, remove, addInfo } = useNotificationActions();
+
+  const { onCancel } = useChooseBrand();
+
+  const { mutate, ...props } = useMutation<
     ICarBrand,
     AxiosError<IServerError>,
-    string,
-    unknown
-  >;
-  reset: () => void;
-} & ApiOperationState => {
-
-
-  return useMutation<ICarBrand, AxiosError<IServerError>, string>({
+    string
+  >({
     mutationFn: (id: string) => deleteOne(id),
     mutationKey: [SERVICE_URLS.carbrand],
-      onSuccess:() => {
-      // addNotification({
-      //   message: 'Успех!',
-      //   type: "success",
-      //   duration: 3000
-      // })
+    onSuccess: () => {
+      onCancel();
+      remove('info');
+      queryClient.invalidateQueries({
+        queryKey: [SERVICE_URLS.carbrand],
+      });
+      addSuccess();
     },
-    onError:(data) => {
-      //  addNotification({
-      //   message: data.response?.data.detail || "Error!",
-      //   type: "success",
-      //   duration: 3000
-      // })
-    }
+    onError: (data) => {
+      onCancel();
+      remove('info');
+      addError();
+    },
   });
+
+  const handleMutate = (data: string) => {
+    addInfo();
+    mutate(data);
+  };
+
+  return { mutate: handleMutate, ...props };
 };
 
 export const useEditBrand = () => {

@@ -19,6 +19,9 @@ export const editOne = async (id: string): Promise<ICarBrand> => {
   return await instance.put("")
 }
 
+export const deleteOne = async (id: string) => {
+  return (await instance.delete(`${SERVICE_URLS.carbrand}/${id}`)).data
+}
 
 export const findMany = async (
   dto:IInfiteScrollQueryParameters

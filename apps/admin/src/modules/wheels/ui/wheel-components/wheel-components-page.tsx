@@ -1,5 +1,5 @@
 import { useInView } from 'react-intersection-observer';
-import { useChooseBrand } from '../../model/hooks/use-choose-brand';
+import { useChoosedWheelComponentBrand  } from '../../model/hooks/use-choose-wheel-component-brand';
 import { useWheelComponentsBrands } from '../../model/hooks/use-wheel-components-brand';
 import { Toolbar } from './toolbar';
 import { List } from './list';
@@ -10,7 +10,7 @@ import { EditBrandModal } from './edit-modal';
 export const WheelComponentsPage = () => {
   const { ref, inView } = useInView();
 
-  const { choosedBrand, onChooseBrand, onCancel } = useChooseBrand();
+  const { choosedWheelComponentBrand, onChooseWheelComponentBrand, onCancel } = useChoosedWheelComponentBrand();
 
   const { onChangeSearchValue, search, states, data } =
     useWheelComponentsBrands(inView);
@@ -20,15 +20,15 @@ export const WheelComponentsPage = () => {
       <div>
         <Toolbar onChangeSearchValue={onChangeSearchValue} search={search} />
         <List
-          onChoose={onChooseBrand}
+          onChoose={onChooseWheelComponentBrand}
           libRef={ref}
           states={{ ...states, error: states.error || null }}
           data={data?.pages}
         />
       </div>
       <PostBrandModal />
-      <DeleteBrandModal isOpen={choosedBrand?.type === "delete"} onClose={onCancel} brand={{...choosedBrand}} />
-      <EditBrandModal isOpen={choosedBrand?.type === "edit"} onClose={onCancel} brand={{...choosedBrand}}  />
+      <DeleteBrandModal isOpen={choosedWheelComponentBrand?.type === "delete"} onClose={onCancel} brand={{...choosedWheelComponentBrand}} />
+      <EditBrandModal isOpen={choosedWheelComponentBrand?.type === "edit"} onClose={onCancel} brand={{...choosedWheelComponentBrand}}  />
     </>
   );
 };

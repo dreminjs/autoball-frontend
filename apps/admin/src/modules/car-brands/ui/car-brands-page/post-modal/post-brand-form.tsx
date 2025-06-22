@@ -9,9 +9,6 @@ import {
   usePostPhoto,
 } from '../../../../../shared/api/s3/queries';
 import { generateRandomString } from '../../../../../shared';
-import { useQueryClient } from '@tanstack/react-query';
-import { SERVICE_URLS } from '../../../../../shared/constants';
-import { useSnackbarVisible } from '../../../../../shared/hooks/use-snackbar-visible';
 
 interface IProps {
   isLoading?: boolean;
@@ -20,7 +17,6 @@ interface IProps {
 
 export const PostBrandForm: FC<IProps> = ({ isLoading, onClose }) => {
   const filename = useMemo(() => generateRandomString(), []);
-  const queryClient = useQueryClient();
 
   const {
     register,
@@ -35,27 +31,12 @@ export const PostBrandForm: FC<IProps> = ({ isLoading, onClose }) => {
 
   const {
     mutate: postCarBrand,
-    isError: postCarBrandIsError,
-    isPending: postCarBrandIsPending,
-    isSuccess: postCarBrandIsSuccess,
   } = usePostCarBrand();
 
   const {
     mutate: postPhoto,
-    isError: postPhotoIsError,
-    isPending: postPhotoIsPending,
-    isSuccess: postPhotoIsSuccess,
   } = usePostPhoto();
 
-  const { snackbarOpen, onHideSnackbar } = useSnackbarVisible({
-    state:
-      postCarBrandIsError ||
-      postPhotoIsError ||
-      postCarBrandIsPending ||
-      postPhotoIsPending ||
-      postCarBrandIsSuccess ||
-      postPhotoIsSuccess,
-  });
 
   const { data: urlData } = useGetPresignUrl({
     content_type: watch('brand_logo')?.type,
@@ -66,23 +47,9 @@ export const PostBrandForm: FC<IProps> = ({ isLoading, onClose }) => {
     ? URL.createObjectURL(watch('brand_logo'))
     : null;
 
-  const handleOnSuccess = () => {
-    queryClient.invalidateQueries({
-      queryKey: [SERVICE_URLS.carbrand],
-    });
-
-    setTimeout(() => {
-      onClose();
-      onHideSnackbar();
-    }, 1500);
-  };
-
   const hadlePostSubmit = (data: CarBrandForm) => {
     postCarBrand(
       { name: data.name, picture: `${filename}` },
-      {
-        onSuccess: handleOnSuccess,
-      }
     );
     postPhoto({
       files: [data.brand_logo],
@@ -92,7 +59,6 @@ export const PostBrandForm: FC<IProps> = ({ isLoading, onClose }) => {
   };
 
   return (
-    <>
       <form
         onSubmit={handleSubmit((data) => {
           hadlePostSubmit(data);
@@ -169,22 +135,5 @@ export const PostBrandForm: FC<IProps> = ({ isLoading, onClose }) => {
           </button>
         </div>
       </form>
-      {/* <CustomSnackbar
-        isOpen={snackbarOpen}
-        severity={getSnackbarSeverity({
-          isError: postPhotoIsError || postCarBrandIsError,
-          isPending: postCarBrandIsPending,
-          isSuccess: postCarBrandIsSuccess,
-        })}
-        message={getPostCarBrandSnackbarMessage({
-          postCarBrandIsPending,
-          postPhotoIsPending,
-          postCarBrandIsError,
-          postPhotoIsError,
-          postCarBrandIsSuccess,
-          postPhotoIsSuccess,
-        })}
-      /> */}
-    </>
   );
 };
