@@ -1,11 +1,10 @@
 import { ICarPart } from "@autoball-frontend/shared-types";
-import { useState } from "react";
+import { useAtom } from "jotai";
+import { choosedCarPartAtom } from "../atoms";
 
 
 export const useChooseCarPart = () => {
-  const [choosedCarPart, setChoosedCarPart] = useState<
-    ((ICarPart) & { type: 'delete' | 'edit' }) | null
-  >(null);
+  const [choosedCarPart, setChoosedCarPart] = useAtom(choosedCarPartAtom);
 
   const handleChooseCarPart = (
     newValue: (ICarPart & { type: 'delete' | 'edit' }) | null

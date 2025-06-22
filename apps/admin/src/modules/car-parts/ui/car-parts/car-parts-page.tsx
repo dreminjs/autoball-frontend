@@ -2,8 +2,8 @@ import { useInView } from 'react-intersection-observer';
 import { Toolbar } from './toolbar';
 import { List } from './list';
 import { PostBrandModal } from './post-modal';
-import { DeleteBrandModal } from './delete-modal';
-import { EditBrandModal } from './edit-modal';
+import { DeleteCarPartModal } from './delete-modal';
+import { EditCarPartModal } from './edit-modal';
 import { useChooseCarPart } from '../../model/hooks/use-choose-car-part';
 import { useCarParts } from '../../model/hooks/use-car-parts';
 
@@ -27,8 +27,8 @@ export const CarPartsPage = () => {
         />
       </div>
       <PostBrandModal />
-      <DeleteBrandModal isOpen={choosedCarPart?.type === "delete"} onClose={onCancel} brand={{...choosedCarPart}} />
-      <EditBrandModal isOpen={choosedCarPart?.type === "edit"} onClose={onCancel} brand={{...choosedCarPart}}  />
+      <DeleteCarPartModal isOpen={choosedCarPart?.type === "delete"} onClose={onCancel} brand={{...choosedCarPart}} />
+      <EditCarPartModal isOpen={choosedCarPart?.type === "edit"} onClose={onCancel} brand={{...choosedCarPart}}  />
     </>
   );
 };

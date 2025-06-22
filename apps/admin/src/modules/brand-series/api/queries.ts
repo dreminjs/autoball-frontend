@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ApiOperationState } from '../../../shared/interfaces/api-operation-state.interface';
 import { ICarSeries } from '@autoball-frontend/shared-types';
 import { SERVICE_URLS } from '../../../shared/constants';
 import { createOne, deleteOne, editOne, findManyByBrandId } from './service';
@@ -82,7 +81,7 @@ export const useDeleteCarSeries = (brandId?: string) => {
       });
       addSuccess();
     },
-    onError: (data) => {
+    onError: () => {
       onCancel();
       remove('info');
       addError();

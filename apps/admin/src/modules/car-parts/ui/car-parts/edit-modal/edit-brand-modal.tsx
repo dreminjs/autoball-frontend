@@ -26,7 +26,7 @@ const icon = (
   </svg>
 );
 
-export const EditBrandModal: FC<IProps> = ({ isOpen, onClose, brand }) => {
+export const EditCarPartModal: FC<IProps> = ({ isOpen, onClose, brand }) => {
   return (
     <ModalLayout
       isOpen={isOpen}

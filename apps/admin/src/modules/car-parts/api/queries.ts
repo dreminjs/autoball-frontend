@@ -15,6 +15,7 @@ import { IPostCarPart } from '../model/schemas/post-car-part';
 import { SERVICE_URLS } from '../../../shared/constants';
 import { useNotificationActions } from '../../notifications';
 import { useCarPartModal } from '../model/hooks/use-car-parts-modal';
+import { useChooseCarPart } from '../model/hooks/use-choose-car-part';
 
 export const useGetCarParts = (params = {}) => {
   return useInfiniteQuery<
@@ -45,7 +46,7 @@ export const useGetCarPart = (id: string) => {
 export const useDeleteCarPart = () => {
   const queryClient = useQueryClient();
   const { addError, addSuccess, remove, addInfo } = useNotificationActions();
-  const { closeModal } = useCarPartModal();
+  const { onCancel } = useChooseCarPart();
 
   const { mutate, ...props } = useMutation({
     mutationFn: (id: string) =>
@@ -55,11 +56,11 @@ export const useDeleteCarPart = () => {
       queryClient.invalidateQueries({
         queryKey: [SERVICE_URLS.carpart],
       });
-      closeModal()
+      onCancel()
       addSuccess();
     },
     onError: (data) => {
-      closeModal()
+      onCancel()
       remove('info');
       addError();
     },

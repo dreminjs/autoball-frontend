@@ -22,7 +22,7 @@ export const PostBrandForm: FC = () => {
   return (
     <form
       onSubmit={handleSubmit((data) => {
-        mutate({ data });
+        mutate(data);
       })}
       className="space-y-6"
     >

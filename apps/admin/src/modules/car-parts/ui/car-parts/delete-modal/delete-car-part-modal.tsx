@@ -2,7 +2,6 @@ import { ICarPart } from '@autoball-frontend/shared-types';
 import { FC } from 'react';
 import { useDeleteCarPart } from '../../../api/queries';
 import { ModalLayout } from '../../../../../shared';
-import { useNotificationActions } from '../../../../notifications';
 
 type Props = {
   isOpen: boolean;
@@ -10,12 +9,12 @@ type Props = {
   brand: Partial<ICarPart>;
 };
 
-export const DeleteBrandModal: FC<Props> = ({ isOpen, onClose, brand }) => {
+export const DeleteCarPartModal: FC<Props> = ({ isOpen, onClose, brand }) => {
   const { mutate } = useDeleteCarPart();
 
   const handleConfirmDelete = () => {
     brand.id &&
-      mutate({data: brand.id, onStopFetching: onClose });
+      mutate(brand.id);
   };
 
   return (

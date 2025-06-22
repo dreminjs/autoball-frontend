@@ -1,3 +1,3 @@
 
 
-export * from "./delete-brand-modal"
+export * from "./delete-car-part-modal"
