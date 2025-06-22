@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { carSeriesSchema } from '../../model/schemas/carseries.schema';
 import { FormField } from './form-field';
@@ -7,11 +6,7 @@ import { usePostCarSeries } from '../../api/queries';
 import { useLocation } from 'react-router-dom';
 import { IPostCarSeriesForm } from '../../model/types/carseries.interface';
 
-interface IProps {
-  onClose: () => void;
-}
-
-export const Form: FC<IProps> = ({ onClose }) => {
+export const Form = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const brandId = searchParams.get('brandId') as string;
@@ -24,9 +19,9 @@ export const Form: FC<IProps> = ({ onClose }) => {
     resolver: zodResolver(carSeriesSchema),
   });
 
-  const { mutate, isError, isPending, isSuccess, error } =
+  const { mutate } =
     usePostCarSeries(brandId);
-    
+
   const handleOnSubmit = handleSubmit((data) => {
     mutate({ data });
   });
