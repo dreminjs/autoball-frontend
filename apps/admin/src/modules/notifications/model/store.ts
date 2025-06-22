@@ -36,7 +36,7 @@ export const useNotificationStore = create<INotificationStore>((set, get) => ({
     set({ notifications: [] });
   },
 
-  addSuccessNotification: (dto): void => {
+  addSuccessNotification: (dto = {duration: 3000}): void => {
     get().addNotification({
       ...dto,
       message: dto.message ? dto.message : 'Успех!',
@@ -53,7 +53,7 @@ export const useNotificationStore = create<INotificationStore>((set, get) => ({
     });
   },
 
-  addErrorNotification: (dto): void => {
+  addErrorNotification: (dto = {duration: 3000}): void => {
     get().addNotification({
       ...dto,
       message: dto.message ? dto.message : 'Что-то пошло не так!',

@@ -1,10 +1,7 @@
 import { ICarSeries } from '@autoball-frontend/shared-types';
 import { QUERY_KEYS, SERVICE_URLS } from '../../../shared/constants';
 import { instance } from '../../../shared/api/api-instance';
-import {
-  ICreateCarSeriesDto,
-  IUpdateCarSeriesForm,
-} from '../model/types/carseries.interface';
+import { IEditCarSeriesForm, IPostCarSeriesDto } from '../model/types/carseries.interface';
 
 export const findManyByBrandId = async (
   brandId: string
@@ -17,7 +14,7 @@ export const findManyByBrandId = async (
 };
 
 export const createOne = async (
-  data: ICreateCarSeriesDto
+  data: IPostCarSeriesDto
 ): Promise<ICarSeries> => {
   return await instance.post(`${SERVICE_URLS.carseries}`, data);
 };
@@ -26,6 +23,6 @@ export const deleteOne = async (id: string) => {
   return (await instance.delete(`${SERVICE_URLS.carseries}/${id}`)).data;
 };
 
-export const editOne = async (dto: IUpdateCarSeriesForm, id: string): Promise<ICarSeries> => {
+export const editOne = async (dto: IEditCarSeriesForm, id: string): Promise<ICarSeries> => {
   return (await instance.put(`${SERVICE_URLS.carseries}/${id}`, dto)).data;
 };

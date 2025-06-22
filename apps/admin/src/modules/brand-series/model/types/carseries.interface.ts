@@ -1,13 +1,13 @@
 import { z } from "zod";
 import { carSeriesSchema, updateCarSeriesSchema } from "../schemas/carseries.schema";
 
-export type ICreateCarSeriesForm = z.infer<typeof carSeriesSchema>
+export type IPostCarSeriesForm = z.infer<typeof carSeriesSchema>
 
-export type ICreateCarSeriesDto = Omit<ICreateCarSeriesForm,"from" | "to"> & {
+export type IPostCarSeriesDto = Omit<IPostCarSeriesForm,"from" | "to"> & {
     car_brand_id: string
     year: string // EXAMPLE: 1999-2000
 }
 
-export type IUpdateCarSeriesDto = Partial<ICreateCarSeriesDto>
+export type IUpdateCarSeriesDto = Partial<IPostCarSeriesForm>
 
-export type IUpdateCarSeriesForm= z.infer<typeof updateCarSeriesSchema>
+export type IEditCarSeriesForm= z.infer<typeof updateCarSeriesSchema>

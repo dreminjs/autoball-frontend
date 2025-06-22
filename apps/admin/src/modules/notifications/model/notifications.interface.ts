@@ -14,7 +14,7 @@ export interface INotificationStore {
   addNotification: (data: Omit<INotification,"id">) => void,
   removeNotification: (data: NotificationType) => void 
   clearNotifications: () => void
-  addSuccessNotification: (dto: IAddNotificationDto) => void
+  addSuccessNotification: (dto?: IAddNotificationDto) => void
   addInfoNotification: (dto?: Omit<IAddNotificationDto, "duration">) => void
-  addErrorNotification: (dto: IAddNotificationDto) => void
+  addErrorNotification: (dto?: IAddNotificationDto) => void
 }

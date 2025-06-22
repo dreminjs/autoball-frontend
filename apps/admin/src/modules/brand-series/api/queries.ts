@@ -11,9 +11,13 @@ import { createOne, deleteOne, editOne, findManyByBrandId } from './service';
 import { AxiosError } from 'axios';
 import { IServerError } from '../../../shared/interfaces/server-error';
 import {
-  ICreateCarSeriesDto,
+  IPostCarSeriesDto,
+  IPostCarSeriesForm,
   IUpdateCarSeriesDto,
 } from '../model/types/carseries.interface';
+import { useNotificationActions } from '../../notifications';
+import { useCarSeriesModal } from '../model/hooks/use-car-series-modal';
+import { IMutateArgsDto } from '../../../shared';
 
 export const useGetCarSeriesByBrandId = (
   brandId: string | null
@@ -33,42 +37,44 @@ export const useGetCarSeriesByBrandId = (
   return { data, isSuccess, isPending, isError, error };
 };
 
-export const usePostCarSeries = (
-  brandId: string | null
-): {
-  mutate: UseMutateFunction<
-    ICarSeries,
-    AxiosError<IServerError>,
-    ICreateCarSeriesDto
-  >;
-} & ApiOperationState => {
+export const usePostCarSeries = (brandId: string) => {
   const queryClient = useQueryClient();
+  const { addError, addSuccess, remove, addInfo } = useNotificationActions();
+  const { closeModal } = useCarSeriesModal();
 
-  return useMutation<
+  const { mutate, ...props } = useMutation<
     ICarSeries,
     AxiosError<IServerError>,
-    ICreateCarSeriesDto
+    IPostCarSeriesForm
   >({
-    mutationFn: (data: ICreateCarSeriesDto) => createOne(data),
+    mutationFn: (data: IPostCarSeriesForm) => createOne({
+      ...data, year: `${data.from} - ${data.to}`,
+      car_brand_id: brandId
+    }),
     mutationKey: [SERVICE_URLS.carseries],
     onSuccess: () => {
+      remove('info');
       queryClient.invalidateQueries({
         queryKey: [SERVICE_URLS.carseries, brandId || ''],
       });
-      // addNotification({
-      //   message: 'Успех!',
-      //   type: 'success',
-      //   duration: 3000,
-      // });
+      addSuccess();
     },
     onError: (data) => {
-      // addNotification({
-      //   message: data.response?.data.detail || 'Error!',
-      //   type: 'error',
-      //   duration: 3000,
-      // });
+      remove('info');
+      addError();
     },
   });
+
+  const handleMutate = (args: IMutateArgsDto<IPostCarSeriesForm>) => {
+
+    addInfo();
+    mutate(args.data, {
+      onSuccess: closeModal,
+      onError: closeModal,
+    });
+  };
+
+  return {mutate: handleMutate, ...props}
 };
 
 export const useDeleteCarSeries = (
@@ -109,7 +115,6 @@ export const useEditCarSeries = (): {
   >;
 } & ApiOperationState => {
   const queryClient = useQueryClient();
-
 
   return useMutation<
     ICarSeries,

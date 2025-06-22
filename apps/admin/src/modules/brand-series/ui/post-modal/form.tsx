@@ -1,11 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { carSeriesSchema } from '../../model/schemas/carseries.schema';
 import { FormField } from './form-field';
 import { usePostCarSeries } from '../../api/queries';
-import { ICreateCarSeriesForm } from '../../model/types/carseries.interface';
 import { useLocation } from 'react-router-dom';
+import { IPostCarSeriesForm } from '../../model/types/carseries.interface';
 
 interface IProps {
   onClose: () => void;
@@ -14,41 +14,25 @@ interface IProps {
 export const Form: FC<IProps> = ({ onClose }) => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const brandId = searchParams.get('brandId');
+  const brandId = searchParams.get('brandId') as string;
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm({
+  } = useForm<IPostCarSeriesForm>({
     resolver: zodResolver(carSeriesSchema),
   });
 
-  const { mutate, isError, isPending, isSuccess, error } = usePostCarSeries(brandId);
-
-  useEffect(() => {
-    if(isPending){
-      // addNotification({
-      //   message: 'hello',
-      //   type: 'error',
-      //   duration: null
-      // })
-    }
-  },[isError, isSuccess, isPending])
-
-  const onSubmit = (data: ICreateCarSeriesForm) => {
-    mutate(
-      {
-        year: `${data.from} - ${data.to}`,
-        car_brand_id: brandId || '',
-        name: data.name,
-      }
-    );
-
-  };
+  const { mutate, isError, isPending, isSuccess, error } =
+    usePostCarSeries(brandId);
+    
+  const handleOnSubmit = handleSubmit((data) => {
+    mutate({ data });
+  });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleOnSubmit}>
       <FormField
         register={register}
         type={'name'}
