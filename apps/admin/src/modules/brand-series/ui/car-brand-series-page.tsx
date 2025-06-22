@@ -19,7 +19,6 @@ export const CarBrandSeriesPage = () => {
     <>
       <div>
         <Toolbar brandName={brandName} />
-    
         <List brandId={brandId} onChoose={onChooseBrand} />
       </div>
       <PostSeriesModal />

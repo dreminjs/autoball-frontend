@@ -14,7 +14,6 @@ import { IServerError } from '../../../shared/interfaces/server-error';
 import { IPostCarPart } from '../model/schemas/post-car-part';
 import { SERVICE_URLS } from '../../../shared/constants';
 import { useNotificationActions } from '../../notifications';
-import { IMutateArgsDto } from '../../../shared';
 import { useCarPartModal } from '../model/hooks/use-car-parts-modal';
 
 export const useGetCarParts = (params = {}) => {
@@ -56,20 +55,19 @@ export const useDeleteCarPart = () => {
       queryClient.invalidateQueries({
         queryKey: [SERVICE_URLS.carpart],
       });
-      addSuccess({ duration: 3000 });
+      closeModal()
+      addSuccess();
     },
     onError: (data) => {
+      closeModal()
       remove('info');
-      addError({ duration: 3000 });
+      addError();
     },
   });
 
-  const handleMutate = (args: IMutateArgsDto<string>) => {
+  const handleMutate = (data: string) => {
     addInfo();
-    mutate(args.data, {
-      onSuccess: closeModal,
-      onError: closeModal,
-    });
+    mutate(data);
   };
 
   return { ...props, mutate: handleMutate };
@@ -83,24 +81,23 @@ export const usePostCarPart = () => {
     mutationFn: (brand: IPostCarPart) =>
       instance.post(SERVICE_URLS.carpart, brand),
     onSuccess: () => {
+      closeModal()
       remove('info');
       queryClient.invalidateQueries({
         queryKey: [SERVICE_URLS.carpart],
       });
-      addSuccess({ duration: 3000 });
+      addSuccess();
     },
     onError: (data) => {
+      closeModal()
       remove('info');
-      addError({ duration: 3000 });
+      addError();
     },
   });
 
-  const handleMutate = (args: IMutateArgsDto<IPostCarPart>) => {
+  const handleMutate = (data: IPostCarPart) => {
     addInfo();
-    mutate(args.data, {
-      onSuccess: closeModal,
-      onError: closeModal,
-    });
+    mutate(data);
   };
 
   return { ...props, mutate: handleMutate };
@@ -119,17 +116,17 @@ export const useEditCarPart = () => {
       queryClient.invalidateQueries({
         queryKey: [SERVICE_URLS.carpart],
       });
-      addSuccess({ duration: 3000 });
+      addSuccess();
     },
     onError: (data) => {
       remove('info');
-      addError({ duration: 3000 });
+      addError();
     },
   });
 
-  const handleMutate = (args: IMutateArgsDto<IPostCarPart>) => {
+  const handleMutate = (data: IPostCarPart) => {
     addInfo();
-    mutate(args.data, {
+    mutate(data, {
       onSuccess: closeModal,
       onError: closeModal,
     });

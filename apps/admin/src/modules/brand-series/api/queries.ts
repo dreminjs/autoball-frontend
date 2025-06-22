@@ -11,23 +11,15 @@ import {
 } from '../model/types/carseries.interface';
 import { useNotificationActions } from '../../notifications';
 import { useCarSeriesModal } from '../model/hooks/use-car-series-modal';
+import { useChooseSeries } from '../model/hooks/use-choose-series';
 
-export const useGetCarSeriesByBrandId = (
-  brandId: string | null
-): {
-  data?: ICarSeries[];
-} & ApiOperationState => {
-  const { data, isSuccess, isPending, isError, error } = useQuery<
-    ICarSeries[],
-    AxiosError<IServerError>
-  >({
+export const useGetCarSeriesByBrandId = (brandId: string | null) => {
+  return useQuery<ICarSeries[], AxiosError<IServerError>>({
     queryKey: [SERVICE_URLS.carseries, brandId],
     queryFn: () => findManyByBrandId(brandId || ''),
     enabled: brandId !== null,
     refetchOnWindowFocus: false,
   });
-
-  return { data, isSuccess, isPending, isError, error };
 };
 
 export const usePostCarSeries = (brandId: string) => {
@@ -73,7 +65,7 @@ export const usePostCarSeries = (brandId: string) => {
 export const useDeleteCarSeries = (brandId?: string) => {
   const queryClient = useQueryClient();
   const { addError, addSuccess, remove, addInfo } = useNotificationActions();
-  const { closeModal } = useCarSeriesModal();
+  const { onCancel } = useChooseSeries();
 
   const { mutate, ...props } = useMutation<
     ICarSeries,
@@ -83,15 +75,15 @@ export const useDeleteCarSeries = (brandId?: string) => {
     mutationKey: [SERVICE_URLS.carseries],
     mutationFn: (id: string) => deleteOne(id),
     onSuccess: () => {
-      closeModal();
+      onCancel();
       remove('info');
       queryClient.invalidateQueries({
-        queryKey: [SERVICE_URLS.carseries, brandId],
+        queryKey: [SERVICE_URLS.carseries, brandId || ''],
       });
       addSuccess();
     },
     onError: (data) => {
-      closeModal();
+      onCancel();
       remove('info');
       addError();
     },
@@ -107,7 +99,7 @@ export const useDeleteCarSeries = (brandId?: string) => {
 export const useEditCarSeries = (id: string) => {
   const queryClient = useQueryClient();
   const { addError, addSuccess, remove, addInfo } = useNotificationActions();
-  const { closeModal } = useCarSeriesModal();
+  const { onCancel } = useChooseSeries();
 
   const { mutate, ...props } = useMutation<
     ICarSeries,
@@ -121,13 +113,13 @@ export const useEditCarSeries = (id: string) => {
       queryClient.invalidateQueries({
         queryKey: [SERVICE_URLS.carseries],
       });
-      closeModal();
+      onCancel();
       addSuccess();
     },
     onError: (data) => {
       remove('info');
+      onCancel();
       addError();
-      closeModal();
     },
   });
 
@@ -139,5 +131,5 @@ export const useEditCarSeries = (id: string) => {
     });
   };
 
-  return {mutate: handleMutate, ...props};
+  return { mutate: handleMutate, ...props };
 };
