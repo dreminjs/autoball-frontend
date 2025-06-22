@@ -29,3 +29,7 @@ export const postPhoto = async (dto: PostPhotoDto) => {
     })
   ).data;
 };
+
+export const deleteMany = (data: string[]) => {
+  return instance.delete(`${SERVICE_URLS.storage}`,{data})
+}

@@ -13,3 +13,7 @@ export * from "./interfaces/api-operation-state.interface"
 export * from "./lib/get-snackbar-message"
 
 export * from "./ui/modal-layout"
+
+export * from "./lib/cross-store"
+
+export * from "./interfaces/mutate-args.dto"

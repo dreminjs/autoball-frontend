@@ -8,7 +8,7 @@ interface IProps {
 }
 
 export const Navigation: FC<IProps> = ({
-  ulClassName = 'hidden sm:flex items-center gap-5',
+  ulClassName = 'hidden md:flex items-center gap-5',
   navClassName,
 }) => (
   <nav className={navClassName}>

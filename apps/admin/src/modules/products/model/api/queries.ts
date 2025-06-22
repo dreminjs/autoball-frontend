@@ -23,7 +23,7 @@ return useInfiniteQuery<
     AxiosError<IServerError>
   >({
     queryKey: [condition, countItems, isPrintedStatus],
-    queryFn: () => findMany({ condition, countItems, isPrinted: isPrintedStatus }),
+    queryFn: () => findMany({ condition, countItems, isPrinted: isPrintedStatus, page: 1 }),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) =>
       lastPage.next_cursor,

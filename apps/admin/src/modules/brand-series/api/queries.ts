@@ -33,26 +33,47 @@ export const useGetCarSeriesByBrandId = (
   return { data, isSuccess, isPending, isError, error };
 };
 
-export const usePostCarSeries = (): {
+export const usePostCarSeries = (
+  brandId: string | null
+): {
   mutate: UseMutateFunction<
     ICarSeries,
     AxiosError<IServerError>,
     ICreateCarSeriesDto
   >;
 } & ApiOperationState => {
-  const { mutate, isSuccess, isPending, isError, error } = useMutation<
+  const queryClient = useQueryClient();
+
+  return useMutation<
     ICarSeries,
     AxiosError<IServerError>,
     ICreateCarSeriesDto
   >({
     mutationFn: (data: ICreateCarSeriesDto) => createOne(data),
     mutationKey: [SERVICE_URLS.carseries],
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [SERVICE_URLS.carseries, brandId || ''],
+      });
+      // addNotification({
+      //   message: 'Успех!',
+      //   type: 'success',
+      //   duration: 3000,
+      // });
+    },
+    onError: (data) => {
+      // addNotification({
+      //   message: data.response?.data.detail || 'Error!',
+      //   type: 'error',
+      //   duration: 3000,
+      // });
+    },
   });
-
-  return { mutate, isSuccess, isPending, isError, error };
 };
 
-export const useDeleteCarSeries = (brandId?: string): {
+export const useDeleteCarSeries = (
+  brandId?: string
+): {
   mutate: UseMutateFunction<ICarSeries, AxiosError<IServerError>, string>;
 } & ApiOperationState => {
   const queryClient = useQueryClient();
@@ -64,6 +85,18 @@ export const useDeleteCarSeries = (brandId?: string): {
       queryClient.invalidateQueries({
         queryKey: [SERVICE_URLS.carseries, brandId],
       });
+      // addNotification({
+      //   message: 'Успех!',
+      //   type: 'success',
+      //   duration: 3000,
+      // });
+    },
+    onError: (data) => {
+      // addNotification({
+      //   message: data.response?.data.detail || 'Error!',
+      //   type: 'success',
+      //   duration: 3000,
+      // });
     },
   });
 };
@@ -75,14 +108,32 @@ export const useEditCarSeries = (): {
     { id: string; data: IUpdateCarSeriesDto }
   >;
 } & ApiOperationState => {
-  const { isError, isPending, isSuccess, mutate, error } = useMutation<
+  const queryClient = useQueryClient();
+
+
+  return useMutation<
     ICarSeries,
     AxiosError<IServerError>,
     { id: string; data: IUpdateCarSeriesDto }
   >({
     mutationKey: [SERVICE_URLS.carseries],
     mutationFn: ({ id, data }) => editOne(data, id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [SERVICE_URLS.carseries],
+      });
+      // addNotification({
+      //   message: 'Успех!',
+      //   type: 'success',
+      //   duration: 3000,
+      // });
+    },
+    onError: (data) => {
+      // addNotification({
+      //   message: data.response?.data.detail || 'Error!',
+      //   type: 'success',
+      //   duration: 3000,
+      // });
+    },
   });
-
-  return { isError, isPending, isSuccess, mutate, error };
 };

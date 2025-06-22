@@ -1,4 +1,3 @@
-import { CarBrandForm } from '../../../modules/car-brands/model/types/car-brand';
 
 export interface IGetPresignUrlQueryParameters {
   filename: string;
@@ -9,5 +8,4 @@ export interface IPresignUrl {
   url?: string;
 }
 
-export type PostPhotoDto = IPresignUrl &
-  Omit<CarBrandForm, 'name'> & { filename: string };
+export type PostPhotoDto = IPresignUrl & { filenames: string[],  files: File[] };

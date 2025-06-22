@@ -21,6 +21,7 @@ import { IServerError } from '../../../shared/interfaces/server-error';
 import { CarBrandFormDto } from '../model/types/car-brand';
 import { createOne, findMany, findOne } from './servies';
 import { deleteOne } from '../../brand-series/api/service';
+import { useSetAtom } from 'jotai';
 
 export const usePostCarBrand = (): {
   mutate: UseMutateFunction<
@@ -29,9 +30,26 @@ export const usePostCarBrand = (): {
     CarBrandFormDto
   >;
 } & ApiOperationState => {
+
+  // const addNotification = useSetAtom(addNotificationAtom)
+
   return useMutation<ICarBrand, AxiosError<IServerError>, CarBrandFormDto>({
     mutationFn: (data: CarBrandFormDto) => createOne({ ...data }),
     mutationKey: [SERVICE_URLS.carbrand],
+    onSuccess:() => {
+      // addNotification({
+      //   message: 'Успех!',
+      //   type: "success",
+      //   duration: 3000
+      // })
+    },
+    onError:(data) => {
+      //  addNotification({
+      //   message: data.response?.data.detail || "Error!",
+      //   type: "success",
+      //   duration: 3000
+      // })
+    }
   });
 };
 
@@ -71,9 +89,25 @@ export const useDeleteCarBrand = (): {
   >;
   reset: () => void;
 } & ApiOperationState => {
+
+
   return useMutation<ICarBrand, AxiosError<IServerError>, string>({
     mutationFn: (id: string) => deleteOne(id),
     mutationKey: [SERVICE_URLS.carbrand],
+      onSuccess:() => {
+      // addNotification({
+      //   message: 'Успех!',
+      //   type: "success",
+      //   duration: 3000
+      // })
+    },
+    onError:(data) => {
+      //  addNotification({
+      //   message: data.response?.data.detail || "Error!",
+      //   type: "success",
+      //   duration: 3000
+      // })
+    }
   });
 };
 

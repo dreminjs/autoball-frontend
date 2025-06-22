@@ -4,7 +4,7 @@ import { useDeleteCarSeries } from '../../api/queries';
 import { ICarSeries } from '@autoball-frontend/shared-types';
 import { CustomSnackbar } from '../../../../components';
 import { useSnackbarVisible } from '../../../../shared/hooks/use-snackbar-visible';
-import { getSnackbarMessage } from '../../../../shared';
+import { getSnackbarMessage, ModalLayout } from '../../../../shared';
 import { getSnackbarSeverity } from '../../../../shared/lib/get-snackbar-severity';
 import { useQueryClient } from '@tanstack/react-query';
 import { SERVICE_URLS } from '../../../../shared/constants';
@@ -39,12 +39,10 @@ export const DeleteSeriesModal: FC<IProps> = ({ isOpen, onClose, series }) => {
 
   return (
     <>
-      <Modal
-        open={isOpen}
+      <ModalLayout
+        isOpen={isOpen}
         onClose={onClose}
-        className="flex items-center justify-center p-5 z-50"
       >
-        <div className="relative max-w-[500px] w-full overflow-y-auto bg-white rounded-lg shadow-xl z-50 p-6">
           <h2 className="text-xl font-bold text-gray-800 mb-6 text-center">
             Вы уверены, что хотите удалить:{' '}
             <span className="text-red-600">{series.name}</span> ?
@@ -67,8 +65,7 @@ export const DeleteSeriesModal: FC<IProps> = ({ isOpen, onClose, series }) => {
               Нет, отмена
             </button>
           </div>
-        </div>
-      </Modal>
+      </ModalLayout>
       <CustomSnackbar
         isOpen={snackbarOpen}
         severity={getSnackbarSeverity({

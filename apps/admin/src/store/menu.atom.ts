@@ -1,6 +1,3 @@
 import { atom } from "jotai";
 
-
-
-
-export const mobileMenuVisibleAtom = atom(false)
+export const mobileMenuVisibleAtom = atom<boolean>(false)

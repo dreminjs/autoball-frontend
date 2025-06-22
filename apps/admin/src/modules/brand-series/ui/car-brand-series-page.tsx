@@ -14,11 +14,12 @@ export const CarBrandSeriesPage = () => {
   const brandName = searchParams.get('brandName');
 
   const { onChooseBrand, choosedSeries, onCancel } = useChooseSeries();
-
+  
   return (
     <>
       <div>
         <Toolbar brandName={brandName} />
+    
         <List brandId={brandId} onChoose={onChooseBrand} />
       </div>
       <PostSeriesModal />

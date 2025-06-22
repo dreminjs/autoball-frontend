@@ -11,6 +11,8 @@ export const findMany = async (dto: IGetProductsQueryParameters): Promise<IInfit
 
   if(dto.countItems) queryParameters.append("page_size", String(dto.countItems))
 
+  if(dto.page) queryParameters.append('page', String(dto.page))
+
   if(dto.isPrinted !== undefined && dto.isPrinted !== null) queryParameters.append("is_printed", String(dto.isPrinted))
 
   return (await instance.get(`${SERVICE_URLS.product}?${queryParameters}`)).data

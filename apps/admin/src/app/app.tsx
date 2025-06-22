@@ -4,7 +4,6 @@ import { SigninPage } from '../modules/signin';
 import { ProtectedRoutes } from '../providers/protected-routes';
 import { OrdersPage } from '../modules/orders';
 import { PAGE_URLS, QUERY_KEYS } from '../shared/constants';
-import { CarBrandsPage } from '../modules/car-brands';
 import {
   PostProductPage,
   ProductsPage,
@@ -18,7 +17,10 @@ import {
   DiscBrandPage,
   TireBrandPage,
   wheelComponentsStore,
-} from '../modules/wheel/';
+} from '../modules/wheels';
+import { CarBrandsPage } from '../modules/car-brands';
+import { CarPartsPage } from '../modules/car-parts/ui/car-parts/car-parts-page';
+import { carPartsStore } from '../modules/car-parts';
 
 export function App() {
   return (
@@ -39,42 +41,50 @@ export function App() {
             />
             <Route path={`${QUERY_KEYS.post}`} element={<PostProductPage />} />
           </Route>
-        </Route>
+          <Route
+            path={PAGE_URLS["carpart"]}
+            element={
+              <Provider store={carPartsStore}>
+                <CarPartsPage />
+              </Provider>
+            }
+          />
 
-        <Route path={PAGE_URLS.brand}>
-          <Route
-            path={`${QUERY_KEYS.disc}`}
-            element={
-              <Provider store={wheelComponentsStore}>
-                <DiscBrandPage />
-              </Provider>
-            }
-          />
-          <Route
-            path={`${QUERY_KEYS.tire}`}
-            element={
-              <Provider store={wheelComponentsStore}>
-                <TireBrandPage />
-              </Provider>
-            }
-          />
-          <Route path={`${QUERY_KEYS.car}`}>
+          <Route path={PAGE_URLS.brand}>
             <Route
-              index
+              path={`${QUERY_KEYS.disc}`}
               element={
-                <Provider store={carBrandsStore}>
-                  <CarBrandsPage />
+                <Provider store={wheelComponentsStore}>
+                  <DiscBrandPage />
                 </Provider>
               }
             />
             <Route
-              path={PAGE_URLS['carseries']}
+              path={`${QUERY_KEYS.tire}`}
               element={
-                <Provider store={brandSeriesStore}>
-                  <CarBrandSeriesPage />
+                <Provider store={wheelComponentsStore}>
+                  <TireBrandPage />
                 </Provider>
               }
             />
+            <Route path={`${QUERY_KEYS.car}`}>
+              <Route
+                index
+                element={
+                  <Provider store={carBrandsStore}>
+                    <CarBrandsPage />
+                  </Provider>
+                }
+              />
+              <Route
+                path={PAGE_URLS['carseries']}
+                element={
+                  <Provider store={brandSeriesStore}>
+                    <CarBrandSeriesPage />
+                  </Provider>
+                }
+              />
+            </Route>
           </Route>
         </Route>
       </Route>

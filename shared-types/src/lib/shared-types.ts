@@ -65,6 +65,11 @@ export interface IWheelComponentBrand {
   name: string
 }
 
+export interface ICarPart {
+  id: uuid,
+  name: string
+}
+
 export interface IInfiteScrollQueryParameters {
   search: string
   cursor: unknown

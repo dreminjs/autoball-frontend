@@ -3,12 +3,16 @@ import { INavItem } from './types/nav-item';
 
 export const items = [
   {
-    name: 'Запчасти',
+    name: 'Товары',
     to: PAGE_URLS['product'],
   },
   {
     name: 'Заказы',
     to: PAGE_URLS['orders'],
+  },
+  {
+    name: "Типы Запчасть",
+    to: PAGE_URLS["carpart"]
   },
   {
     name: 'Бренды',

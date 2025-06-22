@@ -9,14 +9,9 @@ import {
   usePostPhoto,
 } from '../../../../../shared/api/s3/queries';
 import { generateRandomString } from '../../../../../shared';
-import { CustomSnackbar } from '../../../../../components';
-import {
-  getPostCarBrandSnackbarMessage,
-} from '../../../model/lib/helpers';
 import { useQueryClient } from '@tanstack/react-query';
 import { SERVICE_URLS } from '../../../../../shared/constants';
 import { useSnackbarVisible } from '../../../../../shared/hooks/use-snackbar-visible';
-import { getSnackbarSeverity } from '../../../../../shared/lib/get-snackbar-severity';
 
 interface IProps {
   isLoading?: boolean;
@@ -90,9 +85,9 @@ export const PostBrandForm: FC<IProps> = ({ isLoading, onClose }) => {
       }
     );
     postPhoto({
-      brand_logo: data.brand_logo,
+      files: [data.brand_logo],
       url: urlData?.url,
-      filename: `${filename}`,
+      filenames: [`${filename}`],
     });
   };
 
@@ -174,7 +169,7 @@ export const PostBrandForm: FC<IProps> = ({ isLoading, onClose }) => {
           </button>
         </div>
       </form>
-      <CustomSnackbar
+      {/* <CustomSnackbar
         isOpen={snackbarOpen}
         severity={getSnackbarSeverity({
           isError: postPhotoIsError || postCarBrandIsError,
@@ -189,7 +184,7 @@ export const PostBrandForm: FC<IProps> = ({ isLoading, onClose }) => {
           postCarBrandIsSuccess,
           postPhotoIsSuccess,
         })}
-      />
+      /> */}
     </>
   );
 };

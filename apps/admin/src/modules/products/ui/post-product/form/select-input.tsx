@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { UseFormRegister } from "react-hook-form";
-import { ProductFormData } from "../../model/types/product.interface";
+import { ProductFormData } from "../../../model/types/product.interface";
 
 
 interface IProps {

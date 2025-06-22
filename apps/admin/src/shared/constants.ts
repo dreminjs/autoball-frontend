@@ -8,7 +8,8 @@ export const PAGE_URLS = {
   'disc-brands': 'disc-brands',
   product: 'product',
   carseries: 'carseries',
-  brand: "brand"
+  brand: "brand",
+  "carpart": "carpart"
 } as const;
 
 export const SERVICE_URLS = {
@@ -19,6 +20,7 @@ export const SERVICE_URLS = {
   product: 'product',
   carseries: 'carseries',
   storage: 'storage',
+  "carpart": "carpart"
 } as const;
 
 export const QUERY_KEYS = {

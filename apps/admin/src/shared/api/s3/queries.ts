@@ -8,12 +8,12 @@ import { QUERY_KEYS, SERVICE_URLS } from '../../constants';
 import { ApiOperationState } from '../../interfaces/api-operation-state.interface';
 import { AxiosError } from 'axios';
 import { IServerError } from '../../interfaces/server-error';
-import { findPresignUrl, postPhoto } from './service';
+import { deleteMany, findPresignUrl, postPhoto } from './service';
 
 export const useGetPresignUrl = (
   dto: IGetPresignUrlQueryParameters
 ): { data?: IPresignUrl } & ApiOperationState => {
-  const { data, isError, error, isSuccess, isPending } = useQuery<
+  return useQuery<
     IPresignUrl,
     AxiosError<IServerError>
   >({
@@ -21,20 +21,12 @@ export const useGetPresignUrl = (
     queryFn: () => findPresignUrl(dto),
     enabled: dto.filename !== undefined && dto.content_type !== undefined,
   });
-
-  return {
-    data,
-    isError,
-    error,
-    isSuccess,
-    isPending,
-  };
 };
 
 export const usePostPhoto = (): {
   mutate: (data: PostPhotoDto) => void;
 } & ApiOperationState => {
-  const { isError, isPending, isSuccess, error, mutate } = useMutation<
+  return useMutation<
     any,
     AxiosError<IServerError>,
     PostPhotoDto
@@ -42,12 +34,15 @@ export const usePostPhoto = (): {
     mutationFn: (dto: PostPhotoDto) => postPhoto(dto),
     mutationKey: [QUERY_KEYS.post],
   });
+};
 
-  return {
-    isError,
-    isPending,
-    isSuccess,
-    error,
-    mutate,
-  };
+export const useDeletePhotos = () => {
+  return useMutation<
+    any,
+    AxiosError<IServerError>,
+    string[]
+  >({
+    mutationFn: (dto: string[]) => deleteMany(dto),
+    mutationKey: [QUERY_KEYS.post],
+  });
 };

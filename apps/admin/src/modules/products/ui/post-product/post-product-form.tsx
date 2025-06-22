@@ -4,13 +4,15 @@ import { Button } from '../../../../components/buttons';
 import { productSchema } from '../../model/schemas/product.schema';
 import { ProductFormData } from '../../model/types/product.interface';
 import {
-  conditionOptions,
   bodyTypeOptions,
   gearboxOptions,
   fuelOptions,
 } from '../../model/data';
 import { SelectInput } from './form/select-input';
 import { TextInput } from './form/text-input';
+import { DndProvider } from 'react-dnd';
+import { PhotoUploader } from './form/photo-uploader';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 export const PostProductForm = () => {
   const {
@@ -91,14 +93,7 @@ export const PostProductForm = () => {
             error={errors.volume?.message}
             register={register}
           />
-          {/*
-        <SelectInput
-          label="Состояние"
-          name="condition"
-          register={register}
-          options={conditionOptions}
-        />
-          */}
+      
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -135,6 +130,10 @@ export const PostProductForm = () => {
           register={register}
           rows={2}
         />
+        <DndProvider backend={HTML5Backend}>
+          <PhotoUploader onPhotosChange={(photos) => console.log(photos)} />
+        </DndProvider>
+
 
         <Button type="submit">Создать продукт</Button>
       </form>

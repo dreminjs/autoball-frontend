@@ -30,7 +30,7 @@ export const NavItem: FC<Props> = ({ to, name, inner }) => {
         <Link
           to={to}
           onClick={() => toggleIsMobileMenuVisibility()}
-          className={`px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 ${isActive} transition-all text-lg sm:text-xl`}
+          className={`px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 ${isActive} transition-all text-[16px] md:text-xl`}
         >
           {name}
         </Link>
@@ -52,7 +52,7 @@ export const NavItem: FC<Props> = ({ to, name, inner }) => {
                 <ChevronDown size={18} />
               ))}
           </button>
-          {inner.length > 0 && isDropdownOpen && (
+          {inner?.length > 0 && isDropdownOpen && (
             <SelectNavItems
               inner={inner}
               toggleIsMenuVisibility={toggleIsMobileMenuVisibility}
