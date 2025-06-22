@@ -5,6 +5,7 @@ import { FormField } from './form-field';
 import { usePostCarSeries } from '../../api/queries';
 import { useLocation } from 'react-router-dom';
 import { IPostCarSeriesForm } from '../../model/types/carseries.interface';
+import { Button } from '../../../../components/buttons';
 
 export const Form = () => {
   const location = useLocation();
@@ -23,7 +24,7 @@ export const Form = () => {
     usePostCarSeries(brandId);
 
   const handleOnSubmit = handleSubmit((data) => {
-    mutate({ data });
+    mutate(data);
   });
 
   return (
@@ -46,9 +47,9 @@ export const Form = () => {
         error={errors.to?.message}
         placeholder={'Введите по какой год'}
       />
-      <button type="submit" className="border rounded-xl px-5 py-2">
+      <Button type="submit">
         Отправить
-      </button>
+      </Button>
     </form>
   );
 };

@@ -1,9 +1,4 @@
-import {
-  UseMutateFunction,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ApiOperationState } from '../../../shared/interfaces/api-operation-state.interface';
 import { ICarSeries } from '@autoball-frontend/shared-types';
 import { SERVICE_URLS } from '../../../shared/constants';
@@ -11,13 +6,11 @@ import { createOne, deleteOne, editOne, findManyByBrandId } from './service';
 import { AxiosError } from 'axios';
 import { IServerError } from '../../../shared/interfaces/server-error';
 import {
-  IPostCarSeriesDto,
   IPostCarSeriesForm,
-  IUpdateCarSeriesDto,
+  IEditCarSeriesDto,
 } from '../model/types/carseries.interface';
 import { useNotificationActions } from '../../notifications';
 import { useCarSeriesModal } from '../model/hooks/use-car-series-modal';
-import { IMutateArgsDto } from '../../../shared';
 
 export const useGetCarSeriesByBrandId = (
   brandId: string | null
@@ -47,12 +40,15 @@ export const usePostCarSeries = (brandId: string) => {
     AxiosError<IServerError>,
     IPostCarSeriesForm
   >({
-    mutationFn: (data: IPostCarSeriesForm) => createOne({
-      ...data, year: `${data.from} - ${data.to}`,
-      car_brand_id: brandId
-    }),
+    mutationFn: (data: IPostCarSeriesForm) =>
+      createOne({
+        ...data,
+        year: `${data.from} - ${data.to}`,
+        car_brand_id: brandId,
+      }),
     mutationKey: [SERVICE_URLS.carseries],
     onSuccess: () => {
+      closeModal();
       remove('info');
       queryClient.invalidateQueries({
         queryKey: [SERVICE_URLS.carseries, brandId || ''],
@@ -60,85 +56,88 @@ export const usePostCarSeries = (brandId: string) => {
       addSuccess();
     },
     onError: (data) => {
+      closeModal();
       remove('info');
       addError();
     },
   });
 
-  const handleMutate = (args: IMutateArgsDto<IPostCarSeriesForm>) => {
-
+  const handleMutate = (data: IPostCarSeriesForm) => {
     addInfo();
-    mutate(args.data, {
-      onSuccess: closeModal,
-      onError: closeModal,
-    });
+    mutate(data);
   };
 
-  return {mutate: handleMutate, ...props}
+  return { mutate: handleMutate, ...props };
 };
 
-export const useDeleteCarSeries = (
-  brandId?: string
-): {
-  mutate: UseMutateFunction<ICarSeries, AxiosError<IServerError>, string>;
-} & ApiOperationState => {
+export const useDeleteCarSeries = (brandId?: string) => {
   const queryClient = useQueryClient();
+  const { addError, addSuccess, remove, addInfo } = useNotificationActions();
+  const { closeModal } = useCarSeriesModal();
 
-  return useMutation<ICarSeries, AxiosError<IServerError>, string>({
+  const { mutate, ...props } = useMutation<
+    ICarSeries,
+    AxiosError<IServerError>,
+    string
+  >({
     mutationKey: [SERVICE_URLS.carseries],
     mutationFn: (id: string) => deleteOne(id),
     onSuccess: () => {
+      closeModal();
+      remove('info');
       queryClient.invalidateQueries({
         queryKey: [SERVICE_URLS.carseries, brandId],
       });
-      // addNotification({
-      //   message: 'Успех!',
-      //   type: 'success',
-      //   duration: 3000,
-      // });
+      addSuccess();
     },
     onError: (data) => {
-      // addNotification({
-      //   message: data.response?.data.detail || 'Error!',
-      //   type: 'success',
-      //   duration: 3000,
-      // });
+      closeModal();
+      remove('info');
+      addError();
     },
   });
+
+  const handleMutate = (data: string) => {
+    addInfo();
+    mutate(data);
+  };
+  return { mutate: handleMutate, ...props };
 };
 
-export const useEditCarSeries = (): {
-  mutate: UseMutateFunction<
-    ICarSeries,
-    AxiosError<IServerError>,
-    { id: string; data: IUpdateCarSeriesDto }
-  >;
-} & ApiOperationState => {
+export const useEditCarSeries = (id: string) => {
   const queryClient = useQueryClient();
+  const { addError, addSuccess, remove, addInfo } = useNotificationActions();
+  const { closeModal } = useCarSeriesModal();
 
-  return useMutation<
+  const { mutate, ...props } = useMutation<
     ICarSeries,
     AxiosError<IServerError>,
-    { id: string; data: IUpdateCarSeriesDto }
+    { id: string; data: IEditCarSeriesDto }
   >({
     mutationKey: [SERVICE_URLS.carseries],
     mutationFn: ({ id, data }) => editOne(data, id),
     onSuccess: () => {
+      remove('info');
       queryClient.invalidateQueries({
         queryKey: [SERVICE_URLS.carseries],
       });
-      // addNotification({
-      //   message: 'Успех!',
-      //   type: 'success',
-      //   duration: 3000,
-      // });
+      closeModal();
+      addSuccess();
     },
     onError: (data) => {
-      // addNotification({
-      //   message: data.response?.data.detail || 'Error!',
-      //   type: 'success',
-      //   duration: 3000,
-      // });
+      remove('info');
+      addError();
+      closeModal();
     },
   });
+
+  const handleMutate = (data: IEditCarSeriesDto) => {
+    addInfo();
+    mutate({
+      id,
+      data: data,
+    });
+  };
+
+  return {mutate: handleMutate, ...props};
 };

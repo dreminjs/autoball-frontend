@@ -1,6 +1,4 @@
 
 
 
-export interface IMutateArgsDto<T> {
-    data: T
-}
+export type IMutateArgsDto<T> = T

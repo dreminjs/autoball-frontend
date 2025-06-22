@@ -8,6 +8,6 @@ export type IPostCarSeriesDto = Omit<IPostCarSeriesForm,"from" | "to"> & {
     year: string // EXAMPLE: 1999-2000
 }
 
-export type IUpdateCarSeriesDto = Partial<IPostCarSeriesForm>
+export type IEditCarSeriesDto = Partial<IPostCarSeriesForm>
 
 export type IEditCarSeriesForm= z.infer<typeof updateCarSeriesSchema>

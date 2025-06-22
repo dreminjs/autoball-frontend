@@ -2,12 +2,12 @@
 
 
 import { UseFormRegister } from 'react-hook-form';
-import { IUpdateCarSeriesForm } from '../../model/types/carseries.interface';
 import { FC } from 'react';
+import { IEditCarSeriesForm } from '../../model/types/carseries.interface';
 
 interface IProps {
-  register: UseFormRegister<IUpdateCarSeriesForm>;
-  type: keyof IUpdateCarSeriesForm;
+  register: UseFormRegister<IEditCarSeriesForm>;
+  type: keyof IEditCarSeriesForm;
   error?: string;
   placeholder: string
 }
