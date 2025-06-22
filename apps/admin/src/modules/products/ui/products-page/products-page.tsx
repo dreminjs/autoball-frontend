@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useGetProducts } from '../../model/api/queries';
 import { CarPartsFilterDrawer } from './drawer/products-filter-drawer';
-import { Toolbar } from '../toolbar';
+import { Toolbar } from './toolbar';
 import { ProductsList } from './list/products-list';
 import { CarPartsQrList } from './list/products-qr-list';
 

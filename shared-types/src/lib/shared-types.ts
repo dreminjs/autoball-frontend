@@ -70,11 +70,26 @@ export interface ICarPart {
   name: string
 }
 
+export interface IOrder {
+    user_id: uuid,
+    user_name: string,
+    user_phone: string,
+    product_id: string,
+    product_brand: string,
+    product_series: string,
+    product_part: string,
+    created_at: string,
+    description: string,
+    status: OrderStatus
+} 
+
 export interface IInfiteScrollQueryParameters {
   search: string
   cursor: unknown
   limit: number
 }
+
+export type OrderStatus = "open" | "closed"
 
 export type Role = 'admin' | 'owner' | 'worker' | 'seo' | 'client';
 
@@ -98,13 +113,10 @@ export type GearboxType =
   | 'robotic'
   | 'variator';
 
-export type OrderStatus = 'open' | 'closed';
 
 export type FuelType = 'gasoline' | 'diesel' | 'hybrid' | 'electric';
 
 export type ProductCondition = 'used' | 'new';
-
-
 
 export interface IWithPagatination<T> {
   items: T[]

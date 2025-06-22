@@ -1,14 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { useGetCarBrands } from '../../api/queries';
-
+import {useDebounce} from "use-debounce"
 export const useCarBrands = (inView: boolean) => {
   const [search, setSearch] = useState('');
+
+  const [debouncedSearchValue] = useDebounce(search, 250)
 
   const hasFetchedInitial = useRef(false);
 
   const { data, isError, isPending, isSuccess, error, refetch, fetchNextPage } =
     useGetCarBrands({
-      search,
+      search: debouncedSearchValue,
       limit: 10
     });
 
