@@ -1,10 +1,10 @@
 import { useLocation } from 'react-router-dom';
-import { List } from './list/list';
 import { Toolbar } from './toolbar';
 import { PostSeriesModal } from './post-modal';
 import { DeleteSeriesModal } from './delete-modal/delete-series-modal';
 import { useChooseSeries } from '../model/hooks/use-choose-series';
 import { EditSeriesModal } from './edit-modal/edit-series-modal';
+import { CarBrandSeriresList } from "./list/list" 
 
 export const CarBrandSeriesPage = () => {
   const location = useLocation();
@@ -19,7 +19,7 @@ export const CarBrandSeriesPage = () => {
     <>
       <div>
         <Toolbar brandName={brandName} />
-        <List brandId={brandId} onChoose={onChooseBrand} />
+        <CarBrandSeriresList brandId={brandId} onChoose={onChooseBrand} />
       </div>
       <PostSeriesModal />
       <DeleteSeriesModal

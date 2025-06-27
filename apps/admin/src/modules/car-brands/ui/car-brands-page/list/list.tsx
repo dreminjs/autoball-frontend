@@ -4,6 +4,7 @@ import { Actions } from '../../../model/types/actions';
 import { IInfiteScrollResponse } from '../../../../../shared';
 import { CarBrandItem } from './list-item';
 import { ApiOperationState } from '../../../../../shared/interfaces/api-operation-state.interface';
+import { List } from '../../../../../components';
 
 interface IProps {
   data?: IInfiteScrollResponse<ICarBrand>[];
@@ -12,24 +13,20 @@ interface IProps {
   states: ApiOperationState;
 }
 
-export const List: FC<IProps> = ({ data, onChoose, libRef, states }) => {
-  if (states.isPending)
-    return <div className="text-center py-4">Загрузка...</div>;
-
-  if (states.isError)
-    return (
-      <p className="text-center py-4 text-red-500">
-        {states.error?.response?.data.detail}
-      </p>
-    );
-
-  if (!data?.length)
-    return (
-      <div className="text-center py-4 text-gray-500">No car brands found</div>
-    );
+export const CarBrandList: FC<IProps> = ({
+  data,
+  onChoose,
+  libRef,
+  states,
+}) => {
 
   return (
-    <ul className="h-[75vh] overflow-y-scroll">
+    <List
+      isPending={states.isPending}
+      isError={states.isError}
+      empty={!data?.length}
+      error={states.error?.response?.data.detail}
+    >
       {data?.map((el, idx) => (
         <Fragment key={el.items[idx]?.id}>
           {el?.items.map((item) => (
@@ -38,6 +35,6 @@ export const List: FC<IProps> = ({ data, onChoose, libRef, states }) => {
         </Fragment>
       ))}
       <li ref={libRef} />
-    </ul>
+    </List>
   );
 };

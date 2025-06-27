@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { INavItem } from '../../model/types/nav-item';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -13,6 +13,24 @@ export const NavItem: FC<Props> = ({ to, name, inner }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const setIsMobileMenuVisible = useSetAtom(mobileMenuVisibleAtom);
   const location = useLocation();
+  const dropdownRef = useRef<HTMLLIElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false)
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const isActive =
     useLocation().pathname === `/${to}` ? 'text-blue-600 bg-blue-50' : '';
@@ -25,7 +43,7 @@ export const NavItem: FC<Props> = ({ to, name, inner }) => {
     setIsMobileMenuVisible((prev) => !prev);
 
   return (
-    <li className="mb-[25px] sm:m-0 relative">
+    <li className="mb-[25px] sm:m-0 relative" ref={dropdownRef}>
       {to ? (
         <Link
           to={to}
@@ -38,7 +56,7 @@ export const NavItem: FC<Props> = ({ to, name, inner }) => {
         <div className="flex flex-col">
           <button
             onClick={toggleDropdown}
-            className={`px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-all text-lg sm:text-xl flex items-center gap-1 ${
+            className={`px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-all text-[16px] md:text-xl flex items-center gap-1 ${
               inner?.some((item) => location.pathname === `/${item.to}`)
                 ? 'text-blue-600 bg-blue-50'
                 : ''

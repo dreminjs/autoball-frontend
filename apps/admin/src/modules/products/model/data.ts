@@ -1,5 +1,6 @@
 import {
   BodyType,
+  Currency,
   FuelType,
   GearboxType,
 } from '@autoball-frontend/shared-types';
@@ -51,4 +52,36 @@ export const gearboxTitles: Record<GearboxType, string> = {
   automatic: 'Автоматическая',
   robotic: 'Роботизированная',
   variator: 'Вариатор',
+};
+
+export const currenciesOptions = ['USD', 'PLN'] as [Currency, Currency];
+
+export const diameterOptions = [
+  'R12',
+  'R13',
+  'R13C',
+  'R14',
+  'R14C',
+  'R15',
+  'R15C',
+  'R16',
+  'R16C',
+  'R16.5',
+  'R17',
+  'R17.5',
+  'R18',
+  'R19',
+  'R19.5',
+  'R20',
+  'R21',
+  'R22',
+  'R22.5',
+  'R23',
+  'R24',
+  'R24.5',
+] as const;
+
+export const currenciesLabels: Record<Extract<Currency, "USD" |  "PLN">, string> = {
+  USD: 'Американский Доллар',
+  PLN: 'Польский Злот',
 };

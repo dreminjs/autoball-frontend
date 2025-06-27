@@ -1,17 +1,27 @@
-import { Outlet, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useGetMe } from '../shared/api/user/queries';
-import { useEffect } from 'react';
+import { FC, ReactNode, useEffect } from 'react';
+import { PAGE_URLS } from '../shared/constants';
 
-export const ProtectedRoutes = () => {
+interface IProps {
+  children: ReactNode;
+}
+
+export const ProtectedRoutes: FC<IProps> = ({ children }) => {
   const navigate = useNavigate();
 
-  const { data, isSuccess, isError, error } = useGetMe();
+  const { pathname } = useLocation();
 
-  // useEffect(() => {
-  //   if (!isError) {
-  //     navigate('/');
-  //   }
-  // }, [isError, navigate]);
+  const { isError, isSuccess } = useGetMe();
 
-  return <Outlet />;
+  useEffect(() => {
+    if (isError) {
+      navigate('/');
+    }
+    if (pathname === '/' && isSuccess) {
+      navigate(PAGE_URLS.product);
+    }
+  }, [isError, isSuccess, navigate, pathname]);
+
+  return children;
 };

@@ -1,12 +1,11 @@
 import { IOrder } from "@autoball-frontend/shared-types"
 import { FC } from "react"
-import { formatDate } from "../../../../shared/lib/format-date"
-import { statusColors } from "../../model/status-styles"
+import { formatDate } from "../../../../../shared/lib/format-date"
+import { statusColors } from "../../../model/status-styles"
 
 type Props = IOrder
 
 export const ListItem: FC<Props> = (props) => {
-
 
     return (
   <li className="bg-white rounded-lg shadow-md p-5 mb-4 border border-gray-200 hover:shadow-lg transition-shadow relative list-none">

@@ -1,33 +1,29 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useGetCarBrands } from '../../api/queries';
-import {useDebounce} from "use-debounce"
-export const useCarBrands = (inView: boolean) => {
+import { useDebounce } from "use-debounce"
+import { useInView } from 'react-intersection-observer';
+
+export const useCarBrands = () => {
   const [search, setSearch] = useState('');
+
+  const {inView, ref} = useInView()
 
   const [debouncedSearchValue] = useDebounce(search, 250)
 
-  const hasFetchedInitial = useRef(false);
 
-  const { data, isError, isPending, isSuccess, error, refetch, fetchNextPage } =
+  const { data, isError, isPending, isSuccess, error, refetch, fetchNextPage, hasNextPage } =
     useGetCarBrands({
       search: debouncedSearchValue,
       limit: 10
     });
 
   const handleChangeSearchValue = (newValue: string) => setSearch(newValue);
-
-  useEffect(() => {
-    if (inView && !hasFetchedInitial.current) {
-      hasFetchedInitial.current = true;
-      fetchNextPage();
-    }
-  }, [fetchNextPage, inView]);
    
   useEffect(() => {
-    if (inView && hasFetchedInitial.current) {
+    if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [fetchNextPage, inView]);
+  }, [fetchNextPage, inView, hasNextPage]);
 
   return {
     onChangeSearchValue: handleChangeSearchValue,
@@ -40,5 +36,6 @@ export const useCarBrands = (inView: boolean) => {
       isSuccess,
       error,
     },
+    inViewRef: ref
   };
 };

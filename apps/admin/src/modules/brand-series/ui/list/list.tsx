@@ -1,36 +1,36 @@
 import { FC } from 'react';
-import { useGetCarSeriesByBrandId } from '../../api/queries';
-import { ListItem } from './list-item';
+import { CarSeriesListItem } from './list-item';
 import { ICarSeries } from '@autoball-frontend/shared-types';
+import { List } from '../../../../components';
+import { Actions } from '../../../../shared';
+import { useCarSeries } from '../../model/hooks/use-car-series';
 
 interface IProps {
   brandId: string | null;
-  onChoose:  (newValue: (ICarSeries & {
-    type: "delete" | "edit";
-}) | null) => void
+  onChoose: (newValue: (ICarSeries & Actions) | null) => void;
 }
 
-export const List: FC<IProps> = ({ brandId, onChoose }) => {
-  const { data, isError, isPending, error } = useGetCarSeriesByBrandId(brandId);
-
-  if (isPending) return <div className="text-center py-4">Loading...</div>;
-  if (isError)
-    return (
-      <div className="text-center py-4 text-red-500">
-        {error?.response?.data.detail}
-      </div>
-    );
-  if (!data?.length)
-    return (
-      <div className="text-center py-4 text-gray-500">No car series found</div>
-    );
+export const CarBrandSeriresList: FC<IProps> = ({ brandId, onChoose }) => {
+  
+  const {
+    states: { isError, isPending, error },
+    data,
+    inViewRef
+  } = useCarSeries(brandId);
 
   return (
-    <ul className="divide-y divide-gray-200 overflow-y-scroll h-[75vh]">
-      {data.map((series) => (
-        <ListItem onChoose={onChoose} key={series.id} {...series} />
-      ))}
-    </ul>
+    <List
+      {...{ isError, isPending }}
+      empty={!data?.pages.length}
+      error={error?.response?.data.detail}
+    >
+      {data &&
+        data.pages.map((page) =>
+          page.items.map((item) => (
+            <CarSeriesListItem onChoose={onChoose} key={item.id} {...item} />
+          ))
+        )}
+        <li ref={inViewRef}/>
+    </List>
   );
-
 };

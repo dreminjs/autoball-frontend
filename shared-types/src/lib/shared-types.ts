@@ -1,7 +1,7 @@
 type uuid = string;
 
 export interface IUser {
-  id: string; // UUID формат
+  id: string;
   name: string;
   email: string;
   phone_number: string;
@@ -113,6 +113,11 @@ export type GearboxType =
   | 'robotic'
   | 'variator';
 
+export type Code = 451 | 456 | 431 | 0
+
+export type Currency = "USD" | "PLN" | "BYN" | "EUR" | "RUB"
+
+export type WheelComponent = "disk" | "tire"
 
 export type FuelType = 'gasoline' | 'diesel' | 'hybrid' | 'electric';
 

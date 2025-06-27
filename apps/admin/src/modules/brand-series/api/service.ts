@@ -1,11 +1,11 @@
-import { ICarSeries } from '@autoball-frontend/shared-types';
+import { ICarSeries, IInfiteScrollResponse } from '@autoball-frontend/shared-types';
 import { QUERY_KEYS, SERVICE_URLS } from '../../../shared/constants';
 import { instance } from '../../../shared/api/api-instance';
 import { IEditCarSeriesForm, IPostCarSeriesDto } from '../model/types/carseries.interface';
 
 export const findManyByBrandId = async (
   brandId: string
-): Promise<ICarSeries[]> => {
+): Promise<IInfiteScrollResponse<ICarSeries>> => {
   return (
     await instance.get(
       `${SERVICE_URLS.carseries}/${QUERY_KEYS.brand}/${brandId}`

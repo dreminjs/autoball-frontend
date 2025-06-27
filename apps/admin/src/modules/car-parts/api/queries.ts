@@ -56,11 +56,11 @@ export const useDeleteCarPart = () => {
       queryClient.invalidateQueries({
         queryKey: [SERVICE_URLS.carpart],
       });
-      onCancel()
+      onCancel();
       addSuccess();
     },
     onError: (data) => {
-      onCancel()
+      onCancel();
       remove('info');
       addError();
     },
@@ -82,7 +82,7 @@ export const usePostCarPart = () => {
     mutationFn: (brand: IPostCarPart) =>
       instance.post(SERVICE_URLS.carpart, brand),
     onSuccess: () => {
-      closeModal()
+      closeModal();
       remove('info');
       queryClient.invalidateQueries({
         queryKey: [SERVICE_URLS.carpart],
@@ -90,7 +90,7 @@ export const usePostCarPart = () => {
       addSuccess();
     },
     onError: (data) => {
-      closeModal()
+      closeModal();
       remove('info');
       addError();
     },
@@ -107,7 +107,7 @@ export const usePostCarPart = () => {
 export const useEditCarPart = () => {
   const queryClient = useQueryClient();
   const { addError, addSuccess, remove, addInfo } = useNotificationActions();
-  const { closeModal } = useCarPartModal();
+  const { onCancel } = useChooseCarPart();
 
   const { mutate, ...props } = useMutation({
     mutationFn: (brand: IPostCarPart) =>
@@ -117,9 +117,11 @@ export const useEditCarPart = () => {
       queryClient.invalidateQueries({
         queryKey: [SERVICE_URLS.carpart],
       });
+      onCancel();
       addSuccess();
     },
     onError: (data) => {
+      onCancel();
       remove('info');
       addError();
     },
@@ -127,10 +129,7 @@ export const useEditCarPart = () => {
 
   const handleMutate = (data: IPostCarPart) => {
     addInfo();
-    mutate(data, {
-      onSuccess: closeModal,
-      onError: closeModal,
-    });
+    mutate(data);
   };
 
   return { ...props, mutate: handleMutate };

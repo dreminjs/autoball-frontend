@@ -7,7 +7,7 @@ type IProps = ICarSeries & {
 }) | null) => void
 }
 
-export const ListItem: FC<IProps> = ({ name, year, onChoose, ...props }) => {
+export const CarSeriesListItem: FC<IProps> = ({ name, year, onChoose, ...props }) => {
   return (
     <li className="group py-4 px-4 hover:bg-gray-50 transition-colors rounded-lg flex items-center justify-between">
       <div className="flex items-center min-w-0 flex-1">

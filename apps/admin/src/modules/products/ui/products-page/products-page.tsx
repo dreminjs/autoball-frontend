@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useGetProducts } from '../../model/api/queries';
 import { CarPartsFilterDrawer } from './drawer/products-filter-drawer';
-import { Toolbar } from './toolbar';
+import { Toolbar } from './toolbar/toolbar';
 import { ProductsList } from './list/products-list';
 import { CarPartsQrList } from './list/products-qr-list';
 
 export const ProductsPage = () => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
 
-  const { isSuccess, isPending, isError, data, error } = useGetProducts();
+  const { isPending, data, error } = useGetProducts();
 
   return (
     <>

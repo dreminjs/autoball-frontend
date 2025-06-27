@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Layout } from '../components/layout/layout';
 import { SigninPage } from '../modules/signin';
 import { ProtectedRoutes } from '../providers/protected-routes';
-import { OrdersPage } from '../modules/orders';
+import { OrdersPage, PostOrderPage } from '../modules/orders';
 import { PAGE_URLS, QUERY_KEYS } from '../shared/constants';
 import {
   PostProductPage,
@@ -27,8 +27,10 @@ export function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<SigninPage />} />
-        <Route element={<ProtectedRoutes />}>
-          <Route path={PAGE_URLS.orders} element={<OrdersPage />} />
+          <Route path={PAGE_URLS.orders}>
+            <Route index element={<OrdersPage />} />
+            <Route path={QUERY_KEYS.post} element={<PostOrderPage/>}/>
+          </Route>
 
           <Route path={PAGE_URLS['product']}>
             <Route
@@ -42,7 +44,7 @@ export function App() {
             <Route path={`${QUERY_KEYS.post}`} element={<PostProductPage />} />
           </Route>
           <Route
-            path={PAGE_URLS["carpart"]}
+            path={PAGE_URLS['carpart']}
             element={
               <Provider store={carPartsStore}>
                 <CarPartsPage />
@@ -87,7 +89,6 @@ export function App() {
             </Route>
           </Route>
         </Route>
-      </Route>
     </Routes>
   );
 }

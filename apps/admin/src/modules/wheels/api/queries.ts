@@ -8,6 +8,7 @@ import { instance } from '../../../shared/api/api-instance';
 import {
   IInfiteScrollResponse,
   ICarPart,
+  WheelComponent,
 } from '@autoball-frontend/shared-types';
 import { IPostWheelComponentBrand } from '../model/schemas/post-wheel-component-brand';
 import { getComponentBrandType } from '../../../shared/lib/get-component-brand-type';
@@ -17,13 +18,13 @@ import { useWheelComponentBrandModal } from '../model/hooks/use-wheel-component-
 import { useNotificationActions } from '../../notifications';
 import { useChoosedWheelComponentBrand } from '../model/hooks/use-choose-wheel-component-brand';
 
-export const useGetWheelBrands = (params = {}) => {
+export const useGetWheelBrands = (params = {}, data?: WheelComponent) => {
   const path = getComponentBrandType();
   return useInfiniteQuery<
     IInfiteScrollResponse<ICarPart>,
     AxiosError<IServerError>
   >({
-    queryKey: [path, params],
+    queryKey: [(data ? data : path), params],
     queryFn: async () => {
       return (await instance.get(path, { params })).data;
     },

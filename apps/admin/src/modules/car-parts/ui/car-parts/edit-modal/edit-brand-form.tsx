@@ -6,8 +6,6 @@ import {
 } from '../../../model/schemas/edit-car-part';
 import { useEditCarPart } from '../../../api/queries';
 import { CustomSnackbar } from '../../../../../components';
-import { getSnackbarMessage } from '../../../../../shared';
-import { getSnackbarSeverity } from '../../../../../shared/lib/get-snackbar-severity';
 import { useSnackbarVisible } from '../../../../../shared/hooks/use-snackbar-visible';
 import { FC } from 'react';
 import { ICarPart } from '@autoball-frontend/shared-types';
@@ -30,30 +28,16 @@ export const EditBrandForm: FC<IProps> = ({ onClose, brand }) => {
     },
   });
 
-  const { mutate, isError, isPending, isSuccess, error } = useEditCarPart();
-
-  const { snackbarOpen, onHideSnackbar } = useSnackbarVisible({
-    state: isError || isPending || isSuccess,
-  });
-
-  const handleOnSuccess = () => {
-    setTimeout(() => {
-      onClose();
-      onHideSnackbar();
-    }, 1500);
-  };
+  const { mutate, isPending } = useEditCarPart();
 
   const hadleEditSubmit = (data: IEditCarPart) => {
     mutate(
       { name: data.name, id: brand.id },
-      {
-        onSuccess: handleOnSuccess,
-      }
+
     );
   };
 
   return (
-    <>
       <form
         onSubmit={handleSubmit((data) => hadleEditSubmit(data))}
         className="space-y-6"
@@ -92,24 +76,6 @@ export const EditBrandForm: FC<IProps> = ({ onClose, brand }) => {
           </button>
         </div>
       </form>
-      <CustomSnackbar
-        isOpen={snackbarOpen}
-        severity={getSnackbarSeverity({
-          isError,
-          isSuccess,
-          isPending,
-        })}
-        message={getSnackbarMessage(
-          {
-            isError,
-            isSuccess,
-            isPending,
-          },
-          {
-            error: error?.message || 'Erorr!',
-          }
-        )}
-      />
-    </>
+    
   );
 };

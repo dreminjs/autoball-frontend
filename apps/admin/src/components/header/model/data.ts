@@ -11,15 +11,12 @@ export const items = [
     to: PAGE_URLS['orders'],
   },
   {
-    name: "Типы Запчасть",
-    to: PAGE_URLS["carpart"]
-  },
-  {
-    name: 'Бренды',
+    name: 'Характеристики',
     inner: [
-      { name: 'Машин', to: `${PAGE_URLS["brand"]}/${QUERY_KEYS.car}` },
-      { name: 'Шин', to: `${PAGE_URLS["brand"]}/${QUERY_KEYS.tire}` },
-      { name: 'Дисков', to: `${PAGE_URLS["brand"]}/${QUERY_KEYS.disc}` },
+      { name: 'Бренды Машин', to: `${PAGE_URLS["brand"]}/${QUERY_KEYS.car}` },
+      { name: 'Бренды Шин', to: `${PAGE_URLS["brand"]}/${QUERY_KEYS.tire}` },
+      { name: 'Бренды Дисков', to: `${PAGE_URLS["brand"]}/${QUERY_KEYS.disc}` },
+      { name: 'Типы запчасть', to: PAGE_URLS["carpart"]  }
     ],
   },
 ] as INavItem[];

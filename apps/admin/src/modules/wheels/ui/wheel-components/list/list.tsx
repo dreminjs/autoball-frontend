@@ -2,6 +2,7 @@ import { FC, Fragment } from 'react';
 import { ICarPart } from '@autoball-frontend/shared-types';
 import { Actions, ApiOperationState, IInfiteScrollResponse } from '../../../../../shared';
 import { WheelComponentBrandItem } from './list-item';
+import { List } from '../../../../../components';
 
 interface IProps {
   data?: IInfiteScrollResponse<ICarPart>[];
@@ -10,24 +11,10 @@ interface IProps {
   states: ApiOperationState;
 }
 
-export const List: FC<IProps> = ({ data, onChoose, libRef, states }) => {
-  if (states.isPending)
-    return <div className="text-center py-4">Загрузка...</div>;
-
-  if (states.isError)
-    return (
-      <p className="text-center py-4 text-red-500">
-        {states.error?.response?.data.detail}
-      </p>
-    );
-
-  if (!data?.length)
-    return (
-      <div className="text-center py-4 text-gray-500">No car brands found</div>
-    );
+export const WheelComponentsBrandsList: FC<IProps> = ({ data, onChoose, libRef, states }) => {
 
   return (
-    <ul className="h-[75vh] overflow-y-scroll">
+    <List isPending={states.isPending} isError={states.isError} empty={!data?.length} >
       {data?.map((el, idx) => (
         <Fragment key={el.items[idx]?.id}>
           {el?.items.map((item) => (
@@ -36,6 +23,6 @@ export const List: FC<IProps> = ({ data, onChoose, libRef, states }) => {
         </Fragment>
       ))}
       <li ref={libRef} />
-    </ul>
+    </List>
   );
 };

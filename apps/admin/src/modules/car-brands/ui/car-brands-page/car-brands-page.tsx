@@ -1,23 +1,21 @@
-import { List } from './list';
 import { Toolbar } from './toolbar';
 import { DeleteBrandModal } from './delete-modal';
 import { PostBrandModal } from './post-modal';
 import { EditBrandModal } from './edit-modal';
 import { useCarBrands, useChooseBrand } from '../../model/hooks';
-import { useInView } from 'react-intersection-observer';
+import { CarBrandList } from "./list/"
 
 export const CarBrandsPage = () => {
-  const { ref, inView } = useInView();
   const { choosedBrand, onChooseBrand, onCancel } = useChooseBrand();
-  const { onChangeSearchValue, search, data, states } = useCarBrands(inView);
+  const { onChangeSearchValue, search, data, states, inViewRef } = useCarBrands();
   
   return (
     <>
       <>
         <Toolbar onChangeSearchValue={onChangeSearchValue} search={search} />
-        <List
+        <CarBrandList
           states={states}
-          libRef={ref}
+          libRef={inViewRef}
           data={data?.pages}
           onChoose={(data) => onChooseBrand(data)}
         />

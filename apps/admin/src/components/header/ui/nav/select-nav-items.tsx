@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 interface IProps {
   inner: { name: string; to: string }[];
@@ -12,10 +12,8 @@ export const SelectNavItems: FC<IProps> = ({
   toggleIsDropdownOpen,
   toggleIsMenuVisibility,
 }) => {
-  const location = useLocation();
-
   return (
-    <ul className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-md py-1 min-w-[160px]">
+    <ul className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-md py-1 min-w-[160px] z-50">
       {inner.map((item) => (
         <li key={item.to}>
           <Link

@@ -1,5 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ICarSeries } from '@autoball-frontend/shared-types';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
+import { ICarSeries, IInfiteScrollResponse } from '@autoball-frontend/shared-types';
 import { SERVICE_URLS } from '../../../shared/constants';
 import { createOne, deleteOne, editOne, findManyByBrandId } from './service';
 import { AxiosError } from 'axios';
@@ -13,11 +17,14 @@ import { useCarSeriesModal } from '../model/hooks/use-car-series-modal';
 import { useChooseSeries } from '../model/hooks/use-choose-series';
 
 export const useGetCarSeriesByBrandId = (brandId: string | null) => {
-  return useQuery<ICarSeries[], AxiosError<IServerError>>({
+  return useInfiniteQuery<IInfiteScrollResponse<ICarSeries>, AxiosError<IServerError>>({
     queryKey: [SERVICE_URLS.carseries, brandId],
     queryFn: () => findManyByBrandId(brandId || ''),
     enabled: brandId !== null,
     refetchOnWindowFocus: false,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) =>
+      lastPage.next_cursor,
   });
 };
 

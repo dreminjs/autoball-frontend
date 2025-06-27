@@ -1,10 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { useGetWheelBrands } from "../../api/queries";
+import { useInView } from "react-intersection-observer";
 
 
 
-export const useWheelComponentsBrands = (inView: boolean) => {
+export const useWheelComponentsBrands = () => {
   const [search, setSearch] = useState('');
+
+  const { ref, inView } = useInView()
 
   const hasFetchedInitial = useRef(false);
 
@@ -40,5 +43,6 @@ export const useWheelComponentsBrands = (inView: boolean) => {
       isSuccess,
       error,
     },
+    inViewRef: ref
   };
 };

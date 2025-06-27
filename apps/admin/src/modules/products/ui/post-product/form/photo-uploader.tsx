@@ -2,11 +2,12 @@
 import { useState, useRef, useCallback, FC } from 'react';
 import { PhotoItem } from './photo-item';
 
-export type Photo = {
+export interface Photo {
   id: string;
   file: File;
   preview: string;
-};
+  rotatedFile?: File;
+}
 
 interface IProps {
   onPhotosChange: (photos: Photo[]) => void;
@@ -65,6 +66,20 @@ export const PhotoUploader: FC<IProps> = ({ onPhotosChange }) => {
       });
     },
     [onPhotosChange]
+  );
+
+  const handlePhotoRotate = useCallback(
+    (id: string, newFile: File, newPreview: string) => {
+      setPhotos((prev) =>
+        prev.map((photo) =>
+          photo.id === id
+            ? { ...photo, file: newFile, preview: newPreview }
+            : photo
+        )
+      );
+      onPhotosChange(photos); // Обновляем родительский компонент
+    },
+    [onPhotosChange, photos]
   );
 
   const handleDrop = useCallback(
@@ -136,6 +151,7 @@ export const PhotoUploader: FC<IProps> = ({ onPhotosChange }) => {
               index={index}
               movePhoto={movePhoto}
               removePhoto={removePhoto}
+              onPhotoRotate={handlePhotoRotate}
             />
           ))}
         </div>

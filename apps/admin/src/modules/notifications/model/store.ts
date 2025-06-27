@@ -1,4 +1,8 @@
-import { INotification, INotificationStore, NotificationType } from './notifications.interface';
+import {
+  INotification,
+  INotificationStore,
+  NotificationType,
+} from './notifications.interface';
 import { create } from 'zustand';
 import { nanoid } from 'nanoid';
 
@@ -22,6 +26,7 @@ export const useNotificationStore = create<INotificationStore>((set, get) => ({
     if (duration && duration > 0) {
       setTimeout(() => {
         get().removeNotification(data.type);
+        data.callbackFn && data.callbackFn();
       }, duration);
     }
   },
@@ -36,7 +41,7 @@ export const useNotificationStore = create<INotificationStore>((set, get) => ({
     set({ notifications: [] });
   },
 
-  addSuccessNotification: (dto = {duration: 3000}): void => {
+  addSuccessNotification: (dto = { duration: 3000 }): void => {
     get().addNotification({
       ...dto,
       message: dto.message ? dto.message : 'Успех!',
@@ -49,11 +54,11 @@ export const useNotificationStore = create<INotificationStore>((set, get) => ({
       ...dto,
       message: dto.message ? dto.message : 'Загрузка...',
       type: 'info',
-      duration: null
+      duration: null,
     });
   },
 
-  addErrorNotification: (dto = {duration: 3000}): void => {
+  addErrorNotification: (dto = { duration: 3000 }): void => {
     get().addNotification({
       ...dto,
       message: dto.message ? dto.message : 'Что-то пошло не так!',

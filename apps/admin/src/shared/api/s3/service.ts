@@ -22,9 +22,9 @@ export const findPresignUrl = async (dto: IGetPresignUrlQueryParameters) => {
 
 export const postPhoto = async (dto: PostPhotoDto) => {
   return (
-    await axios.put(`${dto.url}`, dto.brand_logo, {
+    await axios.put(`${dto.url}`, dto.files[0], {
       headers: {
-        'Content-Type': dto.brand_logo.type, 
+        'Content-Type': dto.files[0].type, 
       },
     })
   ).data;

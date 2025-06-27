@@ -9,7 +9,7 @@ export const SigninField = ({
   message,
   register
 }: {
-  label: "email" | "пароль"
+  label: "номер телефона" | "пароль"
   type: keyof ISigninForm;
   placeholder?: string;
   message?: string;

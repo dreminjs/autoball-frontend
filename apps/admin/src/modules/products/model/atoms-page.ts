@@ -8,8 +8,6 @@ import { atom, createStore } from 'jotai';
 
 export const productsStore = createStore();
 
-export const brandIdsAtom = atom<string[]>([]);
-
 export const seriesIdsAtom = atom<string[]>([]);
 
 export const conditionAtom = atom<ProductCondition>('new');
@@ -24,7 +22,11 @@ export const isPrintedStatusAtom = atom<boolean | null>(null)
 
 export const showScanCheckboxesAtom = atom<boolean>(false);
 
+export const showUnscanCheckboxesAtom = atom<boolean>(false);
+
+
 export const checkboxesAtom = atom<string[]>();
+
 
 export const countItemsAtom = atom<number>(5)
 
@@ -38,7 +40,7 @@ productsStore.set(isPrintedStatusAtom, null)
 
 productsStore.set(countItemsAtom, 5)
 
-productsStore.set(brandIdsAtom, []);
+productsStore.set(showUnscanCheckboxesAtom, false)
 
 productsStore.set(seriesIdsAtom, []);
 

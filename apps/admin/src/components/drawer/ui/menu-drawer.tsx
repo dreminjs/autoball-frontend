@@ -11,7 +11,7 @@ export const MenuDrawer = () => {
 
   return (
     <Drawer
-    className='sm:hidden'
+      className='sm:hidden'
       open={isMobileMenuVisible}
       onClose={() => setIsMobileMenuVisible(false)}
     >
