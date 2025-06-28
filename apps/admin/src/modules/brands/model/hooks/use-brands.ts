@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDebounce } from 'use-debounce';
 import { useGetBrands } from '../api/brand/queries';
-import { BrandType } from '../../../../shared/interfaces/brands/type';
+import { BrandType } from '../../../../shared/types/brands/type';
 import { useInView } from 'react-intersection-observer';
 
 export const useBrands = (type: BrandType) => {
@@ -43,7 +43,7 @@ export const useBrands = (type: BrandType) => {
       isError,
       isPending,
       isSuccess,
-      error: error?.response?.data.detail,
+      error,
     },
   };
 };

@@ -7,9 +7,7 @@ import { Select } from '../../../../../shared/ui/select';
 
 export const ChooseCondition = () => {
   const setCondition = useSetAtom(conditionAtom);
-  
-
-  return (
+    return (
     <Select
       label={'Состояние'}
       onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCondition(e.target.value as ProductCondition)}

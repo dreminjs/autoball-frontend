@@ -6,10 +6,11 @@ interface IProps {
   empty: boolean;
   error?: string;
   children: ReactNode;
+  className?: string
 }
 
-export const List: FC<IProps> = ({ isError, isPending, error, empty, children }) => {
-  return <ul className='m-2 divide-y divide-gray-200 overflow-y-scroll h-[250px]'>
+export const List: FC<IProps> = ({ isError, isPending, error, empty, children, className }) => {
+  return <ul className={`m-2 divide-y divide-gray-200 overflow-y-scroll ${className ? className : ''}`}>
     {isPending && <li className="text-center py-4">Загрузка...</li> } 
     {isError && <li className="text-center py-4 text-red-500">{error}</li> }
     {!isPending && empty && <li className="text-center py-4 text-gray-500">No car brands found</li>}

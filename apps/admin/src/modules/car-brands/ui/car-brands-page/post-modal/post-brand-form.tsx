@@ -1,14 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import { usePostCarBrand } from '../../../api/queries';
 import { carBrandSchema } from '../../../model/schemas/car-brand.schema';
 import { CarBrandForm } from '../../../model/types/car-brand';
-import {
-  useGetPresignUrl,
-  usePostPhoto,
-} from '../../../../../shared/api/s3/queries';
-import { generateRandomString } from '../../../../../shared';
 
 interface IProps {
   isLoading?: boolean;
@@ -16,7 +11,6 @@ interface IProps {
 }
 
 export const PostBrandForm: FC<IProps> = ({ isLoading, onClose }) => {
-  const filename = useMemo(() => generateRandomString(), []);
 
   const {
     register,
@@ -31,36 +25,17 @@ export const PostBrandForm: FC<IProps> = ({ isLoading, onClose }) => {
 
   const { mutate: postCarBrand } = usePostCarBrand();
 
-  const { mutate: postPhoto } = usePostPhoto();
-
-  const { data: urlData } = useGetPresignUrl({
-    content_type: watch('brand_logo')?.type,
-    filename,
-  });
-
   const preview = watch('brand_logo')
     ? URL.createObjectURL(watch('brand_logo'))
     : null;
 
-  const hadlePostSubmit = (data: CarBrandForm) => {
-    if (data.brand_logo) {
-      postCarBrand({ name: data.name, picture: `${filename}` });
-
-      console.log(data.brand_logo);
-
-      postPhoto({
-        files: [data.brand_logo],
-        url: urlData?.url,
-        filenames: [`${filename}`],
-      });
-    }
-  };
+  const hadlePostSubmit = handleSubmit((data: CarBrandForm) => {
+      postCarBrand(data);
+  })
 
   return (
     <form
-      onSubmit={handleSubmit((data) => {
-        hadlePostSubmit(data);
-      })}
+      onSubmit={hadlePostSubmit}
       className="space-y-6"
     >
       <div>

@@ -1,7 +1,7 @@
 import { UseFormRegister } from "react-hook-form";
 import { ProductFormData } from "../../../model/types/product.interface";
 import { FC } from "react";
-import { BrandType } from "../../../../../shared/interfaces/brands/type";
+import { BrandType } from "../../../../../shared/types/brands/type";
 
 
 

@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { carPartIdAtom } from '../..';
+import { carPartIdAtom } from '../../..';
 
 export const useChooseCarPartId = () => {
   const [choosedCarPartId, setChoosedCarPartId] = useAtom(carPartIdAtom);

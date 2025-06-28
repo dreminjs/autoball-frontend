@@ -4,8 +4,8 @@ import {
   IInfiteScrollResponse,
 } from '@autoball-frontend/shared-types';
 import { AxiosError } from 'axios';
-import { IServerError } from '../../../../../shared/interfaces/server-error';
-import { BrandType } from '../../../../../shared/interfaces/brands/type';
+import { IServerError } from '../../../../../shared/types/server-error';
+import { BrandType } from '../../../../../shared/types/brands/type';
 import { findMany } from './service';
 
 export interface IArgs {

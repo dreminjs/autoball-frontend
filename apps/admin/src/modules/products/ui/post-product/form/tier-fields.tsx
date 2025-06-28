@@ -4,7 +4,7 @@ import { ProductFormData } from '../../../model/schemas/product.schema';
 import { FC } from 'react';
 import { SelectInput } from './select-input';
 import { diameterOptions } from '../../../model/data';
-import { BrandType } from '../../../../../shared/interfaces/brands/type';
+import { BrandType } from '../../../../../shared/types/brands/type';
 import { ChooseBrand } from '../../products-page/drawer/items-list/choose-brand-list/choose-brand';
 
 interface IProps {

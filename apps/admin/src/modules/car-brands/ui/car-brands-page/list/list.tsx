@@ -3,7 +3,7 @@ import { ICarBrand } from '@autoball-frontend/shared-types';
 import { Actions } from '../../../model/types/actions';
 import { IInfiteScrollResponse } from '../../../../../shared';
 import { CarBrandItem } from './list-item';
-import { ApiOperationState } from '../../../../../shared/interfaces/api-operation-state.interface';
+import { ApiOperationState } from '../../../../../shared/types/api-operation-state.interface';
 import { List } from '../../../../../components';
 
 interface IProps {
@@ -22,6 +22,7 @@ export const CarBrandList: FC<IProps> = ({
 
   return (
     <List
+      className='h-[70vh]'
       isPending={states.isPending}
       isError={states.isError}
       empty={!data?.length}

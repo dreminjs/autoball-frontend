@@ -1,6 +1,7 @@
 import { ICarPart } from '@autoball-frontend/shared-types';
 import { useAtom } from 'jotai';
 import { choosedWheelComponentBrandAtom } from '../atoms';
+import { Actions } from '../../../../shared';
 
 export const useChoosedWheelComponentBrand = () => {
   const [choosedWheelComponentBrand, setChoosedWheelComponentBrand] = useAtom(
@@ -8,7 +9,7 @@ export const useChoosedWheelComponentBrand = () => {
   );
 
   const handleChooseWheelComponentBrand = (
-    newValue: (ICarPart & { type: 'delete' | 'edit' }) | null
+    newValue: (ICarPart & Actions) | null
   ) => setChoosedWheelComponentBrand(newValue);
 
   const handleCancel = () => setChoosedWheelComponentBrand(null);

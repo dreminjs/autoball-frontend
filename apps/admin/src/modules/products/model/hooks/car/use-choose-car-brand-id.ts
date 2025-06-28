@@ -1,11 +1,8 @@
-
-
-
 import { useAtom } from 'jotai';
-import { brandIdAtom } from '../atoms-page';
+import { carBrandIdAtom } from '../../atoms-page';
 
-export const useChooseTireBrand = () => {
-  const [brandId, setBrandId] = useAtom(brandIdAtom);
+export const useChooseCarBrandId = () => {
+  const [brandId, setBrandId] = useAtom(carBrandIdAtom);
 
   const handleChooseBrand = (data: string | null) => setBrandId(data);
 

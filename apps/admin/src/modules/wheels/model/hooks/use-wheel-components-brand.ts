@@ -1,21 +1,23 @@
-import { useState, useRef, useEffect } from "react";
-import { useGetWheelBrands } from "../../api/queries";
-import { useInView } from "react-intersection-observer";
+import { useState, useRef, useEffect } from 'react';
+import { useGetWheelBrands } from '../../api/queries';
+import { useInView } from 'react-intersection-observer';
+import { WheelComponent } from '@autoball-frontend/shared-types';
 
-
-
-export const useWheelComponentsBrands = () => {
+export const useWheelComponentsBrands = (type?: WheelComponent) => {
   const [search, setSearch] = useState('');
 
-  const { ref, inView } = useInView()
+  const { ref, inView } = useInView();
 
   const hasFetchedInitial = useRef(false);
 
   const { data, isError, isPending, isSuccess, error, refetch, fetchNextPage } =
-    useGetWheelBrands({
-      search,
-      limit: 10
-    });
+    useGetWheelBrands(
+      {
+        search,
+        limit: 10,
+      },
+      type
+    );
 
   const handleChangeSearchValue = (newValue: string) => setSearch(newValue);
 
@@ -25,7 +27,7 @@ export const useWheelComponentsBrands = () => {
       fetchNextPage();
     }
   }, [fetchNextPage, inView]);
-   
+
   useEffect(() => {
     if (inView && hasFetchedInitial.current) {
       fetchNextPage();
@@ -43,6 +45,6 @@ export const useWheelComponentsBrands = () => {
       isSuccess,
       error,
     },
-    inViewRef: ref
+    inViewRef: ref,
   };
 };

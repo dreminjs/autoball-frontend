@@ -3,7 +3,7 @@ import { SERVICE_URLS } from '../../constants';
 import {
   IGetPresignUrlQueryParameters,
   PostPhotoDto,
-} from '../../interfaces/s3/storage.dto';
+} from '../../types/s3/storage.dto';
 import { instance } from '../api-instance';
 
 export const findPresignUrl = async (dto: IGetPresignUrlQueryParameters) => {

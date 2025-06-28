@@ -19,8 +19,8 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { TierFields } from './form/tier-fields';
 import { RadioGroup } from './form/radio-group';
 import { DiscFields } from './form/disc-fields';
-import { useChooseTireBrand } from '../../model/hooks/use-choose-tire-brand';
 import { ChooseBrand } from '../products-page/drawer/items-list/choose-brand-list/choose-brand';
+import { useChooseTireId } from '../../model/hooks/tire/use-choose-tires-brand-id';
 
 export const PostProductForm = () => {
   const {
@@ -45,8 +45,8 @@ export const PostProductForm = () => {
     },
   });
 
-  const { onChooseBrand: onChooseTireBrand, brandId: tireBrandId } =
-    useChooseTireBrand();
+  const { onChooseBrandId: onChooseTireBrandId, tirebrandId } =
+    useChooseTireId();
 
 
   const productType = watch('productType');
@@ -174,8 +174,8 @@ export const PostProductForm = () => {
           <TierFields
             register={register}
             errors={errors}
-            choosedItemId={tireBrandId}
-            onChoose={onChooseTireBrand}
+            choosedItemId={tirebrandId}
+            onChoose={onChooseTireBrandId}
             type={productType}
           />
         )}

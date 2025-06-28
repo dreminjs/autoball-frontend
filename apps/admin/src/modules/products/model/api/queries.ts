@@ -4,7 +4,7 @@ import {
 } from '@tanstack/react-query';
 import { findMany, toggleAvailibleStatus, toggleScanStatus } from './services';
 import { AxiosError } from 'axios';
-import { IServerError } from '../../../../shared/interfaces/server-error';
+import { IServerError } from '../../../../shared/types/server-error';
 import { IProduct } from '@autoball-frontend/shared-types';
 import { IInfiteScrollResponse } from '../../../../shared';
 import { IToggleAvailibleStatusDto } from '../types/toggle-availible-status.dto';

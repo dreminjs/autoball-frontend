@@ -1,9 +1,8 @@
 import Modal from '@mui/material/Modal';
 import { FC } from 'react';
 import { PostBrandForm } from './post-brand-form';
-import { useAtom, useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { isPostCarBrandModalVisibleAtom } from '../../../model/atoms';
-import { addNotificationAtom } from '../../../../notifications';
 
 const logo = (
   <svg
@@ -28,8 +27,6 @@ export const PostBrandModal: FC = () => {
   const [isPostCarBrandModalVisible, setIsPostCarBrandModalVisible] = useAtom(isPostCarBrandModalVisibleAtom)
 
   const handleClose = () => setIsPostCarBrandModalVisible(false)
-
-
 
   return (
     <Modal

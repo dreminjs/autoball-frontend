@@ -117,7 +117,7 @@ export type Code = 451 | 456 | 431 | 0
 
 export type Currency = "USD" | "PLN" | "BYN" | "EUR" | "RUB"
 
-export type WheelComponent = "disk" | "tire"
+export type WheelComponent = "disc" | "tire"
 
 export type FuelType = 'gasoline' | 'diesel' | 'hybrid' | 'electric';
 

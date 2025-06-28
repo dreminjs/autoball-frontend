@@ -10,7 +10,7 @@ import {
   ICarPart,
 } from '@autoball-frontend/shared-types';
 import { AxiosError } from 'axios';
-import { IServerError } from '../../../shared/interfaces/server-error';
+import { IServerError } from '../../../shared/types/server-error';
 import { IPostCarPart } from '../model/schemas/post-car-part';
 import { SERVICE_URLS } from '../../../shared/constants';
 import { useNotificationActions } from '../../notifications';

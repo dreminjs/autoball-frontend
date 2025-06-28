@@ -8,6 +8,10 @@ import { ChoosePrintedStatus } from './choose-printed-status';
 import { ChooseBrand } from './items-list/choose-brand-list/choose-brand';
 import { ChooseSeries } from './items-list/choose-series-list/choose-series';
 import { ChooseCarPart } from './items-list/choose-car-part/choose-car-part';
+import { ChooseYear } from './choose-year/choose-year';
+import { ChoosePrice } from './choose-price/choose-price';
+import { ChooseAvailability } from './choose-availability';
+import { DiscFilter } from './disc/disc-filter';
 
 interface IProps {
   isOpen: boolean;
@@ -22,6 +26,10 @@ export const ProductsFilterDrawer: FC<IProps> = ({ isOpen, onClose }) => {
         <ChooseBrand type={'car'} />
         <ChooseSeries />
         <ChooseCarPart />
+        <ChooseYear />
+        <ChoosePrice />
+        <DiscFilter />
+        <ChooseAvailability />
         <ChooseCountItems />
         <ChoosePrintedStatus />
         <ChooseFuel />

@@ -3,7 +3,7 @@ import { index } from './service';
 import { ISigninForm } from '../types/signin.interface';
 import { ITokens } from '@autoball-frontend/shared-types';
 import { AxiosError } from 'axios';
-import { IServerError } from '../../../../shared/interfaces/server-error';
+import { IServerError } from '../../../../shared/types/server-error';
 import { useNotificationActions } from '../../../notifications';
 import { useNavigate } from 'react-router-dom';
 import { PAGE_URLS } from '../../../../shared/constants';

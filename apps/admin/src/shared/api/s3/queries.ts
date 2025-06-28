@@ -3,11 +3,11 @@ import {
   IGetPresignUrlQueryParameters,
   IPresignUrl,
   PostPhotoDto,
-} from '../../interfaces/s3/storage.dto';
+} from '../../types/s3/storage.dto';
 import { QUERY_KEYS, SERVICE_URLS } from '../../constants';
-import { ApiOperationState } from '../../interfaces/api-operation-state.interface';
+import { ApiOperationState } from '../../types/api-operation-state.interface';
 import { AxiosError } from 'axios';
-import { IServerError } from '../../interfaces/server-error';
+import { IServerError } from '../../types/server-error';
 import { deleteMany, findPresignUrl, postPhoto } from './service';
 import { useNotificationActions } from '../../../modules/notifications';
 

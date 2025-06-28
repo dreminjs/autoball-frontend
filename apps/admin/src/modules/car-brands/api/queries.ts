@@ -11,9 +11,9 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { SERVICE_URLS } from '../../../shared/constants';
-import { ApiOperationState } from '../../../shared/interfaces/api-operation-state.interface';
-import { IServerError } from '../../../shared/interfaces/server-error';
-import { CarBrandFormDto } from '../model/types/car-brand';
+import { ApiOperationState } from '../../../shared/types/api-operation-state.interface';
+import { IServerError } from '../../../shared/types/server-error';
+import { CarBrandForm } from '../model/types/car-brand';
 import { createOne, deleteOne, findMany, findOne } from './servies';
 import { useCarBrandModal } from '../model/hooks/use-car-brand-modal';
 import { useNotificationActions } from '../../notifications';
@@ -29,9 +29,9 @@ export const usePostCarBrand = () => {
   const { mutate, ...props } = useMutation<
     ICarBrand,
     AxiosError<IServerError>,
-    CarBrandFormDto
+   CarBrandForm
   >({
-    mutationFn: (data: CarBrandFormDto) => createOne({ ...data }),
+    mutationFn: (data: CarBrandForm) => createOne({ ...data }),
     mutationKey: [SERVICE_URLS.carbrand],
     onSuccess: () => {
       closeModal();
@@ -51,7 +51,7 @@ export const usePostCarBrand = () => {
     },
   });
 
-  const handleMutate = (data: CarBrandFormDto) => {
+  const handleMutate = (data: CarBrandForm) => {
     addInfo();
     mutate(data);
   };

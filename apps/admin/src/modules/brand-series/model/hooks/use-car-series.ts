@@ -2,11 +2,18 @@ import { useEffect } from 'react';
 import { useGetCarSeriesByBrandId } from '../../api/queries';
 import { useInView } from 'react-intersection-observer';
 
-export const useCarSeries = (brandId: string | null ) => {
+export const useCarSeries = (brandId: string | null) => {
   const { ref, inView } = useInView();
 
-  const { data, isError, isPending, error, fetchNextPage, hasNextPage, isSuccess } =
-    useGetCarSeriesByBrandId(brandId);
+  const {
+    data,
+    isError,
+    isPending,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isSuccess,
+  } = useGetCarSeriesByBrandId(brandId);
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -15,7 +22,7 @@ export const useCarSeries = (brandId: string | null ) => {
   }, [inView, fetchNextPage, hasNextPage]);
 
   return {
-    states: { isError, isPending, error: error?.response?.data.detail || "Error!", isSuccess },
+    states: { isError, isPending, error, isSuccess },
     data,
     inViewRef: ref,
   };

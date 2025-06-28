@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import { ApiOperationState } from '../../interfaces/api-operation-state.interface';
+import { ApiOperationState } from '../../types/api-operation-state.interface';
 import { IUser } from '@autoball-frontend/shared-types';
 import { AxiosError } from 'axios';
-import { IServerError } from '../../interfaces/server-error';
+import { IServerError } from '../../types/server-error';
 import { getMe } from './services';
 import { QUERY_KEYS } from '../../constants';
 import { useEffect } from 'react';

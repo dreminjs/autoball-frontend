@@ -13,18 +13,18 @@ import {
 import { IPostWheelComponentBrand } from '../model/schemas/post-wheel-component-brand';
 import { getComponentBrandType } from '../../../shared/lib/get-component-brand-type';
 import { AxiosError } from 'axios';
-import { IServerError } from '../../../shared/interfaces/server-error';
+import { IServerError } from '../../../shared/types/server-error';
 import { useWheelComponentBrandModal } from '../model/hooks/use-wheel-component-brand-modal';
 import { useNotificationActions } from '../../notifications';
 import { useChoosedWheelComponentBrand } from '../model/hooks/use-choose-wheel-component-brand';
 
 export const useGetWheelBrands = (params = {}, data?: WheelComponent) => {
-  const path = getComponentBrandType();
+  const path = data ? `${data}brand` : getComponentBrandType();
   return useInfiniteQuery<
     IInfiteScrollResponse<ICarPart>,
     AxiosError<IServerError>
   >({
-    queryKey: [(data ? data : path), params],
+    queryKey: [path, params],
     queryFn: async () => {
       return (await instance.get(path, { params })).data;
     },

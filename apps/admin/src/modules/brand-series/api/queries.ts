@@ -7,7 +7,7 @@ import { ICarSeries, IInfiteScrollResponse } from '@autoball-frontend/shared-typ
 import { SERVICE_URLS } from '../../../shared/constants';
 import { createOne, deleteOne, editOne, findManyByBrandId } from './service';
 import { AxiosError } from 'axios';
-import { IServerError } from '../../../shared/interfaces/server-error';
+import { IServerError } from '../../../shared/types/server-error';
 import {
   IPostCarSeriesForm,
   IEditCarSeriesDto,

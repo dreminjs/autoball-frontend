@@ -5,17 +5,13 @@ import {
 import { FC } from 'react';
 import { InfiniteData } from '@tanstack/react-query';
 import { List, ListItem } from '../../../../../../../../components';
-import { useChooseCarBrandId } from '../../../../../../model/hooks/use-choose-car-brand-id';
+import { ApiOperationState } from '../../../../../../../../shared';
+import { useChooseCarBrandId } from '../../../../../../model/hooks/car/use-choose-car-brand-id';
 
 interface IProps {
   data?: InfiniteData<IInfiteScrollResponse<ICarBrand>>;
   ref: (node?: Element | null) => void;
-  states: {
-    error?: string;
-    isPending: boolean;
-    isSuccess: boolean;
-    isError: boolean;
-  };
+  states: ApiOperationState
 }
 
 export const BrandList: FC<IProps> = ({ data, ref, states }) => {
@@ -23,9 +19,10 @@ export const BrandList: FC<IProps> = ({ data, ref, states }) => {
 
   return (
     <List
+      className='h-[250px]'
       isPending={states.isPending}
       isError={states.isError}
-      error={states.error}
+      error={states.error?.response?.data.detail}
       empty={!data?.pages}
     >
       <ListItem
