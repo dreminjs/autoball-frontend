@@ -11,8 +11,6 @@ import { TTiresCar, TTiresSeason } from '../../../shared/types';
 
 export const productsStore = createStore();
 
-export const seriesIdsAtom = atom<string[]>([]);
-
 export const conditionAtom = atom<ProductCondition>('new');
 
 export const fuelAtom = atom<FuelType | null>(null);
@@ -100,8 +98,6 @@ productsStore.set(tiresCarTypeAtom, null)
 productsStore.set(tiresIndexAtom, null)
 
 productsStore.set(tiresDiameterAtom, null)
-
-productsStore.set(seriesIdsAtom, []);
 
 productsStore.set(conditionAtom, 'used');
 
