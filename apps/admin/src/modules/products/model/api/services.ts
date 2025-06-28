@@ -25,6 +25,8 @@ export const findMany = async (
 
   if (dto.seriesId) queryParameters.append('car_series_id', dto.seriesId);
 
+  if(dto.carPartId) queryParameters.append("car_part_id",dto.carPartId)
+
   return (
     await instance.get(
       `${SERVICE_URLS.product}/${QUERY_KEYS.private}?${queryParameters.toString()}`

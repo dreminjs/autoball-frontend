@@ -7,5 +7,5 @@ export interface IGetProductsQueryParameters {
     isPrinted?: boolean | null
     brandId?: string | null
     seriesId?: string | null
-
+    carPartId?: string | null
 }

@@ -16,6 +16,7 @@ import { SERVICE_URLS } from '../../../shared/constants';
 import { useNotificationActions } from '../../notifications';
 import { useCarPartModal } from '../model/hooks/use-car-parts-modal';
 import { useChooseCarPart } from '../model/hooks/use-choose-car-part';
+import { findMany } from './services';
 
 export const useGetCarParts = (params = {}) => {
   return useInfiniteQuery<
@@ -23,8 +24,9 @@ export const useGetCarParts = (params = {}) => {
     AxiosError<IServerError>
   >({
     queryKey: [SERVICE_URLS.carpart, params],
-    queryFn: async () => {
-      return (await instance.get(SERVICE_URLS.carpart, { params })).data;
+    queryFn: async ({ pageParam }) => {
+      const cursor = typeof pageParam === 'number' ? pageParam : 0;
+      return await findMany({ cursor });
     },
     refetchOnWindowFocus: false,
     initialPageParam: 0,

@@ -7,6 +7,7 @@ import { ChooseCountItems } from './choose-count-items';
 import { ChoosePrintedStatus } from './choose-printed-status';
 import { ChooseBrand } from './items-list/choose-brand-list/choose-brand';
 import { ChooseSeries } from './items-list/choose-series-list/choose-series';
+import { ChooseCarPart } from './items-list/choose-car-part/choose-car-part';
 
 interface IProps {
   isOpen: boolean;
@@ -20,6 +21,7 @@ export const ProductsFilterDrawer: FC<IProps> = ({ isOpen, onClose }) => {
       <div className="px-[50px] py-5">
         <ChooseBrand type={'car'} />
         <ChooseSeries />
+        <ChooseCarPart />
         <ChooseCountItems />
         <ChoosePrintedStatus />
         <ChooseFuel />

@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useGetCarParts } from "../../api/queries";
 import { useInView } from "react-intersection-observer";
+import { useDebounce } from "use-debounce";
 
 export const useCarParts = () => {
 
@@ -8,28 +9,22 @@ export const useCarParts = () => {
 
   const [search, setSearch] = useState('');
 
-  const hasFetchedInitial = useRef(false);
+  const [debouncedSearchValue] = useDebounce(search,400)
 
   const { data, isError, isPending, isSuccess, error, refetch, fetchNextPage } =
     useGetCarParts({
-      search,
+      search: debouncedSearchValue,
       limit: 10
     });
 
   const handleChangeSearchValue = (newValue: string) => setSearch(newValue);
 
   useEffect(() => {
-    if (inView && !hasFetchedInitial.current) {
-      hasFetchedInitial.current = true;
+    if (inView) {
       fetchNextPage();
     }
   }, [fetchNextPage, inView]);
    
-  useEffect(() => {
-    if (inView && hasFetchedInitial.current) {
-      fetchNextPage();
-    }
-  }, [fetchNextPage, inView]);
 
   return {
     onChangeSearchValue: handleChangeSearchValue,
