@@ -1,31 +1,24 @@
 import { Button } from '../../../../../../../components/buttons';
-import { useToggleScanStatusCheckbox } from '../../../../../model/hooks/use-toggle-scan-status-checkbox';
+import { useToggleAvailibleStatusCheckbox } from '../../../../../model/hooks/use-toggle-availible-status-checkbox';
 
 export const AvailibleCheckboxButton = () => {
-  const {
-    onToggleScanCheckbox,
-    showScanCheckboxes,
-    checkboxes,
-    onConfirmScan
-  } = useToggleScanStatusCheckbox();
+  const {showAvailibleCheckboxes, onToggleAvailibleCheckbox, onConfirmAvailible, checkboxes} = useToggleAvailibleStatusCheckbox();
 
   return (
     <div>
-      {!showScanCheckboxes ? (
-        <Button onClick={onToggleScanCheckbox}>
+      {!showAvailibleCheckboxes ? (
+        <Button onClick={onToggleAvailibleCheckbox}>
           Отметить доступные товары
         </Button>
       ) : (
         <div className="flex gap-2">
           <Button
-            onClick={onConfirmScan}
+            onClick={onConfirmAvailible}
             disabled={checkboxes && checkboxes?.length < 1}
           >
             Отметить
           </Button>
-          <Button onClick={onToggleScanCheckbox}>
-            Отмена
-          </Button>
+          <Button onClick={onToggleAvailibleCheckbox}>Отмена</Button>
         </div>
       )}
     </div>

@@ -1,52 +1,79 @@
-import { useAtomValue } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import {
   checkboxesAtom,
+  showAvailibeCheckboxesAtom,
+  showScanCheckboxesAtom,
+  showUnavalibleCheckboxesAtom,
+  showUnscanCheckboxesAtom,
 } from '../atoms-page';
 import { useToggleScanStatus } from '../api/queries';
-import { useState } from 'react';
 
 export const useToggleScanStatusCheckbox = () => {
   const checkboxes = useAtomValue(checkboxesAtom);
-
   const { toggleScanStatus } = useToggleScanStatus();
-
-  const [showScanCheckboxes, setShowScanCheckboxes] = useState(
-    false
+  const [showScanCheckboxes, setShowScanCheckboxes] = useAtom(
+    showScanCheckboxesAtom
+  );
+  const [showUnscanCheckboxes, setShowUnscanCheckboxes] = useAtom(
+    showUnscanCheckboxesAtom
+  );
+  const [showAvailibleCheckboxes, setShowAvailibleCheckboxes] = useAtom(
+    showAvailibeCheckboxesAtom
+  );
+  const [showUnavailibleCheckboxes, setShowUnavailibleCheckbox] = useAtom(
+    showUnavalibleCheckboxesAtom
   );
 
-  const [showUnscanCheckboxes, setShowUnscanCheckboxes] = useState(
-    false
-  );
+  const resetOtherStates = (exclude: 'scan' | 'unscan') => {
+    if (exclude !== 'scan' && showScanCheckboxes) {
+      setShowScanCheckboxes(false);
+    }
+    if (exclude !== 'unscan' && showUnscanCheckboxes) {
+      setShowUnscanCheckboxes(false);
+    }
+    if (showAvailibleCheckboxes) setShowAvailibleCheckboxes(false);
+    if (showUnavailibleCheckboxes) setShowUnavailibleCheckbox(false);
+  };
 
   const handleToggleUnscanCheckbox = () => {
-    showScanCheckboxes && handleToggleScanCheckbox();
-    setShowUnscanCheckboxes((prev) => !prev);
+    setShowUnscanCheckboxes((prev) => {
+      const newValue = !prev;
+      if (newValue) {
+        resetOtherStates('unscan');
+      }
+      return newValue;
+    });
   };
 
   const handleToggleScanCheckbox = () => {
-    showUnscanCheckboxes && handleToggleUnscanCheckbox();
-    setShowScanCheckboxes((prev) => !prev);
+    setShowScanCheckboxes((prev) => {
+      const newValue = !prev;
+      if (newValue) {
+        resetOtherStates('scan');
+      }
+      return newValue;
+    });
   };
 
   const handleConfirmScan = () => {
     if (checkboxes && checkboxes?.length > 0) {
-      handleToggleScanCheckbox();
+      setShowScanCheckboxes(false);
+      toggleScanStatus({
+        is_printed: true,
+        products_id: checkboxes,
+      });
+    }
+  };
+
+  const handleConfirmUnscan = () => {
+    if (checkboxes && checkboxes?.length > 0) {
+      setShowUnscanCheckboxes(false);
       toggleScanStatus({
         is_printed: false,
         products_id: checkboxes,
       });
     }
-  }
-  
-    const handleConfirmUnscan = () => {
-      if (checkboxes && checkboxes?.length > 0) {
-        handleToggleUnscanCheckbox();
-        toggleScanStatus({
-          is_printed: false,
-          products_id: checkboxes,
-        });
-      }
-    };
+  };
 
   return {
     showScanCheckboxes,
