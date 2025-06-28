@@ -1,6 +1,6 @@
 import { useAtomValue } from 'jotai';
 import {
-  brandIdAtom,
+  carBrandIdAtom,
   carPartIdAtom,
   conditionAtom,
   countItemsAtom,
@@ -15,7 +15,7 @@ export const useFilterCategories = () => {
 
   const isPrintedStatus = useAtomValue(isPrintedStatusAtom);
 
-  const brandId = useAtomValue(brandIdAtom);
+  const carBrandId = useAtomValue(carBrandIdAtom);
 
   const seriesId = useAtomValue(seriesIdAtom);
 
@@ -25,7 +25,7 @@ export const useFilterCategories = () => {
     condition,
     countItems,
     isPrintedStatus,
-    brandId,
+    carBrandId,
     seriesId,
     carPartId,
   };

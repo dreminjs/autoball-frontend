@@ -4,6 +4,7 @@ import {
   FuelType,
   GearboxType,
 } from '@autoball-frontend/shared-types';
+import { TTiresCar, TTiresSeason } from '../../../shared/types';
 
 export const bodyTypeOptions = [
   { value: 'sedan', label: 'Седан' },
@@ -80,6 +81,16 @@ export const diameterOptions = [
   'R24',
   'R24.5',
 ] as const;
+
+export const seasonsOptions = [
+  "winter", "summer", "any"
+] as [TTiresSeason,TTiresSeason,TTiresSeason]
+
+export const tiresCarTypeOptions = [
+  "passenger",
+  "suv",
+  "truck"
+] as [TTiresCar,TTiresCar,TTiresCar]
 
 export const currenciesLabels: Record<Extract<Currency, "USD" |  "PLN">, string> = {
   USD: 'Американский Доллар',

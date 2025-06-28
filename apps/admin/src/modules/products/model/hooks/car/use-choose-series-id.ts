@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { seriesIdAtom } from '../..';
+import { seriesIdAtom } from '../../..';
 
 export const useChooseSeriesId = () => {
   const [choosedSeriesId, setChoosedSeriesId] = useAtom(seriesIdAtom);

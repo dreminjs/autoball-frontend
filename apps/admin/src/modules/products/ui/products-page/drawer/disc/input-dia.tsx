@@ -6,7 +6,7 @@ export const InputDia = () => {
 
   return (
     <FilterInput
-      label={'DIA'}
+      label={'Высота'}
       value={discDia || 0}
       onChange={(data) => typeof data === 'number' && onChangeDiscDia(data)}
       type={'number'}

@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { discEjectionAtom } from '../atoms-page';
+import { discEjectionAtom } from '../../atoms-page';
 
 export const useDiscEjection = () => {
   const [discEjection, setDiscEjection] = useAtom(discEjectionAtom);

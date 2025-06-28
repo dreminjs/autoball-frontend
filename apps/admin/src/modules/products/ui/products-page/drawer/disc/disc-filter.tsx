@@ -7,7 +7,6 @@ import { InputEjection } from "./input-ejection"
 import { InputDia } from "./input-dia"
 import { InputHoles } from "./input-holes"
 import { InputModel } from "./input-model"
-import { InputPcd } from "./input-pcd"
 import { ChooseDiscBrand } from "./choose-disc-brand/choose-disc-brand"
 
 export const DiscFilter = () => {
@@ -17,12 +16,11 @@ export const DiscFilter = () => {
             <AccordionTitle title={"Фильтрация дисков"} />
             <AccordionDetails>
                 <ChooseDiametr />
+                <InputDia />
                 <InputWidth />
                 <InputEjection />
-                <InputDia />
                 <InputHoles />
                 <InputModel />
-                <InputPcd />
                 <ChooseDiscBrand />
             </AccordionDetails>
         </Accordion>

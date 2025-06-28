@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { discBrandIdAtom } from '../atoms-page';
+import { discBrandIdAtom } from '../../atoms-page';
 
 export const useChooseDiscBrandId = () => {
   const [discBrandId, setDiscBrandId] = useAtom(discBrandIdAtom);

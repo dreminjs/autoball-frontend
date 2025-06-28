@@ -12,6 +12,7 @@ import { ChooseYear } from './choose-year/choose-year';
 import { ChoosePrice } from './choose-price/choose-price';
 import { ChooseAvailability } from './choose-availability';
 import { DiscFilter } from './disc/disc-filter';
+import { TireFilter } from './tire/tire-filter';
 
 interface IProps {
   isOpen: boolean;
@@ -29,6 +30,7 @@ export const ProductsFilterDrawer: FC<IProps> = ({ isOpen, onClose }) => {
         <ChooseYear />
         <ChoosePrice />
         <DiscFilter />
+        <TireFilter />
         <ChooseAvailability />
         <ChooseCountItems />
         <ChoosePrintedStatus />

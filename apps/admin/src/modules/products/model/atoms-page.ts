@@ -7,7 +7,7 @@ import {
 import { atom, createStore } from 'jotai';
 import { TAvailability } from './types/availability.interface';
 import { TDiameterOption } from './types/dics.interface';
-import { TTiresCar } from '../../../shared/types';
+import { TTiresCar, TTiresSeason } from '../../../shared/types';
 
 export const productsStore = createStore();
 
@@ -67,11 +67,13 @@ export const discPcdAtom = atom<number | null>(null);
 
 export const discBrandIdAtom = atom<string | null>(null);
 
-export const tireDiameterAtom = atom<TDiameterOption | null>(null)
+export const tiresDiameterAtom = atom<TDiameterOption | null>(null)
+
+export const tiresSeasonAtom = atom<TTiresSeason | null>(null)
 
 export const tiresWidthAtom = atom<string | null>(null)
 
-export const tiresHeightAtom = atom<string | null>(null) 
+export const tiresHeightAtom = atom<number | null>(null) 
 
 export const tiresIndexAtom = atom<string | null>(null)
 
@@ -81,6 +83,14 @@ export const tiresModelAtom = atom<string | null>(null)
 
 export const tiresBrandIdAtom = atom<string | null>(null)
 
+export const tiresResidueFromAtom = atom<number | null>(null)
+
+export const tiresResidueToAtom = atom<number | null>(null)
+
+productsStore.set(tiresResidueFromAtom, null)
+
+productsStore.set(tiresResidueToAtom, null)
+
 productsStore.set(tiresBrandIdAtom, null)
 
 productsStore.set(tiresModelAtom, null)
@@ -89,7 +99,7 @@ productsStore.set(tiresCarTypeAtom, null)
 
 productsStore.set(tiresIndexAtom, null)
 
-productsStore.set(tireDiameterAtom, null)
+productsStore.set(tiresDiameterAtom, null)
 
 productsStore.set(seriesIdsAtom, []);
 

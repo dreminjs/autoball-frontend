@@ -1,14 +1,14 @@
-import { useChooseDiscModel } from '../../../../model/hooks/disc/use-disc-model';
+import { useChooseTiresModel } from '../../../../model/hooks/tire/use-choose-tires-model';
 import { FilterInput } from '../filter-input';
 
 export const InputModel = () => {
-  const { discModel, onChangeDiscModel } = useChooseDiscModel();
+  const { tireModel, onChooseModel } = useChooseTiresModel();
 
   return (
     <FilterInput
       label={'Модель'}
-      value={discModel || ''}
-      onChange={(data) => typeof data === 'string' && onChangeDiscModel}
+      value={tireModel || ''}
+      onChange={(data) => typeof data === 'string' && onChooseModel(data)}
       type={'string'}
     />
   );
