@@ -10,7 +10,7 @@ export const InputSearch: FC<IProps> = ({search,onChange}) => {
     <input
       type="text"
       placeholder="Поиск..."
-      className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-white"
+      className="px-2 py-2 border mb-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-white"
       value={search}
       onChange={(e) => onChange(e.target.value)}
     />
