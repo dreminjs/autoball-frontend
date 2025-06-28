@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Button, CustomLink } from '../../../../../components/buttons';
-import { ScanButtons } from './scan/scan-buttonts';
+import { ToggleStatues } from './statuses/toggle-statuses';
 
 interface IProps {
   onShowDrawer: () => void;
@@ -20,7 +20,7 @@ export const Toolbar: FC<IProps> = ({ onShowDrawer }) => {
           Выложить новую запчасть
         </CustomLink>
       </div>
-      <ScanButtons />
+      <ToggleStatues />
     </div>
   );
 };

@@ -4,22 +4,18 @@ import { FC } from 'react';
 import { TextInput } from './text-input';
 import { SelectInput } from './select-input';
 import { diameterOptions } from '../../../model/data';
-import { ChooseBrand } from '../../../../car-brands';
 import { BrandType } from '../../../../../shared/interfaces/brands/type';
+import { ChooseBrand } from '../../products-page/drawer/items-list/choose-brand-list/choose-brand';
 
 interface IProps {
   register: UseFormRegister<ProductFormData>;
   errors: FieldErrors<ProductFormData>;
-  choosedItemId: string | null;
-  onChoose: (data: string | null) => void;
   type: BrandType;
 }
 
 export const DiscFields: FC<IProps> = ({
   errors,
   register,
-  choosedItemId,
-  onChoose,
   type,
 }) => {
   return (
@@ -47,8 +43,6 @@ export const DiscFields: FC<IProps> = ({
           error={errors.tires_height?.message}
         />
         <ChooseBrand
-          choosedItemId={choosedItemId}
-          onChoose={(data) => onChoose(data)}
           type={type}
         />
       </div>

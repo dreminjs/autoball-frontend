@@ -1,7 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { useGetCarParts } from "../../api/queries";
+import { useInView } from "react-intersection-observer";
 
-export const useCarParts = (inView: boolean) => {
+export const useCarParts = () => {
+
+  const {inView, ref} = useInView()
+
   const [search, setSearch] = useState('');
 
   const hasFetchedInitial = useRef(false);
@@ -36,7 +40,8 @@ export const useCarParts = (inView: boolean) => {
       isError,
       isPending,
       isSuccess,
-      error,
+      error: error?.response?.data.detail || "Error!" ,
     },
+    inViewRef: ref
   };
 };

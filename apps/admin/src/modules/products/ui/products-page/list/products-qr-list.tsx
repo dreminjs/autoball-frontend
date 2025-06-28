@@ -15,7 +15,6 @@ export const CarPartsQrList: FC<IProps> = ({ response }) => {
         response.map(({ items }) =>
           items.map((item) => <CarPartsQrItem key={item.id} {...item} />)
         )}
-        
     </ul>
   );
 };

@@ -5,7 +5,7 @@ import { useInView } from 'react-intersection-observer';
 export const useCarSeries = (brandId: string | null ) => {
   const { ref, inView } = useInView();
 
-  const { data, isError, isPending, error, fetchNextPage, hasNextPage } =
+  const { data, isError, isPending, error, fetchNextPage, hasNextPage, isSuccess } =
     useGetCarSeriesByBrandId(brandId);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export const useCarSeries = (brandId: string | null ) => {
   }, [inView, fetchNextPage, hasNextPage]);
 
   return {
-    states: { isError, isPending, error },
+    states: { isError, isPending, error: error?.response?.data.detail || "Error!", isSuccess },
     data,
     inViewRef: ref,
   };

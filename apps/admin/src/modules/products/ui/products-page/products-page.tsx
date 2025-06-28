@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useGetProducts } from '../../model/api/queries';
-import { CarPartsFilterDrawer } from './drawer/products-filter-drawer';
+import { ProductsFilterDrawer } from './drawer/products-filter-drawer';
 import { Toolbar } from './toolbar/toolbar';
 import { ProductsList } from './list/products-list';
 import { CarPartsQrList } from './list/products-qr-list';
@@ -22,7 +22,7 @@ export const ProductsPage = () => {
         />
         <CarPartsQrList response={data?.pages} />
       </div>
-      <CarPartsFilterDrawer
+      <ProductsFilterDrawer
         isOpen={isDrawerVisible}
         onClose={() => setIsDrawerVisible(false)}
       />

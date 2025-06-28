@@ -11,7 +11,7 @@ interface IProps {
 
 export const ProductsList: FC<IProps> = ({ response, isLoading, errorMessage }) => {
   return (
-    <ul className="h-[80vh] print:hidden">
+    <ul className="h-[70vh] overflow-y-scroll print:hidden">
       {isLoading && <li className="text-center">Загрузка...</li>}
       {errorMessage && <li className='text-center text-rose-600'>{errorMessage}</li>}
       {response &&

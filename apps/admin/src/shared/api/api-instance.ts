@@ -1,6 +1,7 @@
 import { API_URL } from "../constants";
 import axios from "axios";
 import errorCatch from "./api-error";
+import { ITokens } from "@autoball-frontend/shared-types";
 
 
 export const instance = axios.create({
@@ -27,7 +28,10 @@ instance.interceptors.response.use(
 			originalRequest._isRetry = true
 			retryCount += 1
 			try {
-				return instance.post("auth/refresh")
+			 const res = (await instance.post("auth/refresh")).data as ITokens
+
+			 localStorage.setItem("accessToken", res.access_token)
+
 			} catch (error: any) {
 				if (errorCatch(error) === 'jwt expired') {
 					// set auth false

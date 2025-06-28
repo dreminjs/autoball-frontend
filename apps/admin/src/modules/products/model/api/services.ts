@@ -18,12 +18,16 @@ export const findMany = async (
 
   if (dto.page) queryParameters.append('page', String(dto.page));
 
-  if (dto.isPrinted !== undefined && dto.isPrinted !== null)
+  if (dto.isPrinted)
     queryParameters.append('is_printed', String(dto.isPrinted));
+
+  if (dto.brandId) queryParameters.append('car_brand_id', dto.brandId);
+
+  if (dto.seriesId) queryParameters.append('car_series_id', dto.seriesId);
 
   return (
     await instance.get(
-      `${SERVICE_URLS.product}/${QUERY_KEYS.private}?page=1&page_size=10`
+      `${SERVICE_URLS.product}/${QUERY_KEYS.private}?${queryParameters.toString()}`
     )
   ).data;
 };

@@ -5,4 +5,7 @@ export interface IGetProductsQueryParameters {
     countItems?: number
     page: number
     isPrinted?: boolean | null
+    brandId?: string | null
+    seriesId?: string | null
+
 }

@@ -1,5 +1,5 @@
-import { Button } from '../../../../../../components/buttons';
-import { useToggleScanStatusCheckbox } from '../../../../model/hooks/use-toggle-scan-status-checkbox';
+import { Button } from '../../../../../../../components/buttons';
+import { useToggleScanStatusCheckbox } from '../../../../../model/hooks/use-toggle-scan-status-checkbox';
 
 export const ScanCheckboxButton = () => {
   const {
@@ -10,7 +10,7 @@ export const ScanCheckboxButton = () => {
   } = useToggleScanStatusCheckbox();
 
   return (
-    <div className='border-2 p-2 rounded-lg'>
+    <div>
       {!showScanCheckboxes ? (
         <Button variant="default" onClick={() => onToggleScanCheckbox()}>
           Отметить распечатаные товары

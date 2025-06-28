@@ -9,9 +9,11 @@ import { IServerError } from '../../../../shared/interfaces/server-error';
 import { IProduct } from '@autoball-frontend/shared-types';
 import { IInfiteScrollResponse } from '../../../../shared';
 import {
+  brandIdAtom,
   conditionAtom,
   countItemsAtom,
   isPrintedStatusAtom,
+  seriesIdAtom,
 } from '../atoms-page';
 import { useAtomValue } from 'jotai';
 import { ApiOperationState } from '../../../../shared/interfaces/api-operation-state.interface';
@@ -28,13 +30,17 @@ export const useGetProducts = (): {
 
   const isPrintedStatus = useAtomValue(isPrintedStatusAtom);
 
+  const brandId = useAtomValue(brandIdAtom)
+
+  const seriesId = useAtomValue(seriesIdAtom)
+
   return useInfiniteQuery<
     IInfiteScrollResponse<IProduct>,
     AxiosError<IServerError>
   >({
-    queryKey: [condition, countItems, isPrintedStatus],
+    queryKey: [condition, countItems, isPrintedStatus, seriesId, brandId ],
     queryFn: () =>
-      findMany({ condition, countItems, isPrinted: isPrintedStatus, page: 1 }),
+      findMany({ condition, countItems, isPrinted: isPrintedStatus, page: 1, brandId, seriesId }),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) =>
       lastPage.next_cursor,

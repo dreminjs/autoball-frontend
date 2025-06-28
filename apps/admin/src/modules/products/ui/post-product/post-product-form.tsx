@@ -1,7 +1,5 @@
 import {
-  RegisterOptions,
   useForm,
-  UseFormRegisterReturn,
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '../../../../components/buttons';
@@ -21,10 +19,8 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { TierFields } from './form/tier-fields';
 import { RadioGroup } from './form/radio-group';
 import { DiscFields } from './form/disc-fields';
-import { ChooseBrand } from '../../../car-brands';
-import { useChooseCarBrand } from '../../model/hooks/use-choose-car-brand';
-import { useChooseDiscBrand } from '../../model/hooks/use-choose-disc-brand';
 import { useChooseTireBrand } from '../../model/hooks/use-choose-tire-brand';
+import { ChooseBrand } from '../products-page/drawer/items-list/choose-brand-list/choose-brand';
 
 export const PostProductForm = () => {
   const {
@@ -49,14 +45,9 @@ export const PostProductForm = () => {
     },
   });
 
-  const { onChooseBrand: onChooseCarBrand, brandId: carBrandId } =
-    useChooseCarBrand();
-
   const { onChooseBrand: onChooseTireBrand, brandId: tireBrandId } =
     useChooseTireBrand();
 
-  const { onChooseBrand: onChooseDiscBrand, brandId: discBrandId } =
-    useChooseDiscBrand();
 
   const productType = watch('productType');
 
@@ -155,8 +146,6 @@ export const PostProductForm = () => {
         </div>
         {productType === 'car' && (
           <ChooseBrand
-            choosedItemId={carBrandId}
-            onChoose={(data) => onChooseCarBrand(data)}
             type={productType}
           />
         )}
@@ -178,8 +167,6 @@ export const PostProductForm = () => {
           <DiscFields
             register={register}
             errors={errors}
-            choosedItemId={discBrandId}
-            onChoose={onChooseDiscBrand}
             type={productType}
           />
         )}

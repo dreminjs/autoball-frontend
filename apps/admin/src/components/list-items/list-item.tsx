@@ -18,27 +18,23 @@ const icon = (
 );
 
 type IProps = {
-  choosedBrandId: string | null;
-  currentBrand: ICarBrand | null;
+  currentItem: { id: string; name: string } | null;
   onChoose: (data: null | string) => void;
+  isSelected: boolean;
 };
 
-export const ListItem: FC<IProps> = ({
-  choosedBrandId,
-  currentBrand,
-  onChoose,
-}) => {
-  const isSelected = choosedBrandId === currentBrand?.id || currentBrand === null
-
+export const ListItem: FC<IProps> = ({ currentItem, onChoose, isSelected }) => {
   const handleClick = () => {
-    currentBrand && onChoose(isSelected ? null : currentBrand?.id);
+    onChoose(
+      isSelected && currentItem === null ? null : currentItem && currentItem.id
+    );
   };
 
   return (
     <li
       className={`px-4 py-3 mb-1.5 cursor-pointer rounded-lg transition-all duration-200
         ${
-          isSelected 
+          isSelected
             ? 'bg-blue-100 border border-blue-300 text-blue-700 font-medium'
             : 'bg-white hover:bg-blue-50 border border-transparent text-gray-700'
         }
@@ -46,7 +42,9 @@ export const ListItem: FC<IProps> = ({
       onClick={handleClick}
     >
       <div className="flex items-center justify-between">
-        <span className="truncate">{currentBrand?.name ? currentBrand?.name : "Не важно"}</span>
+        <span className="truncate">
+          {currentItem?.name ? currentItem?.name : 'Не важно'}
+        </span>
         {isSelected && icon}
       </div>
     </li>

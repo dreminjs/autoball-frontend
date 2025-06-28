@@ -4,8 +4,8 @@ import { ProductFormData } from '../../../model/schemas/product.schema';
 import { FC } from 'react';
 import { SelectInput } from './select-input';
 import { diameterOptions } from '../../../model/data';
-import { ChooseBrand } from '../../../../car-brands';
 import { BrandType } from '../../../../../shared/interfaces/brands/type';
+import { ChooseBrand } from '../../products-page/drawer/items-list/choose-brand-list/choose-brand';
 
 interface IProps {
   register: UseFormRegister<ProductFormData>;
@@ -73,8 +73,6 @@ export const TierFields: FC<IProps> = ({
           error={errors.tires_residue?.message}
         />
         <ChooseBrand
-          choosedItemId={choosedItemId}
-          onChoose={(data) => onChoose(data)}
           type={type}
         />
       </div>

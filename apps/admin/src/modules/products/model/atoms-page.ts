@@ -20,27 +20,31 @@ export const gearboxAtom = atom<GearboxType | null>(null);
 
 export const isPrintedStatusAtom = atom<boolean | null>(null)
 
+export const showAvailibeCheckboxesAtom = atom<boolean>(false);
+
+export const showUnavalibleCheckboxesAtom = atom<boolean>(false);
+
 export const showScanCheckboxesAtom = atom<boolean>(false);
 
 export const showUnscanCheckboxesAtom = atom<boolean>(false);
 
-
 export const checkboxesAtom = atom<string[]>();
-
 
 export const countItemsAtom = atom<number>(5)
 
 export const brandIdAtom = atom<string | null>(null)
 
-productsStore.sub(brandIdAtom, () => console.log("Changed"))
+export const seriesIdAtom = atom<string | null>(null)
+
+export const carPartIdAtom = atom<string | null>(null)
 
 productsStore.set(brandIdAtom, null)
+
+productsStore.set(seriesIdAtom, null)
 
 productsStore.set(isPrintedStatusAtom, null)
 
 productsStore.set(countItemsAtom, 5)
-
-productsStore.set(showUnscanCheckboxesAtom, false)
 
 productsStore.set(seriesIdsAtom, []);
 
@@ -50,4 +54,3 @@ productsStore.set(fuelAtom, 'gasoline');
 
 productsStore.set(checkboxesAtom, []);
 
-productsStore.set(showScanCheckboxesAtom, false);

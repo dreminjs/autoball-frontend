@@ -1,4 +1,5 @@
+import { Actions } from "../actions";
 
 
 
-export type ChoosedItem<T> = (T & { type: 'delete' | 'edit' }) | null 
+export type ChoosedItem<T> = (T & Actions) | null 

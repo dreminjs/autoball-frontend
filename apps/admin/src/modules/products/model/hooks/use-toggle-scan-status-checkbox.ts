@@ -1,22 +1,21 @@
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtomValue } from 'jotai';
 import {
   checkboxesAtom,
-  showScanCheckboxesAtom,
-  showUnscanCheckboxesAtom,
 } from '../atoms-page';
 import { useToggleScanStatus } from '../api/queries';
+import { useState } from 'react';
 
 export const useToggleScanStatusCheckbox = () => {
   const checkboxes = useAtomValue(checkboxesAtom);
 
   const { toggleScanStatus } = useToggleScanStatus();
 
-  const [showScanCheckboxes, setShowScanCheckboxes] = useAtom(
-    showScanCheckboxesAtom
+  const [showScanCheckboxes, setShowScanCheckboxes] = useState(
+    false
   );
 
-  const [showUnscanCheckboxes, setShowUnscanCheckboxes] = useAtom(
-    showUnscanCheckboxesAtom
+  const [showUnscanCheckboxes, setShowUnscanCheckboxes] = useState(
+    false
   );
 
   const handleToggleUnscanCheckbox = () => {

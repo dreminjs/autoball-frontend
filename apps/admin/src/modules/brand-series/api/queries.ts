@@ -20,7 +20,7 @@ export const useGetCarSeriesByBrandId = (brandId: string | null) => {
   return useInfiniteQuery<IInfiteScrollResponse<ICarSeries>, AxiosError<IServerError>>({
     queryKey: [SERVICE_URLS.carseries, brandId],
     queryFn: () => findManyByBrandId(brandId || ''),
-    enabled: brandId !== null,
+    enabled: brandId !== null && brandId !== "",
     refetchOnWindowFocus: false,
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) =>

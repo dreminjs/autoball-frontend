@@ -1,7 +1,4 @@
 import {
-  BodyType,
-  FuelType,
-  GearboxType,
   IProduct,
   ProductCondition,
 } from '@autoball-frontend/shared-types';
