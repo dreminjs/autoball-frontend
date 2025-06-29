@@ -30,8 +30,9 @@ export const useGetProducts = () => {
     ],
     queryFn: () =>
       findMany({
-        page: 1,
         ...categories,
+        page: 1,
+        isPrintedStatus: JSON.parse(categories.isPrintedStatus) === null ? null : categories.isPrintedStatus
       }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.next_cursor,

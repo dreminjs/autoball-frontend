@@ -4,7 +4,7 @@ import { IInfiteScrollResponse } from '../../../../shared';
 import { IGetProductsQueryParameters } from '../types/get-products-query-parameters';
 import { IProduct } from '@autoball-frontend/shared-types';
 import { IToggleScanStatusDto } from '../types/toggle-scan-status.dto';
-import { IToggleAvailibleStatusDto } from '../types/toggle-availible-status.dto';
+import { IToggleAvailableStatusDto } from '../types/toggle-availible-status.dto';
 
 export const findMany = async (
   dto: IGetProductsQueryParameters
@@ -64,7 +64,7 @@ export const toggleScanStatus = async (dto: IToggleScanStatusDto) => {
   );
 };
 
-export const toggleAvailibleStatus = async (dto: IToggleAvailibleStatusDto) => {
+export const toggleAvailibleStatus = async (dto: IToggleAvailableStatusDto) => {
   return await instance.patch(
     `${SERVICE_URLS.product}/${QUERY_KEYS.toggle_availible_status}`,
     dto

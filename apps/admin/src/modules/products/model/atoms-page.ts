@@ -3,9 +3,9 @@ import {
   FuelType,
   GearboxType,
   ProductCondition,
+  TAvailability,
 } from '@autoball-frontend/shared-types';
 import { atom, createStore } from 'jotai';
-import { TAvailability } from './types/availability.interface';
 import { TDiameterOption } from './types/dics.interface';
 import { TTiresCar, TTiresSeason } from '../../../shared/types';
 

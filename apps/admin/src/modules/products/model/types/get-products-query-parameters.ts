@@ -1,13 +1,12 @@
-import { BodyType, FuelType, GearboxType, ProductCondition } from "@autoball-frontend/shared-types";
+import { BodyType, FuelType, GearboxType, ProductCondition, TAvailability } from "@autoball-frontend/shared-types";
 import { TDiameterOption } from "./dics.interface";
 import { TTiresCar, TTiresSeason } from "../../../../shared/types";
-import { TAvailability } from "./availability.interface";
 
 export interface IGetProductsQueryParameters {
   condition?: ProductCondition;
   countItems?: number;
   page: number;
-  isPrintedStatus?: boolean | null;
+  isPrintedStatus?: string | null;
   carBrandId?: string | null;
   seriesId?: string | null;
   carPartId?: string | null;

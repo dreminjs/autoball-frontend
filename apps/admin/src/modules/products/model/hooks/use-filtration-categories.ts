@@ -48,6 +48,7 @@ export const useFilterCategories = () => {
     countItems: useAtomValue(countItemsAtom),
     carBrandId: useAtomValue(carBrandIdAtom),
     seriesId: useAtomValue(seriesIdAtom),
+    isPrintedStatus: String(useAtomValue(isPrintedStatusAtom)),
     carPartId: useAtomValue(carPartIdAtom),
     yearFrom: useAtomValue(yearFromAtom)?.toString().trim(),
     yearTo: useAtomValue(yearToAtom)?.toString().trim(),
