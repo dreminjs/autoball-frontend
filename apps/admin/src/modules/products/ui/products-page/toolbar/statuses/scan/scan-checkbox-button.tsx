@@ -1,5 +1,5 @@
 import { Button } from '../../../../../../../components/buttons';
-import { useToggleScanStatusCheckbox } from '../../../../../model/hooks/use-toggle-scan-status-checkbox';
+import { useToggleScanStatusCheckbox } from '../../../../../model/hooks/products/use-toggle-scan-status-checkbox';
 
 export const ScanCheckboxButton = () => {
   const {

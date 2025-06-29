@@ -1,5 +1,5 @@
 import { useSetAtom } from 'jotai';
-import { availabilityAtom } from '../../../model/atoms-page';
+import { availabilityAtom } from '../../../model/product-atoms-page';
 import { TAvailability } from '../../../model/types/availability.interface';
 import { Select } from '../../../../../shared/ui/select';
 

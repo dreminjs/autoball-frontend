@@ -1,4 +1,4 @@
-import { useChooseTiresModel } from '../../../../model/hooks/tire/use-choose-tires-model';
+import { useChooseTiresModel } from '../../../../model/hooks/products/tire/use-choose-tires-model';
 import { FilterInput } from '../filter-input';
 
 export const InputModel = () => {

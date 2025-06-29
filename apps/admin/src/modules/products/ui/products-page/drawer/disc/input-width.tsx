@@ -1,4 +1,4 @@
-import { useChooseDiscWidth } from '../../../../model/hooks/disc/use-disc-width';
+import { useChooseDiscWidth } from '../../../../model/hooks/products/disc/use-disc-width';
 import { FilterInput } from '../filter-input';
 
 export const InputWidth = () => {

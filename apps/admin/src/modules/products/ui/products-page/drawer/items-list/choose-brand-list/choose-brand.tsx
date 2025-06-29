@@ -3,9 +3,10 @@ import { BrandList } from './list';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import { AccordionTitle } from '../../accordion-title';
-import { InputSearch } from '../input-search';
+import { InputSearch } from '../../../../../../../components/input-search';
 import { BrandType } from '../../../../../../../shared/types/brands/type';
 import { useBrands } from '../../../../../../brands/model/hooks/use-brands';
+import { typesBrandsLabels } from '../../../../../model/data';
 
 interface IProps {
   type: BrandType;
@@ -17,7 +18,7 @@ export const ChooseBrand: FC<IProps> = ({ type }) => {
  
   return (
     <Accordion className="border border-gray-200 rounded-lg max-w-xs shadow-sm mb-2 bg-white">
-    <AccordionTitle title={'бренд запчасти'} />
+    <AccordionTitle title={`бренды ${typesBrandsLabels[type]}`} />
       <AccordionDetails>
         <InputSearch search={search} onChange={onChangeSearchValue} />
         <BrandList

@@ -1,5 +1,5 @@
 import { useSetAtom } from 'jotai';
-import { conditionAtom } from '../../../model/atoms-page';
+import { conditionAtom } from '../../../model/product-atoms-page';
 import { ProductCondition } from '@autoball-frontend/shared-types';
 import { Select } from '../../../../../shared/ui/select';
 

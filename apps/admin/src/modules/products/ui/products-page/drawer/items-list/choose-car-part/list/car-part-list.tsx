@@ -6,7 +6,7 @@ import { InfiniteData } from '@tanstack/react-query';
 import { FC } from 'react';
 import { List, ListItem } from '../../../../../../../../components';
 import { ApiOperationState } from '../../../../../../../../shared';
-import { useChooseCarPartId } from '../../../../../../model/hooks/car/use-choose-car-part-id';
+import { useChooseCarPartId } from '../../../../../../model/hooks/products/car/use-choose-car-part-id';
 
 interface IProps {
   data?: InfiniteData<IInfiteScrollResponse<ICarPart>>;

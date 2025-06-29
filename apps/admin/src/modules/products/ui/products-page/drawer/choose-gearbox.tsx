@@ -1,6 +1,6 @@
 import { useSetAtom } from 'jotai';
 import { Select } from '../../../../../shared/ui/select';
-import { gearboxAtom } from '../../../model/atoms-page';
+import { gearboxAtom } from '../../../model/product-atoms-page';
 import { GearboxType } from '@autoball-frontend/shared-types';
 
 export const ChooseGearbox = () => {

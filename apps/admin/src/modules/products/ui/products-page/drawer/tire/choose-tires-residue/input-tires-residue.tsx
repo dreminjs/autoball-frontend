@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { useChooseResidueRange } from "../../../../../model/hooks/tire/use-tires-residue";
+import { useChooseResidueRange } from "../../../../../model/hooks/products/tire/use-tires-residue";
 
 
 

@@ -1,7 +1,7 @@
 import { useSetAtom } from 'jotai';
 import { Select } from '../../../../../../shared/ui/select';
 import { diameterOptions } from '../../../../model/data';
-import { discDiameterAtom } from '../../../../model/atoms-page';
+import { discDiameterAtom } from '../../../../model/product-atoms-page';
 import { TDiameterOption } from '../../../../model/types/dics.interface';
 
 export const ChooseDiametr = () => {

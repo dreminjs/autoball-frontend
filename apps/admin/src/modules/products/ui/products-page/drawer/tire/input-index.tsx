@@ -1,4 +1,4 @@
-import { useChooseTiresIndex } from '../../../../model/hooks/tire/use-choose-tires-index';
+import { useChooseTiresIndex } from '../../../../model/hooks/products/tire/use-choose-tires-index';
 import { FilterInput } from '../filter-input';
 
 export const InputIndex = () => {

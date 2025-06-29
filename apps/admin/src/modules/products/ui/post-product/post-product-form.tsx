@@ -1,6 +1,4 @@
-import {
-  useForm,
-} from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '../../../../components/buttons';
 import { productSchema } from '../../model/schemas/product.schema';
@@ -19,8 +17,8 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { TierFields } from './form/tier-fields';
 import { RadioGroup } from './form/radio-group';
 import { DiscFields } from './form/disc-fields';
-import { ChooseBrand } from '../products-page/drawer/items-list/choose-brand-list/choose-brand';
-import { useChooseTireId } from '../../model/hooks/tire/use-choose-tires-brand-id';
+import { AddCarPartCharacteristicsModal } from './form/characteristics/add-car-part-characteristics/add-car-part-characteristics-modal';
+import { useCarPartCharacteristicsModal } from '../../model/hooks/products/use-car-part-characteristics-modal';
 
 export const PostProductForm = () => {
   const {
@@ -45,9 +43,7 @@ export const PostProductForm = () => {
     },
   });
 
-  const { onChooseBrandId: onChooseTireBrandId, tirebrandId } =
-    useChooseTireId();
-
+  const { isOpen, onToggleModal } = useCarPartCharacteristicsModal();
 
   const productType = watch('productType');
 
@@ -56,136 +52,142 @@ export const PostProductForm = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-4 mx-auto">
-        <h2 className="text-2xl font-bold">Создание нового продукта</h2>
-        <RadioGroup
-          label="Тип продукта"
-          name="productType"
-          register={register}
-          options={[
-            { value: 'tire', label: 'Шины' },
-            { value: 'disc', label: 'Диски' },
-            { value: 'car', label: 'Другие детали' },
-          ]}
-        />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <TextInput
-            label="OEM номер"
-            name="OEM"
+    <>
+      <div>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-4 p-4 mx-auto"
+        >
+          <h2 className="text-2xl font-bold">Создание нового продукта</h2>
+          <RadioGroup
+            label="Тип продукта"
+            name="productType"
             register={register}
-            error={errors.OEM?.message}
+            options={[
+              { value: 'tire', label: 'Шины' },
+              { value: 'disc', label: 'Диски' },
+              { value: 'car', label: 'Другие детали' },
+            ]}
           />
-          <TextInput label="VIN" name="VIN" register={register} />
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <TextInput
+              label="OEM номер"
+              name="OEM"
+              register={register}
+              error={errors.OEM?.message}
+            />
+            <TextInput label="VIN" name="VIN" register={register} type="text" />
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <SelectInput
-            label={'Выберите валюту'}
-            name={'currency'}
-            register={register}
-            options={currenciesOptions.map((el) => ({ label: el, value: el }))}
-          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <SelectInput
+              label={'Выберите валюту'}
+              name={'currency'}
+              register={register}
+              options={currenciesOptions.map((el) => ({
+                label: el,
+                value: el,
+              }))}
+            />
+            <TextInput
+              label={`Реальная цена (${watch('currency')})`}
+              name="real_price"
+              type="number"
+              error={errors.real_price?.message}
+              register={register}
+            />
+            <TextInput
+              label={`Фейковая цена (${watch('currency')})`}
+              name="fake_price"
+              type="number"
+              error={errors.fake_price?.message}
+              register={register}
+            />
+            <TextInput
+              label="Количество"
+              name="count"
+              type="number"
+              error={errors.count?.message}
+              register={register}
+            />
+
+            <TextInput
+              label="Год выпуска"
+              name="year"
+              type="number"
+              error={errors.year?.message}
+              register={register}
+            />
+            <TextInput
+              label="Объем двигателя"
+              name="volume"
+              type="number"
+              step="0.1"
+              error={errors.volume?.message}
+              register={register}
+            />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <SelectInput
+              label="Тип кузова"
+              name="type_of_body"
+              register={register}
+              options={bodyTypeOptions}
+            />
+            <SelectInput
+              label="Коробка передач"
+              name="gearbox"
+              register={register}
+              options={gearboxOptions}
+            />
+            <SelectInput
+              label="Тип топлива"
+              name="fuel"
+              register={register}
+              options={fuelOptions}
+            />
+          </div>
+          <Button type="button" onClick={onToggleModal}>Добавить характерстики запчасти</Button>
+
           <TextInput
-            label={`Реальная цена (${watch("currency")})`}
-            name="real_price"
-            type="number"
-            error={errors.real_price?.message}
+            label="Описание"
+            name="description"
             register={register}
-          />
-          <TextInput
-            label={`Фейковая цена (${watch("currency")})`}
-            name="fake_price"
-            type="number"
-            error={errors.fake_price?.message}
-            register={register}
-          />
-          <TextInput
-            label="Количество"
-            name="count"
-            type="number"
-            error={errors.count?.message}
-            register={register}
+            rows={3}
           />
 
           <TextInput
-            label="Год выпуска"
-            name="year"
-            type="number"
-            error={errors.year?.message}
+            label="Примечания"
+            name="note"
             register={register}
+            rows={2}
           />
-          <TextInput
-            label="Объем двигателя"
-            name="volume"
-            type="number"
-            step="0.1"
-            error={errors.volume?.message}
-            register={register}
-          />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <SelectInput
-            label="Тип кузова"
-            name="type_of_body"
-            register={register}
-            options={bodyTypeOptions}
-          />
-          <SelectInput
-            label="Коробка передач"
-            name="gearbox"
-            register={register}
-            options={gearboxOptions}
-          />
-          <SelectInput
-            label="Тип топлива"
-            name="fuel"
-            register={register}
-            options={fuelOptions}
-          />
-        </div>
-        {productType === 'car' && (
-          <ChooseBrand
-            type={productType}
-          />
-        )}
+          {productType === 'disc' && (
+            <DiscFields
+              register={register}
+              errors={errors}
+              type={productType}
+            />
+          )}
+          {
+            productType === 'tire' && 1132
+            // <TierFields
+            //   register={register}
+            //   errors={errors}
+            //   choosedItemId={tirebrandId}
+            //   onChoose={onChooseTireBrandId}
+            //   type={productType}
+            // />
+          }
 
-        <TextInput
-          label="Описание"
-          name="description"
-          register={register}
-          rows={3}
-        />
+          <DndProvider backend={HTML5Backend}>
+            <PhotoUploader onPhotosChange={(photos) => console.log(photos)} />
+          </DndProvider>
 
-        <TextInput
-          label="Примечания"
-          name="note"
-          register={register}
-          rows={2}
-        />
-        {productType === 'disc' && (
-          <DiscFields
-            register={register}
-            errors={errors}
-            type={productType}
-          />
-        )}
-        {productType === 'tire' && (
-          <TierFields
-            register={register}
-            errors={errors}
-            choosedItemId={tirebrandId}
-            onChoose={onChooseTireBrandId}
-            type={productType}
-          />
-        )}
-
-        <DndProvider backend={HTML5Backend}>
-          <PhotoUploader onPhotosChange={(photos) => console.log(photos)} />
-        </DndProvider>
-
-        <Button type="submit">Создать продукт</Button>
-      </form>
-    </div>
+          <Button type="submit">Создать продукт</Button>
+        </form>
+      </div>
+      <AddCarPartCharacteristicsModal isOpen={isOpen} onClose={onToggleModal} />
+    </>
   );
 };

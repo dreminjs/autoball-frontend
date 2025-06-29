@@ -1,6 +1,6 @@
 import { useSetAtom } from 'jotai';
 import { Select } from '../../../../../shared/ui/select';
-import { bodyAtom } from '../../../model/atoms-page';
+import { bodyAtom } from '../../../model/product-atoms-page';
 import { BodyType} from '@autoball-frontend/shared-types';
 
 export const ChooseBody = () => {

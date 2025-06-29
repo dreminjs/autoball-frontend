@@ -3,7 +3,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import { useWheelComponentsBrands } from '../../../../../../wheels/model/hooks/use-wheel-components-brand';
 import { AccordionTitle } from '../../accordion-title';
 import { DiscBrandList } from './disc-brand-list';
-import { InputSearch } from '../../items-list/input-search';
+import { InputSearch } from '../../../../../../../components/input-search';
 
 export const ChooseDiscBrand = () => {
   const { search, states, onChangeSearchValue, data, inViewRef } =

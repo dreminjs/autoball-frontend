@@ -6,7 +6,7 @@ import {
 import { FC } from 'react';
 import { List, ListItem } from '../../../../../../../../components';
 import { ApiOperationState } from '../../../../../../../../shared';
-import { useChooseSeriesId } from '../../../../../../model/hooks/car/use-choose-series-id';
+import { useChooseSeriesId } from '../../../../../../model/hooks/products/car/use-choose-series-id';
 
 interface IProps {
   data?: InfiniteData<IInfiteScrollResponse<ICarSeries>>;

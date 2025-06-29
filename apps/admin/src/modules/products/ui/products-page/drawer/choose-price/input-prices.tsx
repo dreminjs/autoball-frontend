@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { useChoosePrices } from "../../../../model/hooks/use-choose-prices"
+import { useChoosePrices } from "../../../../model/hooks/products/use-choose-prices";
 
 
 

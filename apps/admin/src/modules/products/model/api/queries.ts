@@ -10,11 +10,11 @@ import { IProduct } from '@autoball-frontend/shared-types';
 import { IInfiteScrollResponse } from '../../../../shared';
 import { IToggleAvailableStatusDto } from '../types/toggle-availible-status.dto';
 import { IToggleScanStatusDto } from '../types/toggle-scan-status.dto';
-import { useFilterCategories } from '../hooks/use-filtration-categories';
 import { QUERY_KEYS, SERVICE_URLS } from '../../../../shared/constants';
-import { checkboxesAtom } from '../atoms-page';
+import { checkboxesAtom } from '../product-atoms-page';
 import { useSetAtom } from 'jotai';
 import { useNotificationActions } from '../../../notifications';
+import { useFilterCategories } from '../hooks/products/use-filtration-categories';
 
 export const useGetProducts = () => {
   const categories = useFilterCategories();

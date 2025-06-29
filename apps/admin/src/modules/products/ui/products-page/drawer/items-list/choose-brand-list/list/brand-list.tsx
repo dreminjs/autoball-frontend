@@ -6,8 +6,8 @@ import { FC } from 'react';
 import { InfiniteData } from '@tanstack/react-query';
 import { List, ListItem } from '../../../../../../../../components';
 import { ApiOperationState } from '../../../../../../../../shared';
-import { useChooseCarBrandId } from '../../../../../../model/hooks/car/use-choose-car-brand-id';
-import { useChooseSeriesId } from '../../../../../../model/hooks/car/use-choose-series-id';
+import { useChooseCarBrandId } from '../../../../../../model/hooks/products/car/use-choose-car-brand-id';
+import { useChooseSeriesId } from '../../../../../../model/hooks/products/car/use-choose-series-id';
 
 interface IProps {
   data?: InfiniteData<IInfiteScrollResponse<ICarBrand>>;
@@ -18,7 +18,6 @@ interface IProps {
 export const BrandList: FC<IProps> = ({ data, ref, states }) => {
   const { onChooseBrand, brandId } = useChooseCarBrandId();
   const { onCancel } = useChooseSeriesId()
-
 
   return (
     <List

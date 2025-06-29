@@ -5,6 +5,7 @@ import {
   GearboxType,
 } from '@autoball-frontend/shared-types';
 import { TTiresCar, TTiresSeason } from '../../../shared/types';
+import { BrandType } from '../../../shared/types/brands/type';
 
 export const bodyTypeOptions = [
   { value: 'sedan', label: 'Седан' },
@@ -96,3 +97,10 @@ export const currenciesLabels: Record<Extract<Currency, "USD" |  "PLN">, string>
   USD: 'Американский Доллар',
   PLN: 'Польский Злот',
 };
+
+
+export const typesBrandsLabels: Record<BrandType, string> = {
+  car: 'запчастей',
+  tire: 'шин',
+  disc: 'дисков'
+}

@@ -1,5 +1,5 @@
 import { Button } from "../../../../../../../components/buttons";
-import { useToggleAvailableStatusCheckbox } from "../../../../../model/hooks/use-toggle-availible-status-checkbox";
+import { useToggleAvailableStatusCheckbox } from "../../../../../model/hooks/products/use-toggle-availible-status-checkbox";
 
 export const UnavailableCheckboxButton = () => {
   const {

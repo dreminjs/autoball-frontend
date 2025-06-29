@@ -1,4 +1,4 @@
-import { useChooseDiscModel } from '../../../../model/hooks/disc/use-disc-model';
+import { useChooseDiscModel } from '../../../../model/hooks/products/disc/use-disc-model';
 import { FilterInput } from '../filter-input';
 
 export const InputModel = () => {

@@ -1,4 +1,4 @@
-import { useDiscEjection } from '../../../../model/hooks/disc/use-disc-ejection';
+import { useDiscEjection } from '../../../../model/hooks/products/disc/use-disc-ejection';
 import { FilterInput } from '../filter-input';
 
 export const InputEjection = () => {

@@ -18,7 +18,7 @@ export const useGetBrands = (args: IArgs) => {
     IInfiteScrollResponse<ICarBrand>,
     AxiosError<IServerError>
   >({
-    queryKey: [args.type],
+    queryKey: [Object.values(args)],
     queryFn: ({ pageParam }) => findMany({
       type: args.type,
       search: args.search,

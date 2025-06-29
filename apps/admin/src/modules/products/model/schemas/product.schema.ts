@@ -9,9 +9,12 @@ export const productSchema = z
     car_part_id: z.string().uuid('Некорректный ID'),
     currency: z.enum(currenciesOptions),
     year: z
-      .number({ message: 'Обязательное поле' })
+      .number({
+        message: 'Обязательное поле',
+        invalid_type_error: 'не правильный тип',
+      })
       .min(1950, 'Год должен быть не ранее 1950')
-      .max(new Date().getFullYear()),
+      .max(new Date().getFullYear() + 5),
     type_of_body: z.enum([
       'sedan',
       'hatchback',
@@ -42,7 +45,7 @@ export const productSchema = z
     count: z.number().min(1, 'Минимальное количество: 1'),
     productType: z.enum(['tire', 'disc', 'car'], {
       required_error: 'Выберите тип продукта',
-    }),    
+    }),
     tires_diametr: z.enum(diameterOptions).optional(),
     tires_width: z.number().optional(),
     tires_height: z.number().optional(),
@@ -83,5 +86,4 @@ export const productSchema = z
     }
   });
 
-// Обновите тип ProductFormData
 export type ProductFormData = z.infer<typeof productSchema>;

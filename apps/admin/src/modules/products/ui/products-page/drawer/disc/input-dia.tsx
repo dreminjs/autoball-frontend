@@ -1,4 +1,4 @@
-import { useChooseDiscDia } from '../../../../model/hooks/disc/use-disc-dia';
+import { useChooseDiscDia } from '../../../../model/hooks/products/disc/use-disc-dia';
 import { FilterInput } from '../filter-input';
 
 export const InputDia = () => {

@@ -1,5 +1,5 @@
 import { useSetAtom } from 'jotai';
-import { tiresCarTypeAtom } from '../../../../model/atoms-page';
+import { tiresCarTypeAtom } from '../../../../model/product-atoms-page';
 import { Select } from '../../../../../../shared/ui/select';
 import { TTiresCar } from '../../../../../../shared/types';
 import { tiresCarTypeOptions } from '../../../../model/data';

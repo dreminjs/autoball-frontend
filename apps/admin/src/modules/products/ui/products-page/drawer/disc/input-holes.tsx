@@ -1,4 +1,4 @@
-import { useChooseDiscHoles } from '../../../../model/hooks/disc/use-disc-holes';
+import { useChooseDiscHoles } from '../../../../model/hooks/products/disc/use-disc-holes';
 import { FilterInput } from '../filter-input';
 
 export const InputHoles = () => {

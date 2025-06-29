@@ -1,7 +1,7 @@
 import { useSetAtom } from 'jotai';
 import { Select } from '../../../../../../shared/ui/select';
 import { seasonsOptions } from '../../../../model/data';
-import { tiresSeasonAtom } from '../../../../model/atoms-page';
+import { tiresSeasonAtom } from '../../../../model/product-atoms-page';
 import { TTiresSeason } from '../../../../../../shared/types';
 
 export const SelectSeason = () => {

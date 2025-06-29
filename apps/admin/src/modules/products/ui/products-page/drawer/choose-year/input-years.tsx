@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { useChooseYears } from '../../../../model/hooks/use-choose-years';
+import { useChooseYears } from '../../../../model/hooks/products/use-choose-years';
 
 export const InputYears: FC = () => {
   const { yearFrom, yearTo, onChangeYearFrom, onChangeYearTo } = useChooseYears();

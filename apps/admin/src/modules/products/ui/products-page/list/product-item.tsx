@@ -7,7 +7,7 @@ import {
   showScanCheckboxesAtom,
   showUnavalibleCheckboxesAtom,
   showUnscanCheckboxesAtom,
-} from '../../../model/atoms-page';
+} from '../../../model/product-atoms-page';
 import { bodyTypeTitles, fuelTitles, gearboxTitles } from '../../../model/data';
 
 type Props = IProduct;

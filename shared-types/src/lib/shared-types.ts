@@ -9,8 +9,8 @@ export interface IUser {
 
 export interface ICarBrand {
   id: uuid;
-  name: string;
-  picture: string;
+  name: string
+  picture: string
 }
 
 export interface ICarSeries {

@@ -6,7 +6,7 @@ import {
 } from '@autoball-frontend/shared-types';
 import { ApiOperationState } from '../../../../../../../shared';
 import { FC } from 'react';
-import { useChooseDiscBrandId } from '../../../../../model/hooks/disc/use-choose-disc-brand-id';
+import { useChooseDiscBrandId } from '../../../../../model/hooks/products/disc/use-choose-disc-brand-id';
 
 interface IProps {
   data?: InfiniteData<IInfiteScrollResponse<IWheelComponentBrand>>;

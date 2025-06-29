@@ -1,6 +1,6 @@
 import { useSetAtom } from 'jotai';
 import { Select } from '../../../../../shared/ui/select';
-import { fuelAtom } from '../../../model/atoms-page';
+import { fuelAtom } from '../../../model/product-atoms-page';
 import { FuelType } from '@autoball-frontend/shared-types';
 
 export const ChooseFuel = () => {
