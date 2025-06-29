@@ -18,7 +18,9 @@ export const ProductItem: FC<Props> = (props) => {
 
   const isShowUnscanCheckboxes = useAtomValue(showUnscanCheckboxesAtom);
 
-  const isShowUnavailibleCheckboxes = useAtomValue(showUnavalibleCheckboxesAtom);
+  const isShowUnavailibleCheckboxes = useAtomValue(
+    showUnavalibleCheckboxesAtom
+  );
 
   const [checkboxes, setCheckboxes] = useAtom(checkboxesAtom);
   const checked = checkboxes?.some((id) => id === props.id);
@@ -39,7 +41,10 @@ export const ProductItem: FC<Props> = (props) => {
 
   return (
     <li className="relative border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow bg-white mb-4">
-      {(isShowScanCheckboxes || isShowAvailibleCheckboxes || isShowUnscanCheckboxes || isShowUnavailibleCheckboxes ) && (
+      {(isShowScanCheckboxes ||
+        isShowAvailibleCheckboxes ||
+        isShowUnscanCheckboxes ||
+        isShowUnavailibleCheckboxes) && (
         <div className="absolute top-4 right-4">
           <input
             type="checkbox"
@@ -85,7 +90,7 @@ export const ProductItem: FC<Props> = (props) => {
                 </div>
                 <div className="flex items-start">
                   <span className="text-gray-500 min-w-[70px]">Топливо:</span>
-                  <span>{fuelTitles[props.fuel]}</span>
+                  <span>{fuelTitles[props.fuel] || "-"}</span>
                 </div>
                 <div className="flex items-start">
                   <span className="text-gray-500 min-w-[70px]">Кузов:</span>
@@ -124,7 +129,9 @@ export const ProductItem: FC<Props> = (props) => {
                 )}
                 {props.disc_holes && (
                   <div className="flex items-start">
-                    <span className="text-gray-500 min-w-[70px]">Кол-во отверстий:</span>
+                    <span className="text-gray-500 min-w-[70px]">
+                      Кол-во отверстий:
+                    </span>
                     <span>{props.disc_holes}</span>
                   </div>
                 )}
@@ -172,6 +179,20 @@ export const ProductItem: FC<Props> = (props) => {
               <span className="text-gray-500 min-w-[70px]">OEM:</span>
               <span className="font-mono">{props.OEM}</span>
             </div>
+            <div className="flex items-start gap-1">
+              <span className="text-gray-500 min-w-[70px]">Распечатано:</span>
+              <span className="font-mono">
+                {props.is_printed ? '✅' : '❌'}
+              </span>
+            </div>
+            {props.availability === 'custom order' && (
+              <div className="flex items-start gap-1">
+                <span className="text-gray-500 min-w-[70px]">
+                  Есть на складе:{' '}
+                </span>
+                <span className="font-mono">под заказ</span>
+              </div>
+            )}
           </div>
 
           {props.description && (

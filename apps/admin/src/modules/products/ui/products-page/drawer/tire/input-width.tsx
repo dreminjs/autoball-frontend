@@ -8,7 +8,7 @@ export const InputWidth = () => {
     <FilterInput
       label={'Ширина'}
       value={tiresWidth || ''}
-      onChange={(data) => typeof data === 'number' && onChooseWidth}
+      onChange={(data) => onChooseWidth(data.toString())}
       type={'number'}
     />
   );

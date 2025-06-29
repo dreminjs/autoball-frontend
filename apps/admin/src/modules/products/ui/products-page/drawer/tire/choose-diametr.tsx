@@ -10,7 +10,13 @@ export const ChooseDiametr = () => {
   return (
     <Select
       label={'Диаметр'}
-      onChange={(e) => setDiscDiameter(e.target.value as TDiameterOption) }
+      onChange={(e) =>
+        setDiscDiameter(
+          e.target.value === 'not-matter'
+            ? null
+            : (e.target.value as TDiameterOption)
+        )
+      }
       options={diameterOptions.map((el) => ({ value: el, title: el }))}
     />
   );

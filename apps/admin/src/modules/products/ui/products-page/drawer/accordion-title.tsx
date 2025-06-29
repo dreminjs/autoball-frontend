@@ -9,7 +9,7 @@ export const AccordionTitle:FC<IProps> = ({title}) => {
   return (
     <AccordionSummary>
       <h2 className="font-medium text-gray-800">
-        Выберите <span className="font-bold underline">{title}</span>{' '}
+        {title}
       </h2>
     </AccordionSummary>
   );

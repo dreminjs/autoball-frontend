@@ -6,28 +6,38 @@ import {
   showUnavalibleCheckboxesAtom,
   showUnscanCheckboxesAtom,
 } from '../atoms-page';
+import { useToggleAvailableStatus } from '../api/queries';
 
-export const useToggleAvailibleStatusCheckbox = () => {
+export const useToggleAvailableStatusCheckbox = () => {
   const [checkboxes, setCheckboxes] = useAtom(checkboxesAtom);
-  const [showAvailibleCheckboxes, setShowAvailibleCheckboxes] = useAtom(showAvailibeCheckboxesAtom);
-  const [showUnavailibleCheckboxes, setShowUnavailibleCheckbox] = useAtom(showUnavalibleCheckboxesAtom);
-  const [showScanCheckboxes, setShowScanCheckboxes] = useAtom(showScanCheckboxesAtom);
-  const [showUnscanCheckboxes, setShowUnscanCheckboxes] = useAtom(showUnscanCheckboxesAtom);
+  const [showAvailableCheckboxes, setShowAvailableCheckboxes] = useAtom(
+    showAvailibeCheckboxesAtom
+  );
+  const [showUnavailableCheckboxes, setShowUnavailableCheckbox] = useAtom(
+    showUnavalibleCheckboxesAtom
+  );
+  const [showScanCheckboxes, setShowScanCheckboxes] = useAtom(
+    showScanCheckboxesAtom
+  );
+  const [showUnscanCheckboxes, setShowUnscanCheckboxes] = useAtom(
+    showUnscanCheckboxesAtom
+  );
+  const { toggleAvailableStatus } = useToggleAvailableStatus();
 
   const resetOtherStates = (exclude: 'availible' | 'unavailible') => {
     setCheckboxes([]);
-    if (exclude !== 'availible' && showAvailibleCheckboxes) {
-      setShowAvailibleCheckboxes(false);
+    if (exclude !== 'availible' && showAvailableCheckboxes) {
+      setShowAvailableCheckboxes(false);
     }
-    if (exclude !== 'unavailible' && showUnavailibleCheckboxes) {
-      setShowUnavailibleCheckbox(false);
+    if (exclude !== 'unavailible' && showUnavailableCheckboxes) {
+      setShowUnavailableCheckbox(false);
     }
     if (showScanCheckboxes) setShowScanCheckboxes(false);
     if (showUnscanCheckboxes) setShowUnscanCheckboxes(false);
   };
 
   const handleToggleUnavailibleCheckbox = () => {
-    setShowUnavailibleCheckbox(prev => {
+    setShowUnavailableCheckbox((prev) => {
       const newValue = !prev;
       if (newValue) {
         resetOtherStates('unavailible');
@@ -37,7 +47,7 @@ export const useToggleAvailibleStatusCheckbox = () => {
   };
 
   const handleToggleAvailibleCheckbox = () => {
-    setShowAvailibleCheckboxes(prev => {
+    setShowAvailableCheckboxes((prev) => {
       const newValue = !prev;
       if (newValue) {
         resetOtherStates('availible');
@@ -46,35 +56,33 @@ export const useToggleAvailibleStatusCheckbox = () => {
     });
   };
 
-  const handleConfirmAvailible = () => {
+  const handleConfirmAvailable = () => {
     if (checkboxes && checkboxes?.length > 0) {
-      setShowAvailibleCheckboxes(false);
-      // TODO: Implement confirm availible
-      // toggleAvailibleStatus({
-      //   is_availible: true,
-      //   products_id: checkboxes,
-      // });
+      setShowAvailableCheckboxes(false);
+      toggleAvailableStatus({
+        is_available: true,
+        products_id: checkboxes,
+      });
     }
   };
 
-  const handleConfirmUnavailible = () => {
+  const handleConfirmUnavailable = () => {
     if (checkboxes && checkboxes?.length > 0) {
-      setShowUnavailibleCheckbox(false);
-      // TODO: Implement confirm unavailible
-      // toggleAvailibleStatus({
-      //   is_availible: false,
-      //   products_id: checkboxes,
-      // });
+      setShowUnavailableCheckbox(false);
+      toggleAvailableStatus({
+        is_available: false,
+        products_id: checkboxes,
+      });
     }
   };
 
   return {
-    showAvailibleCheckboxes,
-    showUnavailibleCheckboxes,
-    onToggleUnavailibleCheckbox: handleToggleUnavailibleCheckbox,
-    onToggleAvailibleCheckbox: handleToggleAvailibleCheckbox,
+    showAvailableCheckboxes,
+    showUnavailableCheckboxes,
+    onToggleUnavailableCheckbox: handleToggleUnavailibleCheckbox,
+    onToggleAvailableCheckbox: handleToggleAvailibleCheckbox,
     checkboxes,
-    onConfirmAvailible: handleConfirmAvailible,
-    onConfirmUnavailible: handleConfirmUnavailible,
+    onConfirmAvailable: handleConfirmAvailable,
+    onConfirmUnavailable: handleConfirmUnavailable,
   };
 };

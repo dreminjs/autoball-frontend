@@ -44,7 +44,7 @@ export interface IProduct {
   OEM: string;
   VIN: string;
   article: string;
-  availability: string;
+  availability: TAvailability
   created_at: string;
   currency: string;
   
@@ -163,3 +163,5 @@ export interface IInfiteScrollResponse<T> {
   items: T[];
   next_cursor: null | number;
 }
+
+export type TAvailability = "in stock" | "custom order"

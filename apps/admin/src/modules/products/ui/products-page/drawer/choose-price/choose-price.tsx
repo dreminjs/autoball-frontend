@@ -6,7 +6,7 @@ import { InputPrices } from './input-prices';
 export const ChoosePrice = () => {
   return (
     <Accordion className="mb-2">
-      <AccordionTitle title={'выберите цену'} />
+      <AccordionTitle title={'Цена'} />
       <AccordionDetails>
         <InputPrices />
       </AccordionDetails>

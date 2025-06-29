@@ -1,18 +1,22 @@
 import {
   useInfiniteQuery,
   useMutation,
+  useQueryClient,
 } from '@tanstack/react-query';
 import { findMany, toggleAvailibleStatus, toggleScanStatus } from './services';
 import { AxiosError } from 'axios';
 import { IServerError } from '../../../../shared/types/server-error';
 import { IProduct } from '@autoball-frontend/shared-types';
 import { IInfiteScrollResponse } from '../../../../shared';
-import { IToggleAvailibleStatusDto } from '../types/toggle-availible-status.dto';
+import { IToggleAvailableStatusDto } from '../types/toggle-availible-status.dto';
 import { IToggleScanStatusDto } from '../types/toggle-scan-status.dto';
 import { useFilterCategories } from '../hooks/use-filtration-categories';
+import { QUERY_KEYS, SERVICE_URLS } from '../../../../shared/constants';
+import { checkboxesAtom } from '../atoms-page';
+import { useSetAtom } from 'jotai';
+import { useNotificationActions } from '../../../notifications';
 
 export const useGetProducts = () => {
-
   const categories = useFilterCategories();
 
   return useInfiniteQuery<
@@ -20,38 +24,76 @@ export const useGetProducts = () => {
     AxiosError<IServerError>
   >({
     queryKey: [
-      Object.values(categories)
+      SERVICE_URLS.product,
+      QUERY_KEYS.private,
+      Object.values(categories),
     ],
     queryFn: () =>
       findMany({
-        isPrinted: categories.isPrintedStatus,
         page: 1,
         ...categories,
       }),
     initialPageParam: 1,
-    getNextPageParam: (lastPage, ) =>
-      lastPage.next_cursor,
+    getNextPageParam: (lastPage) => lastPage.next_cursor,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 };
 
-export const useToggleAvailibleStatus = () => {
+export const useToggleAvailableStatus = () => {
+  const { addError, addInfo, addSuccess, remove } = useNotificationActions();
+
+  const queryClient = useQueryClient();
+  const setCheckbox = useSetAtom(checkboxesAtom);
   const { mutate, ...props } = useMutation({
-    mutationFn: (dto: IToggleAvailibleStatusDto) => toggleAvailibleStatus(dto),
+    mutationFn: (dto: IToggleAvailableStatusDto) => toggleAvailibleStatus(dto),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [SERVICE_URLS.product, QUERY_KEYS.private],
+      });
+      setCheckbox([]);
+      addSuccess();
+    },
+    onError: () => {
+      remove('info');
+      addError();
+      setCheckbox([]);
+    },
   });
 
-  const handleMutate = (dto: IToggleAvailibleStatusDto) => {
+  const handleMutate = (dto: IToggleAvailableStatusDto) => {
+    addInfo();
     mutate(dto);
   };
 
-  return { toggleAvailibleStatus: handleMutate, ...props };
+  return { toggleAvailableStatus: handleMutate, ...props };
 };
 
 export const useToggleScanStatus = () => {
+  const { addError, addInfo, addSuccess, remove } = useNotificationActions();
+
+  const queryClient = useQueryClient();
+  const setCheckbox = useSetAtom(checkboxesAtom);
   const { mutate, ...props } = useMutation({
     mutationFn: (dto: IToggleScanStatusDto) => toggleScanStatus(dto),
+    onSuccess: () => {
+      remove('info');
+      queryClient.invalidateQueries({
+        queryKey: [SERVICE_URLS.product, QUERY_KEYS.private],
+      });
+      addSuccess();
+      setCheckbox([]);
+    },
+    onError: () => {
+      remove('info');
+      addError();
+      setCheckbox([]);
+    },
   });
 
   const handleMutate = (dto: IToggleScanStatusDto) => {
+    addInfo();
     mutate(dto);
   };
 

@@ -10,7 +10,13 @@ export const SelectSeason = () => {
   return (
     <Select
       label={'Сезон'}
-      onChange={(e) => setTiresSeason(e.target.value as TTiresSeason)}
+      onChange={(e) =>
+        setTiresSeason(
+          e.target.value === 'not-matter'
+            ? null
+            : (e.target.value as TTiresSeason)
+        )
+      }
       options={seasonsOptions.map((el) => ({ title: el, value: el }))}
     />
   );

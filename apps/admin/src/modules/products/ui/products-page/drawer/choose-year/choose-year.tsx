@@ -10,7 +10,7 @@ export const ChooseYear = () => {
 
     return (
         <Accordion className="mb-2">
-            <AccordionTitle title={"выберите год"} />
+            <AccordionTitle title={"Год"} />
             <AccordionDetails>
                 <InputYears />
             </AccordionDetails>
