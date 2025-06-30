@@ -17,3 +17,5 @@ export * from "./types/choosed-item"
 export * from "./lib/convert-to-webp"
 
 export * from "./types/toggle-status-dto"
+
+export * from "./types/infinity-scroll-query-parameters.dto"

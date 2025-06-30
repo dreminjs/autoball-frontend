@@ -1,14 +1,15 @@
-import { useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { Select } from '../../../../../../shared/ui/select';
 import { seasonsOptions } from '../../../../model/data';
 import { tiresSeasonAtom } from '../../../../model/product-atoms-page';
 import { TTiresSeason } from '../../../../../../shared/types';
 
 export const SelectSeason = () => {
-  const setTiresSeason = useSetAtom(tiresSeasonAtom);
+  const [tiresSeason, setTiresSeason] = useAtom(tiresSeasonAtom);
 
   return (
     <Select
+      value={tiresSeason}
       label={'Сезон'}
       onChange={(e) =>
         setTiresSeason(

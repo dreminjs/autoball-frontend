@@ -1,25 +1,26 @@
-import { useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { availabilityAtom } from '../../../model/product-atoms-page';
-import { TAvailability } from '../../../model/types/availability.interface';
 import { Select } from '../../../../../shared/ui/select';
+import { TAvailability } from '@autoball-frontend/shared-types';
 
 export const ChooseAvailability = () => {
-  const setAvailability = useSetAtom(availabilityAtom);
+  const [availability, setAvailability] = useAtom(availabilityAtom);
 
   const handleOnChange = ({ target }: React.ChangeEvent<HTMLSelectElement>) => {
     const value =
-      target.id === 'not-matter' ? null : (target.value as TAvailability);
+      target.value === 'not-matter' ? null : (target.value as TAvailability);
 
     setAvailability(value);
   };
 
   return (
     <Select
+      value={availability}
       label={'Доступность'}
       onChange={handleOnChange}
       options={[
         { title: 'в наличии', value: 'in stock' },
-        { title: 'ХЗ', value: 'custom order' },
+        { title: 'под заказ', value: 'custom order' },
       ]}
     />
   );

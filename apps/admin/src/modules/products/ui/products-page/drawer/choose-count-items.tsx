@@ -1,9 +1,9 @@
-import { useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { Select } from '../../../../../shared/ui/select';
 import { countItemsAtom } from '../../../model/product-atoms-page';
 
 export const ChooseCountItems = () => {
-  const setCountItems = useSetAtom(countItemsAtom);
+  const [countItems, setCountItems] = useAtom(countItemsAtom);
 
   const handleOnChange = ({ target }: React.ChangeEvent<HTMLSelectElement>) => {
     const value = +target.value;
@@ -13,6 +13,7 @@ export const ChooseCountItems = () => {
 
   return (
     <Select
+      value={countItems}
       label={'Кол-во записей'}
       onChange={handleOnChange}
       options={[

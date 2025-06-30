@@ -13,7 +13,7 @@ export const List: FC<IProps> = ({ isError, isPending, error, empty, children, c
   return <ul className={`divide-y divide-gray-200 overflow-y-scroll ${className ? className : ''}`}>
     {isPending && <li className="text-center py-4">Загрузка...</li> } 
     {isError && <li className="text-center py-4 text-red-500">{error}</li> }
-    {!isPending && empty && <li className="text-center py-4 text-gray-500">No car brands found</li>}
+    {!isPending && empty && <li className="text-center py-4 text-gray-500">Не найдено</li>}
     {!isPending && children}
   </ul>;
 };

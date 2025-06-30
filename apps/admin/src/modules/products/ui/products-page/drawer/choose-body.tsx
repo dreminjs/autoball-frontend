@@ -1,20 +1,21 @@
-import { useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { Select } from '../../../../../shared/ui/select';
 import { bodyAtom } from '../../../model/product-atoms-page';
-import { BodyType} from '@autoball-frontend/shared-types';
+import { BodyType } from '@autoball-frontend/shared-types';
 
 export const ChooseBody = () => {
-  const setBody = useSetAtom(bodyAtom);
+  const [body, setBody] = useAtom(bodyAtom);
 
   const handleOnChange = ({ target }: React.ChangeEvent<HTMLSelectElement>) => {
     const value =
-      target.id === 'not-matter' ? null : (target.value as BodyType);
+      target.value === 'not-matter' ? null : (target.value as BodyType);
 
     setBody(value);
   };
 
   return (
     <Select
+      value={body}
       label={'Тип кузова'}
       onChange={handleOnChange}
       options={[
