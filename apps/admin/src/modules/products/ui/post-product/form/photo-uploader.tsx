@@ -1,6 +1,7 @@
-
-import { useState, useRef, useCallback, FC } from 'react';
+import { useState, useRef, useCallback, FC, useEffect } from 'react';
 import { PhotoItem } from './photo-item';
+import { useFormContext } from 'react-hook-form';
+import { ProductFormData } from '../../../model/schemas/product.schema';
 
 export interface Photo {
   id: string;
@@ -10,18 +11,32 @@ export interface Photo {
 }
 
 interface IProps {
+  name: keyof ProductFormData;
   onPhotosChange: (photos: Photo[]) => void;
-};
+  maxFiles?: number;
+  isClear: boolean;
+}
 
-export const PhotoUploader: FC<IProps> = ({ onPhotosChange }) => {
+export const PhotoUploader: FC<IProps> = ({
+  onPhotosChange,
+  name,
+  maxFiles = 5,
+  isClear,
+}) => {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { register, setValue, watch } = useFormContext();
+  const currentFiles: File[] = watch(name) || [];
 
   const handleFiles = useCallback(
     (files: FileList) => {
       const newPhotos: Photo[] = [];
+      const filesArray = Array.from(files).slice(
+        0,
+        maxFiles - currentFiles.length
+      );
 
-      Array.from(files).forEach((file) => {
+      filesArray.forEach((file) => {
         if (!file.type.match('image.*')) return;
 
         const reader = new FileReader();
@@ -32,16 +47,17 @@ export const PhotoUploader: FC<IProps> = ({ onPhotosChange }) => {
             preview: e.target!.result as string,
           });
 
-          if (newPhotos.length === files.length) {
+          if (newPhotos.length === filesArray.length) {
             const updatedPhotos = [...photos, ...newPhotos];
             setPhotos(updatedPhotos);
-            onPhotosChange(updatedPhotos);
+            const filesToSubmit = updatedPhotos.map((photo) => photo.file);
+            setValue(name, filesToSubmit, { shouldValidate: true });
           }
         };
         reader.readAsDataURL(file);
       });
     },
-    [photos, onPhotosChange]
+    [photos, setValue, name, maxFiles, currentFiles.length]
   );
 
   const movePhoto = useCallback(
@@ -50,22 +66,30 @@ export const PhotoUploader: FC<IProps> = ({ onPhotosChange }) => {
         const newPhotos = [...prev];
         const [movedPhoto] = newPhotos.splice(fromIndex, 1);
         newPhotos.splice(toIndex, 0, movedPhoto);
-        onPhotosChange(newPhotos);
+
+        const filesToSubmit = newPhotos.map((photo) => photo.file);
+        setValue(name, filesToSubmit, { shouldValidate: true });
+
         return newPhotos;
       });
     },
-    [onPhotosChange]
+    [setValue, name]
   );
 
   const removePhoto = useCallback(
     (id: string) => {
       setPhotos((prev) => {
         const newPhotos = prev.filter((photo) => photo.id !== id);
-        onPhotosChange(newPhotos);
+
+        const filesToSubmit = newPhotos.map((photo) => photo.file);
+        setValue(name, filesToSubmit.length > 0 ? filesToSubmit : null, {
+          shouldValidate: true,
+        });
+
         return newPhotos;
       });
     },
-    [onPhotosChange]
+    [setValue, name]
   );
 
   const handlePhotoRotate = useCallback(
@@ -77,7 +101,7 @@ export const PhotoUploader: FC<IProps> = ({ onPhotosChange }) => {
             : photo
         )
       );
-      onPhotosChange(photos); // Обновляем родительский компонент
+      onPhotosChange(photos);
     },
     [onPhotosChange, photos]
   );
@@ -98,6 +122,12 @@ export const PhotoUploader: FC<IProps> = ({ onPhotosChange }) => {
     e.stopPropagation();
   }, []);
 
+  useEffect(() => {
+    if (isClear) {
+      setPhotos([]);
+    }
+  }, [isClear]);
+  
   return (
     <div>
       <label className="block mb-2 text-sm font-medium text-gray-700">
@@ -134,6 +164,7 @@ export const PhotoUploader: FC<IProps> = ({ onPhotosChange }) => {
         </div>
         <input
           type="file"
+          {...register(name)}
           ref={fileInputRef}
           className="hidden"
           multiple

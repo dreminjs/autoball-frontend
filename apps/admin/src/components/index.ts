@@ -6,4 +6,4 @@ export * from "./custom-snackbar/ui/custom-snackbar"
 
 export * from "./list-items/list"
 
-export * from "./list-items/list-item"
+export * from "../modules/products/ui/products-page/list-item"

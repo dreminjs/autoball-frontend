@@ -35,7 +35,7 @@ export const useCarParts = () => {
       isError,
       isPending,
       isSuccess,
-      error,
+      error: error?.response?.data.detail,
     },
     inViewRef: ref
   };

@@ -3,7 +3,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import { FC } from 'react';
 import { CarSeriesList } from './list/car-series-list';
 import { useAtomValue } from 'jotai';
-import { AccordionTitle } from '../../accordion-title';
+import { AccordionTitle } from '../../../../../../../components/accordion-title';
 import { carBrandIdAtom } from '../../../../../model/product-atoms-page';
 import { useCarSeries } from '../../../../../../brand-series/model/hooks/use-car-series';
 

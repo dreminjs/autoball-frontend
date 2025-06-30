@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '../../../../components/buttons';
 import { productSchema } from '../../model/schemas/product.schema';
@@ -12,21 +12,20 @@ import {
 import { SelectInput } from './form/select-input';
 import { TextInput } from './form/text-input';
 import { DndProvider } from 'react-dnd';
-import { PhotoUploader } from './form/photo-uploader';
+import { Photo, PhotoUploader } from './form/photo-uploader';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { TierFields } from './form/tier-fields';
 import { RadioGroup } from './form/radio-group';
 import { DiscFields } from './form/disc-fields';
 import { AddCarPartCharacteristicsModal } from './form/characteristics/add-car-part-characteristics/add-car-part-characteristics-modal';
 import { useCarPartCharacteristicsModal } from '../../model/hooks/products/use-car-part-characteristics-modal';
+import { ChoosedCharacteristics } from './form/characteristics/add-car-part-characteristics/choosed-characteristics';
+import { usePostProduct } from '../../model/api/queries';
+import { useEffect } from 'react';
+import { useResetForm } from '../../model/hooks/post-products/use-reset-form';
+import { TierFields } from './form/tier-fields';
 
 export const PostProductForm = () => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<ProductFormData>({
+  const methods = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
     defaultValues: {
       condition: 'used',
@@ -34,35 +33,87 @@ export const PostProductForm = () => {
       fuel: 'gasoline',
       type_of_body: 'sedan',
       count: 1,
-      real_price: 0,
-      fake_price: 0,
+      price: 0,
       volume: 0,
       productType: 'car',
-      disc_diametr: 'R12',
-      tires_diametr: 'R12',
+      discount: 0,
+      currency: "USD"
     },
   });
 
   const { isOpen, onToggleModal } = useCarPartCharacteristicsModal();
 
-  const productType = watch('productType');
+  const { mutate, isSuccess } = usePostProduct();
 
-  const onSubmit = (data: ProductFormData) => {
-    console.log('Product data:', data);
-  };
+  const productType = methods.watch('productType');
+
+  const onSubmit = methods.handleSubmit((data: ProductFormData) => {
+    mutate(data);
+  });
+
+  useResetForm(isSuccess, methods.reset);
+
+  useEffect(() => {
+    if (productType !== 'disc') {
+      const discFields = [
+        'disc_diametr',
+        'disc_width',
+        'disc_ejection',
+        'disc_dia',
+        'disc_holes',
+        'disc_pcd',
+        'disc_brand_id',
+        'disc_model',
+      ];
+
+      discFields.forEach((field) => {
+        methods.resetField(field as any);
+      });
+
+      const discErrors = Object.keys(methods.formState.errors).filter((key) =>
+        key.startsWith('disc_')
+      );
+
+      discErrors.forEach((errorKey) => {
+        methods.clearErrors(errorKey as any);
+      });
+    }
+    if (productType !== 'tire') {
+      const tiresFields = [
+        'tires_diametr',
+        'tires_width',
+        'tires_height',
+        'tires_index',
+        'tires_car_type',
+        'tire_brand_id',
+        'tires_model',
+        'tires_season',
+        'tires_residue',
+      ];
+
+      tiresFields.forEach((field) => {
+        methods.resetField(field as any);
+      });
+
+      const tiresErrors = Object.keys(methods.formState.errors).filter(
+        (key) => key.startsWith('tires_') || key === 'tire_brand_id'
+      );
+
+      tiresErrors.forEach((errorKey) => {
+        methods.clearErrors(errorKey as any);
+      });
+    }
+  }, [productType, methods]);
 
   return (
     <>
-      <div>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="space-y-4 p-4 mx-auto"
-        >
+      <FormProvider {...methods}>
+        <form onSubmit={onSubmit} className="space-y-4 p-4 mx-auto">
           <h2 className="text-2xl font-bold">Создание нового продукта</h2>
           <RadioGroup
             label="Тип продукта"
             name="productType"
-            register={register}
+            register={methods.register}
             options={[
               { value: 'tire', label: 'Шины' },
               { value: 'disc', label: 'Диски' },
@@ -73,120 +124,134 @@ export const PostProductForm = () => {
             <TextInput
               label="OEM номер"
               name="OEM"
-              register={register}
-              error={errors.OEM?.message}
+              register={methods.register}
+              error={methods.formState.errors.OEM?.message}
             />
-            <TextInput label="VIN" name="VIN" register={register} type="text" />
+            <TextInput
+              label="VIN"
+              name="VIN"
+              register={methods.register}
+              type="text"
+            />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <SelectInput
               label={'Выберите валюту'}
               name={'currency'}
-              register={register}
+              register={methods.register}
               options={currenciesOptions.map((el) => ({
                 label: el,
                 value: el,
               }))}
             />
             <TextInput
-              label={`Реальная цена (${watch('currency')})`}
-              name="real_price"
+              label={`Цена (${methods.watch('currency')})`}
+              name="price"
               type="number"
-              error={errors.real_price?.message}
-              register={register}
+              error={methods.formState.errors.price?.message}
+              register={methods.register}
             />
             <TextInput
-              label={`Фейковая цена (${watch('currency')})`}
-              name="fake_price"
+              label={`Скидка в %`}
+              name="discount"
               type="number"
-              error={errors.fake_price?.message}
-              register={register}
+              error={methods.formState.errors.discount?.message || ''}
+              register={methods.register}
             />
+
             <TextInput
               label="Количество"
               name="count"
               type="number"
-              error={errors.count?.message}
-              register={register}
+              error={methods.formState.errors.count?.message}
+              register={methods.register}
             />
 
             <TextInput
               label="Год выпуска"
               name="year"
               type="number"
-              error={errors.year?.message}
-              register={register}
+              error={methods.formState.errors.year?.message}
+              register={methods.register}
             />
             <TextInput
               label="Объем двигателя"
               name="volume"
               type="number"
               step="0.1"
-              error={errors.volume?.message}
-              register={register}
+              error={methods.formState.errors.volume?.message}
+              register={methods.register}
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <SelectInput
               label="Тип кузова"
               name="type_of_body"
-              register={register}
+              register={methods.register}
               options={bodyTypeOptions}
             />
             <SelectInput
               label="Коробка передач"
               name="gearbox"
-              register={register}
+              register={methods.register}
               options={gearboxOptions}
             />
             <SelectInput
               label="Тип топлива"
               name="fuel"
-              register={register}
+              register={methods.register}
               options={fuelOptions}
             />
           </div>
-          <Button type="button" onClick={onToggleModal}>Добавить характерстики запчасти</Button>
-
+          <div className="flex gap-2 flex-wrap items-center">
+            <Button type="button" onClick={onToggleModal}>
+              Добавить характерстики запчасти
+            </Button>
+            <ChoosedCharacteristics />
+          </div>
           <TextInput
             label="Описание"
             name="description"
-            register={register}
+            register={methods.register}
             rows={3}
           />
 
           <TextInput
             label="Примечания"
             name="note"
-            register={register}
+            register={methods.register}
             rows={2}
           />
           {productType === 'disc' && (
             <DiscFields
-              register={register}
-              errors={errors}
+              register={methods.register}
+              errors={methods.formState.errors}
               type={productType}
             />
           )}
           {
-            productType === 'tire' && 1132
-            // <TierFields
-            //   register={register}
-            //   errors={errors}
-            //   choosedItemId={tirebrandId}
-            //   onChoose={onChooseTireBrandId}
-            //   type={productType}
-            // />
+            productType === 'tire' && 
+            <TierFields
+              register={methods.register}
+              errors={methods.formState.errors}
+              type={productType}
+            />
           }
 
           <DndProvider backend={HTML5Backend}>
-            <PhotoUploader onPhotosChange={(photos) => console.log(photos)} />
+            <PhotoUploader
+              name={'product_pictures'}
+              onPhotosChange={function (photos: Photo[]): void {
+                throw new Error('Function not implemented.');
+              }}
+              isClear={isSuccess}
+            />
           </DndProvider>
 
           <Button type="submit">Создать продукт</Button>
         </form>
-      </div>
+      </FormProvider>
       <AddCarPartCharacteristicsModal isOpen={isOpen} onClose={onToggleModal} />
     </>
   );

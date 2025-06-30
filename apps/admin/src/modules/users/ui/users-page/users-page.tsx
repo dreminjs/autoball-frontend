@@ -6,6 +6,8 @@ export const UsersPage = () => {
 
 
     return (
-        <div></div>
+        <div>
+            
+        </div>
     )
 }

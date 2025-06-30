@@ -16,7 +16,7 @@ export const Header = () => {
       <Container className="flex items-center justify-between gap-5">
         <img src={logo} alt={'autoball logo'} className="w-[75px] h-[75px] md:w-[100px] md:h-[100px]" />
         {auth && <Navigation />}
-        <button onClick={() => setMenuDrawerVisible(true)} className="block md:hidden">
+        <button onClick={() => setMenuDrawerVisible(true)} className="block sm:hidden">
           <img
             src="/icon-menu.svg"
             className="w-[50px] h-[50px]"

@@ -3,7 +3,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import { CarPartList } from './list/car-part-list';
 import { useCarParts } from '../../../../../../car-parts/model/hooks/use-car-parts';
 import { InputSearch } from '../../../../../../../components/input-search';
-import { AccordionTitle } from '../../accordion-title';
+import { AccordionTitle } from '../../../../../../../components/accordion-title';
 
 export const ChooseCarPart = () => {
   const { states, inViewRef, data, search, onChangeSearchValue } =

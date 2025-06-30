@@ -5,6 +5,7 @@ export interface IUser {
   name: string;
   email: string;
   phone_number: string;
+  role: Role
 }
 
 export interface ICarBrand {
@@ -120,9 +121,14 @@ export interface IInfiteScrollQueryParameters {
   limit: number
 }
 
+export interface IListItem {
+  id: uuid
+  name: string
+}
+
 export type OrderStatus = "open" | "closed"
 
-export type Role = 'admin' | 'owner' | 'worker' | 'seo' | 'client';
+export type Role = 'admin' | 'worker' | 'client';
 
 export type BodyType = 
   | 'sedan'

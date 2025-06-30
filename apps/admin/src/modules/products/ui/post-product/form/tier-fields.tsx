@@ -5,29 +5,21 @@ import { FC } from 'react';
 import { SelectInput } from './select-input';
 import { diameterOptions } from '../../../model/data';
 import { BrandType } from '../../../../../shared/types/brands/type';
-import { ChooseBrand } from '../../products-page/drawer/items-list/choose-brand-list/choose-brand';
+import { ChooseBrandTire } from './choose-brand-tire/choose-brand-tire';
 
 interface IProps {
   register: UseFormRegister<ProductFormData>;
   errors: FieldErrors<ProductFormData>;
-  choosedItemId: string | null;
-  onChoose: (data: string | null) => void;
   type: BrandType;
 }
 
-export const TierFields: FC<IProps> = ({
-  register,
-  errors,
-  choosedItemId,
-  onChoose,
-  type,
-}) => {
+export const TierFields: FC<IProps> = ({ register, errors, type }) => {
   return (
-    <div className="bg-blue-50 p-4 rounded-lg">
-      <h3 className="text-lg font-semibold mb-3">Характеристики шин</h3>
+  <div className="bg-blue-50 p-4 rounded-lg">
+      <h3 className="text-lg font-semibold mb-3">Характеристики диска</h3>
       <div
         className="grid grid-rows-3 grid-cols-1 md:grid-cols-3 gap-4"
-        style={{ gridTemplateRows: '100px 100px 300px ' }}
+        style={{ gridTemplateRows: '100px 100px' }}
       >
         <SelectInput
           label="Диаметр шины"
@@ -72,9 +64,9 @@ export const TierFields: FC<IProps> = ({
           register={register}
           error={errors.tires_residue?.message}
         />
-        <ChooseBrand
-          type={type}
-        />
+        <div className="w-[300px]">
+          <ChooseBrandTire />
+        </div>
       </div>
     </div>
   );

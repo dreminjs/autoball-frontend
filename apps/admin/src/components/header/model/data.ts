@@ -11,6 +11,10 @@ export const items = [
     to: PAGE_URLS['orders'],
   },
   {
+    name: "Пользователи",
+    to: PAGE_URLS.user
+  },
+  {
     name: 'Характеристики',
     inner: [
       { name: 'Бренды Машин', to: `${PAGE_URLS["brand"]}/${QUERY_KEYS.car}` },
@@ -19,4 +23,5 @@ export const items = [
       { name: 'Типы запчасть', to: PAGE_URLS["carpart"]  }
     ],
   },
+  
 ] as INavItem[];

@@ -1,5 +1,5 @@
 import Accordion from "@mui/material/Accordion"
-import { AccordionTitle } from "../accordion-title"
+import { AccordionTitle } from "../../../../../../components/accordion-title"
 import AccordionDetails from "@mui/material/AccordionDetails"
 import { ChooseDiametr } from "./choose-diametr"
 import { InputWidth } from "./input-width"

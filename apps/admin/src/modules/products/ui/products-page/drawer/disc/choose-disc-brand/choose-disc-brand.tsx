@@ -1,7 +1,7 @@
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import { useWheelComponentsBrands } from '../../../../../../wheels/model/hooks/use-wheel-components-brand';
-import { AccordionTitle } from '../../accordion-title';
+import { AccordionTitle } from '../../../../../../../components/accordion-title';
 import { DiscBrandList } from './disc-brand-list';
 import { InputSearch } from '../../../../../../../components/input-search';
 

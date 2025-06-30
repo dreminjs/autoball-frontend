@@ -1,5 +1,5 @@
 import Accordion from "@mui/material/Accordion"
-import { AccordionTitle } from "../../accordion-title"
+import { AccordionTitle } from "../../../../../../../components/accordion-title"
 import AccordionDetails from "@mui/material/AccordionDetails"
 import { InputTiresReside } from "./input-tires-residue"
 

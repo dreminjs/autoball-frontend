@@ -1,5 +1,5 @@
 import AccordionDetails from '@mui/material/AccordionDetails';
-import { AccordionTitle } from '../accordion-title';
+import { AccordionTitle } from '../../../../../../components/accordion-title';
 import Accordion from '@mui/material/Accordion';
 import { InputPrices } from './input-prices';
 

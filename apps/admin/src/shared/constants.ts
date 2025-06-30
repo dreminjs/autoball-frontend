@@ -11,18 +11,19 @@ export const PAGE_URLS = {
   product: 'product',
   carseries: 'carseries',
   brand: "brand",
-  "carpart": "carpart"
+  "carpart": "carpart",
+  "user": "user"
 } as const;
 
 export const SERVICE_URLS = {
   auth: 'auth',
-  users: 'user',
   orders: 'orders',
   carbrand: 'carbrand',
   product: 'product',
   carseries: 'carseries',
   storage: 'storage',
-  "carpart": "carpart"
+  "carpart": "carpart",
+  "user": "user"
 } as const;
 
 export const QUERY_KEYS = {

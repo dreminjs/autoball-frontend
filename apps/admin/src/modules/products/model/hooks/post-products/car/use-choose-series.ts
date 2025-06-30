@@ -1,13 +1,12 @@
-import { ICarSeries } from '@autoball-frontend/shared-types';
 import { useAtom } from 'jotai';
-import { choosedCarSeriesAtom } from '../atoms';
-import { Actions, } from '../../../../shared';
+import { carSeriesAtom } from '../../../post-products-atoms-page';
+import { IListItem } from '@autoball-frontend/shared-types';
 
 export const useChooseSeries = () => {
-  const [choosedSeries, setChoosedSeries] = useAtom(choosedCarSeriesAtom);
+  const [choosedSeries, setChoosedSeries] = useAtom(carSeriesAtom);
 
   const handleChooseSeries = (
-    newValue: (ICarSeries & Actions) | null
+    newValue: IListItem | null
   ) => setChoosedSeries(newValue);
 
   const handleCancel = () => setChoosedSeries(null);

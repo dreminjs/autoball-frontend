@@ -21,74 +21,83 @@ import {
 import { CarBrandsPage } from '../modules/car-brands';
 import { CarPartsPage } from '../modules/car-parts/ui/car-parts/car-parts-page';
 import { carPartsStore } from '../modules/car-parts';
+import { postProductsStore } from '../modules/products/model/post-products-atoms-page';
+import { UsersPage } from '../modules/users/ui/users-page/users-page';
 
 export function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<SigninPage />} />
-          <Route path={PAGE_URLS.orders}>
-            <Route index element={<OrdersPage />} />
-            <Route path={QUERY_KEYS.post} element={<PostOrderPage/>}/>
-          </Route>
+        <Route path={PAGE_URLS.orders}>
+          <Route index element={<OrdersPage />} />
+          <Route path={QUERY_KEYS.post} element={<PostOrderPage />} />
+        </Route>
 
-          <Route path={PAGE_URLS['product']}>
-            <Route
-              index
-              element={
-                <Provider store={productsStore}>
-                  <ProductsPage />
-                </Provider>
-              }
-            />
-            <Route path={`${QUERY_KEYS.post}`} element={<PostProductPage />} />
-          </Route>
+        <Route path={PAGE_URLS['product']}>
           <Route
-            path={PAGE_URLS['carpart']}
+            index
             element={
-              <Provider store={carPartsStore}>
-                <CarPartsPage />
+              <Provider store={productsStore}>
+                <ProductsPage />
               </Provider>
             }
           />
-
-          <Route path={PAGE_URLS.brand}>
+          <Route
+            path={`${QUERY_KEYS.post}`}
+            element={
+              <Provider store={postProductsStore}>
+                <PostProductPage />
+              </Provider>
+            }
+          />
+        </Route>
+        <Route
+          path={PAGE_URLS['carpart']}
+          element={
+            <Provider store={carPartsStore}>
+              <CarPartsPage />
+            </Provider>
+          }
+        />
+        <Route path={PAGE_URLS.user} element={<UsersPage />} />
+        <Route path={PAGE_URLS.brand}>
+          <Route
+            path={`${QUERY_KEYS.disc}`}
+            element={
+              <Provider store={wheelComponentsStore}>
+                <DiscBrandPage />
+              </Provider>
+            }
+          />
+          <Route
+            path={`${QUERY_KEYS.tire}`}
+            element={
+              <Provider store={wheelComponentsStore}>
+                <TireBrandPage />
+              </Provider>
+            }
+          />
+          <Route path={`${QUERY_KEYS.car}`}>
             <Route
-              path={`${QUERY_KEYS.disc}`}
+              index
               element={
-                <Provider store={wheelComponentsStore}>
-                  <DiscBrandPage />
+                <Provider store={carBrandsStore}>
+                  <CarBrandsPage />
                 </Provider>
               }
             />
             <Route
-              path={`${QUERY_KEYS.tire}`}
+              path={PAGE_URLS['carseries']}
               element={
-                <Provider store={wheelComponentsStore}>
-                  <TireBrandPage />
+                <Provider store={brandSeriesStore}>
+                  <CarBrandSeriesPage />
                 </Provider>
               }
             />
-            <Route path={`${QUERY_KEYS.car}`}>
-              <Route
-                index
-                element={
-                  <Provider store={carBrandsStore}>
-                    <CarBrandsPage />
-                  </Provider>
-                }
-              />
-              <Route
-                path={PAGE_URLS['carseries']}
-                element={
-                  <Provider store={brandSeriesStore}>
-                    <CarBrandSeriesPage />
-                  </Provider>
-                }
-              />
-            </Route>
           </Route>
         </Route>
+      </Route>
     </Routes>
   );
 }

@@ -8,7 +8,7 @@ export const useCarSeries = (brandId: string | null) => {
   const {
     data,
     isError,
-    isPending,
+    isLoading,
     error,
     fetchNextPage,
     hasNextPage,
@@ -22,7 +22,7 @@ export const useCarSeries = (brandId: string | null) => {
   }, [inView, fetchNextPage, hasNextPage]);
 
   return {
-    states: { isError, isPending, error, isSuccess },
+    states: { isError, isPending: isLoading, error: error?.response?.data.detail, isSuccess },
     data,
     inViewRef: ref,
   };

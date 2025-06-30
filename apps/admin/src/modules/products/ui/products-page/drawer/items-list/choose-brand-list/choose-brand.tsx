@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { BrandList } from './list';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import { AccordionTitle } from '../../accordion-title';
+import { AccordionTitle } from '../../../../../../../components/accordion-title';
 import { InputSearch } from '../../../../../../../components/input-search';
 import { BrandType } from '../../../../../../../shared/types/brands/type';
 import { useBrands } from '../../../../../../brands/model/hooks/use-brands';

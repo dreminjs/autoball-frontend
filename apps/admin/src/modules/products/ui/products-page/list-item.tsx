@@ -1,4 +1,4 @@
-import { ICarBrand } from '@autoball-frontend/shared-types';
+import { ICarBrand, IListItem } from '@autoball-frontend/shared-types';
 import { FC } from 'react';
 
 const icon = (

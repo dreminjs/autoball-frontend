@@ -1,9 +1,10 @@
-import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { FC, useState } from 'react';
 import TabContext from '@mui/lab/TabContext';
 import { CustomTabs } from './tabs';
-import { CarBrandsTab } from './car-brands/car-brands-tab';
+import { CarBrandsTab } from './car-brands-tab';
+import { CarPartsTab } from './car-parts-tab';
+import { CarSeriesTab } from './car-series-tab';
 
 interface IProps {
   isOpen: boolean;
@@ -18,25 +19,14 @@ export const AddCarPartCharacteristicsModal: FC<IProps> = ({
 
   return (
     <Modal onClose={onClose} open={isOpen}>
-      <Box
-        sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 400,
-          bgcolor: 'background.paper',
-          boxShadow: 24,
-          p: 4,
-          backgroundColor: 'white',
-          borderRadius: 2,
-        }}
-      >
+      <div className='w-[500px] mx-auto mt-40 bg-white p-5 rounded'>
         <TabContext value={tab}>
           <CustomTabs value={tab} onChange={(_, newTab) => setTab(newTab)} />
-          <CarBrandsTab currentTab="1" />
+          <CarPartsTab currentTab="1" />
+          <CarBrandsTab currentTab="2" />
+          <CarSeriesTab currentTab="3" />
         </TabContext>
-      </Box>
+      </div>
     </Modal>
   );
 };
