@@ -9,8 +9,10 @@ import {
   showUnscanCheckboxesAtom,
 } from '../../../model/product-atoms-page';
 import { bodyTypeTitles, fuelTitles, gearboxTitles } from '../../../model/data';
+import { Link } from 'react-router-dom';
+import { QUERY_KEYS } from '../../../../../shared/constants';
 
-type Props = IProduct;
+type Props = IProduct
 
 export const ProductItem: FC<Props> = (props) => {
   const isShowScanCheckboxes = useAtomValue(showScanCheckboxesAtom);
@@ -90,7 +92,7 @@ export const ProductItem: FC<Props> = (props) => {
                 </div>
                 <div className="flex items-start">
                   <span className="text-gray-500 min-w-[70px]">Топливо:</span>
-                  <span>{fuelTitles[props.fuel] || "-"}</span>
+                  <span>{fuelTitles[props.fuel] || '-'}</span>
                 </div>
                 <div className="flex items-start">
                   <span className="text-gray-500 min-w-[70px]">Кузов:</span>
@@ -214,19 +216,28 @@ export const ProductItem: FC<Props> = (props) => {
             </div>
 
             <div className="flex items-center gap-3">
-              <span
-                className={`text-sm px-2 py-1 rounded-full ${
-                  props.is_available
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-red-100 text-red-800'
-                }`}
-              >
-                {props.is_available ? 'В наличии' : 'Нет в наличии'}
-              </span>
-              <span className="text-sm text-gray-500">{props.count} шт.</span>
+              <div>
+                <span
+                  className={`text-sm px-2 py-1 rounded-full ${
+                    props.is_available
+                      ? 'bg-green-100 text-green-800'
+                      : 'bg-red-100 text-red-800'
+                  }`}
+                >
+                  {props.is_available ? 'В наличии' : 'Нет в наличии'}
+                </span>{" "}
+                <span className="text-sm text-gray-500">{props.count} шт.</span>
+              </div>
+              <Link
+                className="px-3 py-1 text-sm bg-gray-50 text-gray-600 rounded hover:bg-gray-100 transition-colors"
+                to={`${QUERY_KEYS.edit}/${props.id}`}
+>
+                Редактировать
+              </Link>
             </div>
           </div>
         </div>
+        <div></div>
       </div>
     </li>
   );

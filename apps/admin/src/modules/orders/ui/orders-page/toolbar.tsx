@@ -18,7 +18,6 @@ export const Toolbar: FC<IProps> = ({ statusFilter, onStatusChange }) => {
           onChange={(e) => onStatusChange(e.target.value as OrderStatus)}
           className="appearance-none text-center bg-white border border-gray-300 rounded-lg py-2 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         >
-          <option className='text-left' value="all">Все статусы</option>
           <option className='text-left' value="open">Открытые</option>
           <option className='text-left' value="closed">Закрытые</option>
         </select>

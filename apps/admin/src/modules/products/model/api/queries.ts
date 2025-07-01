@@ -1,11 +1,13 @@
 import {
   useInfiniteQuery,
   useMutation,
+  useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
 import {
   createOne,
   findMany,
+  findOne,
   toggleAvailibleStatus,
   toggleScanStatus,
 } from './services';
@@ -15,7 +17,7 @@ import { IProduct } from '@autoball-frontend/shared-types';
 import { IInfiteScrollResponse } from '../../../../shared';
 import { IToggleAvailableStatusDto } from '../types/toggle-availible-status.dto';
 import { IToggleScanStatusDto } from '../types/toggle-scan-status.dto';
-import { QUERY_KEYS, SERVICE_URLS } from '../../../../shared/constants';
+import { PAGE_URLS, QUERY_KEYS, SERVICE_URLS } from '../../../../shared/constants';
 import { checkboxesAtom } from '../product-atoms-page';
 import { useSetAtom } from 'jotai';
 import { useNotificationActions } from '../../../notifications';
@@ -25,6 +27,8 @@ import { useChooseSeries } from '../hooks/post-products/car/use-choose-series';
 import { useChooseCarBrand } from '../hooks/post-products/car/use-choose-car-brand';
 import { validateProductFields } from '../lib/post-query-validate';
 import { IGetProductsQueryParameters } from '../types/get-products-query-parameters';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const useGetProducts = (categories: IGetProductsQueryParameters) => {
 
@@ -42,11 +46,7 @@ export const useGetProducts = (categories: IGetProductsQueryParameters) => {
 
       return findMany({
         ...categories,
-        condition: "used",
         cursor,
-        isPrintedStatus: categories.isPrintedStatus && JSON.parse(categories.isPrintedStatus) === null
-            ? null
-            : categories.isPrintedStatus,
       });
     },
     refetchOnWindowFocus: false,
@@ -156,3 +156,25 @@ export const usePostProduct = () => {
   };
   return { mutate: handleMutate, ...props };
 };
+
+export const useGetProduct = (id: string) => {
+
+  const navigate = useNavigate()
+
+  const {isError, ...props } =  useQuery({
+    queryKey: [SERVICE_URLS.product, id],
+    queryFn: () => findOne(id),
+    refetchOnWindowFocus: false,
+  })
+
+  useEffect(() => {
+    if(isError) {
+      navigate(`/${PAGE_URLS['product']}`)
+    }
+  },[isError, navigate])
+
+  return {
+    isError,
+    ...props
+  }
+}

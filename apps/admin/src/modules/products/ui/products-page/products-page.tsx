@@ -4,11 +4,14 @@ import { Toolbar } from './toolbar/toolbar';
 import { ProductsList } from './list/products-list';
 import { CarPartsQrList } from './list/products-qr-list';
 import { useProducts } from '../../model/hooks/products/use-products';
+import { useFilterCategories } from '../../model/hooks/products/use-filtration-categories';
 
 export const ProductsPage = () => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
 
-  const { error, data, isPending, ref } = useProducts();
+  const categories = useFilterCategories()
+
+  const { states, data, ref } = useProducts(categories);
 
   return (
     <>
@@ -17,9 +20,9 @@ export const ProductsPage = () => {
 
         <ProductsList
           libRef={ref}
-          errorMessage={error?.response?.data.detail}
+          errorMessage={states.error?.response?.data.detail}
           response={data?.pages}
-          isLoading={isPending}
+          isLoading={states.isPending}
         />
         <CarPartsQrList response={data?.pages} />
       </div>

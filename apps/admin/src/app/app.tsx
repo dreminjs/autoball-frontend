@@ -23,7 +23,10 @@ import { CarPartsPage } from '../modules/car-parts/ui/car-parts/car-parts-page';
 import { carPartsStore } from '../modules/car-parts';
 import { postProductsStore } from '../modules/products/model/post-products-atoms-page';
 import { UsersPage } from '../modules/users/ui/users-page/users-page';
-import { ordersStore } from '../modules/orders/model/atoms';
+import { postOrdersStore } from '../modules/orders/model/post-page-atoms';
+import { EditProductPage } from '../modules/products/ui/edit-product/edit-product-page';
+import { EditOrderPage } from '../modules/orders/ui/edit-orders-page/edit-order-page';
+import { editOrdersStore } from '../modules/orders/model/edit-page-atoms';
 
 export function App() {
   return (
@@ -32,7 +35,22 @@ export function App() {
         <Route path="/" element={<SigninPage />} />
         <Route path={PAGE_URLS.orders}>
           <Route index element={<OrdersPage />} />
-          <Route path={QUERY_KEYS.post} element={ <Provider store={ordersStore}><PostOrderPage /></Provider>} />
+          <Route
+            path={QUERY_KEYS.post}
+            element={
+              <Provider store={postOrdersStore}>
+                <PostOrderPage />
+              </Provider>
+            }
+          />
+           <Route
+            path={QUERY_KEYS.edit}
+            element={
+              <Provider store={editOrdersStore}>
+                <EditOrderPage />
+              </Provider>
+            }
+          />
         </Route>
 
         <Route path={PAGE_URLS['product']}>
@@ -49,6 +67,14 @@ export function App() {
             element={
               <Provider store={postProductsStore}>
                 <PostProductPage />
+              </Provider>
+            }
+          />
+          <Route
+            path={`${QUERY_KEYS.edit}/:id`}
+            element={
+              <Provider store={postProductsStore}>
+                <EditProductPage />
               </Provider>
             }
           />

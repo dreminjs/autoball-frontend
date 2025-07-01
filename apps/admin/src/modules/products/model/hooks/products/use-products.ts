@@ -3,7 +3,7 @@ import { useGetProducts } from '../../api/queries';
 import { useEffect } from 'react';
 import { IGetProductsQueryParameters } from '../../types/get-products-query-parameters';
 
-export const useProducts = (categories: IGetProductsQueryParameters) => {
+export const useProducts = (categories: IGetProductsQueryParameters = {}) => {
   const { inView, ref } = useInView();
 
   const {
@@ -18,6 +18,10 @@ export const useProducts = (categories: IGetProductsQueryParameters) => {
 
 
   useEffect(() => {
+    console.log({
+      inView,
+      hasNextPage
+    })
     if (inView && hasNextPage) {
       console.log('In view');
       fetchNextPage();

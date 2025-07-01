@@ -26,7 +26,7 @@ export const ProductsList: FC<IProps> = ({
         response.map(({ items }) =>
           items.map((item) => <ProductItem key={item.id} {...item} />)
         )}
-      <li ref={libRef} />
+      {response && <li ref={libRef} /> }
     </ul>
   );
 };

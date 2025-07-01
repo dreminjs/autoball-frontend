@@ -7,6 +7,7 @@ interface IProps {
   error?: string;
   children: ReactNode;
   className?: string
+  posistionLoading?: "top" | "bottom"
 }
 
 export const List: FC<IProps> = ({ isError, isPending, error, empty, children, className }) => {

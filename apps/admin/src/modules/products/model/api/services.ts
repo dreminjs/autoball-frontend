@@ -13,10 +13,9 @@ export const findMany = async (
   const queryParameters = new URLSearchParams();
 
   queryParameters.append('cursor', String(dto.cursor));
-  if (dto.condition) queryParameters.append('condition', dto.condition);
   if (dto.countItems)
     queryParameters.append('take', String(dto.countItems));
-  if (dto.isPrintedStatus)
+  if (dto.isPrintedStatus !== undefined && dto.isPrintedStatus !== null)
     queryParameters.append('is_printed', String(dto.isPrintedStatus));
   if (dto.carBrandId) queryParameters.append('car_brand_id', dto.carBrandId);
   if (dto.seriesId) queryParameters.append('car_series_id', dto.seriesId);
@@ -102,3 +101,7 @@ export const createOne = async (data: ProductFormData) => {
 
   return await instance.post(`${SERVICE_URLS.product}`, formData);
 };
+
+export const findOne = async (id: string): Promise<IProduct> => {
+  return (await instance.get(`${SERVICE_URLS.product}/${id}`)).data
+}

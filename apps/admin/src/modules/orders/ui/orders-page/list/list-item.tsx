@@ -9,13 +9,8 @@ export const ListItem: FC<Props> = (props) => {
 
     return (
   <li className="bg-white rounded-lg shadow-md p-5 mb-4 border border-gray-200 hover:shadow-lg transition-shadow relative list-none">
-      {false && (
-        <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center rounded-lg z-10">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
-        </div>
-      )}
-      
-      <div className="flex justify-between items-start mb-3">
+    
+    <div className="flex justify-between items-start mb-3">
         <div>
           <h3 className="text-lg font-semibold text-gray-800">
             {/* Заказ #{props.id.slice(0, 8)} */}

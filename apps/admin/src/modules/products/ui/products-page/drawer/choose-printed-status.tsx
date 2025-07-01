@@ -19,11 +19,11 @@ export const ChoosePrintedStatus = () => {
       onChange={handleOnChange}
       options={[
         {
-          title: 'Распечатаные',
+          title: "Распечатаные",
           value: "true",
         },
         {
-          title: 'Не распечатаные',
+          title: "Не распечатаные",
           value: "false",
         },
       ]}

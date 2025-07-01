@@ -1,7 +1,7 @@
 import { IProduct } from '@autoball-frontend/shared-types';
 import { FC } from 'react';
 import { ItemInfo } from './item-info';
-import { useChooseOrderProductInfo } from '../../../../orders/model/hooks/use-choose-order-product-info';
+import { useChooseOrderProductInfo } from '../../../../orders/model/hooks/post-page/use-choose-order-product-info';
 
 type TProduct = Pick<
   IProduct,

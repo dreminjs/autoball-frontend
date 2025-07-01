@@ -3,7 +3,7 @@ import { InputField } from '../../../../../components';
 import { TextareaField } from '../../../../../components/textarea-field/textarea-field';
 import { Button } from '../../../../../components/buttons';
 import { ChooseProductArticles } from '../../../../products/';
-import { useChooseOrderProductInfo } from '../../../model/hooks/use-choose-order-product-info';
+import { useChooseOrderProductInfo } from '../../../model/hooks/post-page/use-choose-order-product-info';
 import { postOrderValidate } from '../../../model/lib/post-order-validate';
 import { useNotificationActions } from '../../../../notifications';
 import { zodResolver } from '@hookform/resolvers/zod';

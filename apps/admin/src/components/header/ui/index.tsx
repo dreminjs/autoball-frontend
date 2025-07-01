@@ -14,7 +14,7 @@ export const Header = () => {
   return (
     <header className="py-4 bg-gradient-to-r from-[#e6f0f7] to-[#d4e3ed] text-[#2d3748] mb-5 print:hidden">
       <Container className="flex items-center justify-between gap-5">
-        <img src={logo} alt={'autoball logo'} className="w-[75px] h-[75px] md:w-[100px] md:h-[100px]" />
+        <img src={logo} alt={'autoball logo'} className="w-[55px] h-[55px] md:w-[70px] md:h-[70px]" />
         {auth && <Navigation />}
         <button onClick={() => setMenuDrawerVisible(true)} className="block sm:hidden">
           <img
