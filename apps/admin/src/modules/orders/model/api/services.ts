@@ -1,6 +1,6 @@
 import { instance } from "../../../../shared/api/api-instance";
-import { SERVICE_URLS } from "../../../../shared/constants";
-import { IFindManyDto, IPatchOrderStatusDto } from "../types/dto";
+import { QUERY_KEYS, SERVICE_URLS } from "../../../../shared/constants";
+import { IFindManyDto, IPatchOrderStatusDto, PostOrderProductsDto } from "../types/dto";
 
 
 export const findMany = async (dto: IFindManyDto) => {
@@ -13,3 +13,8 @@ export const findMany = async (dto: IFindManyDto) => {
 export const patchOne = async (dto: IPatchOrderStatusDto) => {
     return await instance.patch(`${SERVICE_URLS.orders}/${dto.order_id}?status=${dto.status}`)
 }   
+
+
+export const createOne = async (dto: PostOrderProductsDto) => {
+    return await instance.post(`${SERVICE_URLS.orders}/${QUERY_KEYS.private}`, dto)
+}

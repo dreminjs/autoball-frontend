@@ -35,5 +35,5 @@ export const deleteOne = async (id: string) => {
 }
 
 export const changeRole = async (dto: IChangeUserRoleDto, userId: string) => {
-  return await instance.patch(`${SERVICE_URLS.user}/${userId}?role=${dto.role}`)
+  return await instance.patch(`${SERVICE_URLS.user}/${userId}/role?role=${dto.role}`)
 }

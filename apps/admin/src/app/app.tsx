@@ -23,6 +23,7 @@ import { CarPartsPage } from '../modules/car-parts/ui/car-parts/car-parts-page';
 import { carPartsStore } from '../modules/car-parts';
 import { postProductsStore } from '../modules/products/model/post-products-atoms-page';
 import { UsersPage } from '../modules/users/ui/users-page/users-page';
+import { ordersStore } from '../modules/orders/model/atoms';
 
 export function App() {
   return (
@@ -31,7 +32,7 @@ export function App() {
         <Route path="/" element={<SigninPage />} />
         <Route path={PAGE_URLS.orders}>
           <Route index element={<OrdersPage />} />
-          <Route path={QUERY_KEYS.post} element={<PostOrderPage />} />
+          <Route path={QUERY_KEYS.post} element={ <Provider store={ordersStore}><PostOrderPage /></Provider>} />
         </Route>
 
         <Route path={PAGE_URLS['product']}>

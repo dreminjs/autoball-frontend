@@ -36,7 +36,7 @@ import {
 
 export const useFilterCategories = () => {
   return {
-    condition: useAtomValue(conditionAtom),
+    condition: "used",
     fuel: useAtomValue(fuelAtom),
     body: useAtomValue(bodyAtom),
     gearbox: useAtomValue(gearboxAtom),

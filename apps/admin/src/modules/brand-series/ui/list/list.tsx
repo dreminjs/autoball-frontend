@@ -22,7 +22,7 @@ export const CarBrandSeriresList: FC<IProps> = ({ brandId, onChoose }) => {
     <List
       {...{ isError, isPending }}
       empty={!data?.pages.length}
-      error={error?.response?.data.detail}
+      error={error}
     >
       {data &&
         data.pages.map((page) =>

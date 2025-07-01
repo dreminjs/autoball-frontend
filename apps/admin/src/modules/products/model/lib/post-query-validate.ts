@@ -83,23 +83,5 @@ export const validateProductFields = (
       isValid = false;
     }
   }
-
-  console.log(data)
-
-//   const hasTireFields = Object.keys(data).some(
-//     (key) => key.startsWith('tires_') && data[key as keyof typeof data]
-//   );
-//   const hasDiscFields = Object.keys(data).some(
-//     (key) => key.startsWith('disc_') && data[key as keyof typeof data]
-//   );
-
-//   if (hasTireFields && hasDiscFields) {
-//     addError({
-//       message:
-//         'Указаны параметры и для шин, и для дисков. Выберите один тип продукта.',
-//     });
-//     isValid = false;
-//   }
-
   return isValid;
 };

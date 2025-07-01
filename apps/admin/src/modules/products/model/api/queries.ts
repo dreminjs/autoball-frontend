@@ -19,15 +19,14 @@ import { QUERY_KEYS, SERVICE_URLS } from '../../../../shared/constants';
 import { checkboxesAtom } from '../product-atoms-page';
 import { useSetAtom } from 'jotai';
 import { useNotificationActions } from '../../../notifications';
-import { useFilterCategories } from '../hooks/products/use-filtration-categories';
 import { ProductFormData } from '../schemas/product.schema';
 import { useChooseCarPart } from '../hooks/post-products/car/use-choose-car-part';
 import { useChooseSeries } from '../hooks/post-products/car/use-choose-series';
 import { useChooseCarBrand } from '../hooks/post-products/car/use-choose-car-brand';
 import { validateProductFields } from '../lib/post-query-validate';
+import { IGetProductsQueryParameters } from '../types/get-products-query-parameters';
 
-export const useGetProducts = () => {
-  const categories = useFilterCategories();
+export const useGetProducts = (categories: IGetProductsQueryParameters) => {
 
   return useInfiniteQuery<
     IInfiteScrollResponse<IProduct>,
@@ -38,20 +37,21 @@ export const useGetProducts = () => {
       QUERY_KEYS.private,
       Object.values(categories),
     ],
-    queryFn: () =>
-      findMany({
+    queryFn: ({ pageParam }) => {
+      const cursor = typeof pageParam === 'number' ? pageParam : 0;
+
+      return findMany({
         ...categories,
-        page: 1,
-        isPrintedStatus:
-          JSON.parse(categories.isPrintedStatus) === null
+        condition: "used",
+        cursor,
+        isPrintedStatus: categories.isPrintedStatus && JSON.parse(categories.isPrintedStatus) === null
             ? null
             : categories.isPrintedStatus,
-      }),
-    initialPageParam: 1,
-    getNextPageParam: (lastPage) => lastPage.next_cursor,
-    refetchOnMount: false,
+      });
+    },
     refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
+    getNextPageParam: (lastPage) => lastPage.next_cursor,
+    initialPageParam: 0,
   });
 };
 

@@ -1,11 +1,9 @@
-import { PostProductForm } from "./post-product-form"
-
-
-
+import { PostProductForm } from './post-product-form';
 
 export const PostProductPage = () => {
-
-    return (
-        <PostProductForm />
-    )
-}
+  return (
+    <div>
+      <PostProductForm />
+    </div>
+  );
+};

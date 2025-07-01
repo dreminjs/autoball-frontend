@@ -12,7 +12,7 @@ export const createOne = async (data: CarBrandForm) => {
 
   formData.append('file', data.brand_logo);
 
-  formData.append('data', JSON.stringify({ name: data.name }));
+  formData.append('car_brand_data', JSON.stringify({ name: data.name }));
 
   return (await instance.post(`${SERVICE_URLS.carbrand}`, formData)).data;
 };

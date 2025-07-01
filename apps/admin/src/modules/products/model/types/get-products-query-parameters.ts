@@ -3,9 +3,9 @@ import { TDiameterOption } from "./dics.interface";
 import { TTiresCar, TTiresSeason } from "../../../../shared/types";
 
 export interface IGetProductsQueryParameters {
+  article?: string | null
   condition?: ProductCondition;
   countItems?: number;
-  page: number;
   isPrintedStatus?: string | null;
   carBrandId?: string | null;
   seriesId?: string | null;

@@ -17,7 +17,7 @@ export const UserList: FC<IProps> = ({ ref, data, states }) => {
       className='h-[70vh] overflow-y-scroll'
       isPending={states.isPending}
       isError={states.isError}
-      empty={!data?.pages[0].items.length}
+      empty={!data?.pages.length}
     >
       {
         data?.pages.map((page, index) => (

@@ -28,7 +28,7 @@ export interface ITokens {
 }
 
 export interface IProduct {
-  id: string; // или uuid если у вас есть такой тип
+  id: string;
   pictures: string[];
   car_brand_name: string;
   car_series_name: string;
@@ -40,16 +40,15 @@ export interface IProduct {
   type_of_body: BodyType;
   condition: ProductCondition;
   description: string;
-  price: number; // переименовано из real_price, так как в данных только price
+  price: number;
   count: number;
   OEM: string;
   VIN: string;
   article: string;
   availability: TAvailability
   created_at: string;
-  currency: string;
+  currency: Currency
   
-  // Поля дисков
   disc_brand_name: string | null;
   disc_dia: number | null;
   disc_diametr: string | null;
@@ -58,8 +57,6 @@ export interface IProduct {
   disc_model: string | null;
   disc_pcd: number | null;
   disc_width: number | null;
-  
-  // Поля шин
   tire_brand_name: string | null;
   tire_car_type: string | null;
   tire_diametr: string | null;
@@ -70,7 +67,6 @@ export interface IProduct {
   tire_season: string | null;
   tire_width: number | null;
   
-  // Общие поля
   discount: number;
   is_available: boolean;
   is_printed: boolean;

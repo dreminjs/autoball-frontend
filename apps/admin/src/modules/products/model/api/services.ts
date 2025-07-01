@@ -8,26 +8,25 @@ import { IToggleAvailableStatusDto } from '../types/toggle-availible-status.dto'
 import { ProductFormData } from '../schemas/product.schema';
 
 export const findMany = async (
-  dto: IGetProductsQueryParameters
+  dto: IGetProductsQueryParameters & { cursor: unknown }
 ): Promise<IInfiteScrollResponse<IProduct>> => {
   const queryParameters = new URLSearchParams();
 
+  queryParameters.append('cursor', String(dto.cursor));
   if (dto.condition) queryParameters.append('condition', dto.condition);
   if (dto.countItems)
-    queryParameters.append('page_size', String(dto.countItems));
-  if (dto.page) queryParameters.append('page', "2");
+    queryParameters.append('take', String(dto.countItems));
   if (dto.isPrintedStatus)
     queryParameters.append('is_printed', String(dto.isPrintedStatus));
   if (dto.carBrandId) queryParameters.append('car_brand_id', dto.carBrandId);
   if (dto.seriesId) queryParameters.append('car_series_id', dto.seriesId);
   if (dto.carPartId) queryParameters.append('car_part_id', dto.carPartId);
-
   if (dto.yearFrom) queryParameters.append('year_from', String(dto.yearFrom));
   if (dto.yearTo) queryParameters.append('year_to', String(dto.yearTo));
   if (dto.priceFrom)
     queryParameters.append('price_from', String(dto.priceFrom));
   if (dto.priceTo) queryParameters.append('price_to', String(dto.priceTo));
-
+  if(dto.article) queryParameters.append("article", dto.article)
   if (dto.volume) queryParameters.append('volume', String(dto.volume));
   if (dto.fuel) queryParameters.append('fuel', dto.fuel);
   if (dto.gearbox) queryParameters.append('gearbox', dto.gearbox);
@@ -93,9 +92,7 @@ export const toggleAvailibleStatus = async (dto: IToggleAvailableStatusDto) => {
 export const createOne = async (data: ProductFormData) => {
   const formData = new FormData();
 
-  console.log(data)
-
-  formData.append("product_data", JSON.stringify(data))
+  formData.append('product_data', JSON.stringify(data));
 
   if (data.product_pictures && data.product_pictures.length > 0) {
     data.product_pictures.forEach((picture) => {
@@ -103,8 +100,5 @@ export const createOne = async (data: ProductFormData) => {
     });
   }
 
-  return await instance.post(
-    `${SERVICE_URLS.product}`,
-    formData
-  );
+  return await instance.post(`${SERVICE_URLS.product}`, formData);
 };

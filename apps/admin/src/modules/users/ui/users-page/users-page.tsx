@@ -1,4 +1,3 @@
-import { useChangeRole } from '../../api/queries';
 import { useUsers } from '../../model/hooks/use-users';
 import { UserList } from './list/list';
 import { Toolbar } from './toolbar/toolbar';
@@ -10,14 +9,11 @@ export const UsersPage = () => {
     onChangeName,
     onChangeRole,
     onPhoneNumberChange,
-    onStatusChange,
     name,
     phoneNumber,
-    status,
     role,
     ref,
   } = useUsers();
-
 
   return (
     <>

@@ -1,5 +1,10 @@
-import { createStore } from "zustand";
+import { atom, createStore } from "jotai";
+import { IOrderProductInfo } from "./types/dto";
 
 
 
-export const carBrandsStore = createStore()
+export const ordersStore = createStore()
+
+export const articleAtom = atom<IOrderProductInfo[]>([])
+
+ordersStore.set(articleAtom, [])

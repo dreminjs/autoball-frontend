@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { useGetProducts } from '../../model/api/queries';
 import { ProductsFilterDrawer } from './drawer/products-filter-drawer';
 import { Toolbar } from './toolbar/toolbar';
 import { ProductsList } from './list/products-list';
 import { CarPartsQrList } from './list/products-qr-list';
+import { useProducts } from '../../model/hooks/products/use-products';
 
 export const ProductsPage = () => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
 
-  const { isPending, data, error } = useGetProducts();
+  const { error, data, isPending, ref } = useProducts();
 
   return (
     <>
@@ -16,6 +16,7 @@ export const ProductsPage = () => {
         <Toolbar onShowDrawer={() => setIsDrawerVisible(true)} />
 
         <ProductsList
+          libRef={ref}
           errorMessage={error?.response?.data.detail}
           response={data?.pages}
           isLoading={isPending}

@@ -17,7 +17,7 @@ export const PAGE_URLS = {
 
 export const SERVICE_URLS = {
   auth: 'auth',
-  orders: 'orders',
+  orders: 'order',
   carbrand: 'carbrand',
   product: 'product',
   carseries: 'carseries',
