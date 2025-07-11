@@ -17,16 +17,20 @@ import { IServerError } from '../../../shared/types/server-error';
 import { useWheelComponentBrandModal } from '../model/hooks/use-wheel-component-brand-modal';
 import { useNotificationActions } from '../../notifications';
 import { useChoosedWheelComponentBrand } from '../model/hooks/use-choose-wheel-component-brand';
+import { findMany } from './services';
 
-export const useGetWheelBrands = (params = {}, data?: WheelComponent) => {
+export const useGetWheelBrands = (
+  params: { take: number; search?: string } = { take: 5 },
+  data?: WheelComponent
+) => {
   const path = data ? `${data}brand` : getComponentBrandType();
   return useInfiniteQuery<
     IInfiteScrollResponse<ICarPart>,
     AxiosError<IServerError>
   >({
     queryKey: [path, params],
-    queryFn: async () => {
-      return (await instance.get(path, { params })).data;
+    queryFn: async ({ pageParam }) => {
+      return await findMany(path, { ...params, cursor: pageParam });
     },
     refetchOnWindowFocus: false,
     initialPageParam: 0,

@@ -14,7 +14,7 @@ export const useWheelComponentsBrands = (type?: WheelComponent) => {
     useGetWheelBrands(
       {
         search,
-        limit: 10,
+        take: 10,
       },
       type
     );
