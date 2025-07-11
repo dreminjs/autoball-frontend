@@ -21,6 +21,7 @@ export const ProtectedRoutes: FC<IProps> = ({ children }) => {
     if (pathname === '/' && isSuccess) {
       navigate(PAGE_URLS.product);
     }
+  
   }, [isError, isSuccess, navigate, pathname]);
 
   return children;

@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from '../components/layout/layout';
 import { SigninPage } from '../modules/signin';
-import { ProtectedRoutes } from '../providers/protected-routes';
 import { OrdersPage, PostOrderPage } from '../modules/orders';
 import { PAGE_URLS, QUERY_KEYS } from '../shared/constants';
 import {

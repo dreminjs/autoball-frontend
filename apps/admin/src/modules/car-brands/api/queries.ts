@@ -14,10 +14,11 @@ import { SERVICE_URLS } from '../../../shared/constants';
 import { ApiOperationState } from '../../../shared/types/api-operation-state.interface';
 import { IServerError } from '../../../shared/types/server-error';
 import { CarBrandForm } from '../model/types/car-brand';
-import { createOne, deleteOne, findMany, findOne } from './servies';
+import { createOne, deleteOne, editOne, findMany, findOne } from './servies';
 import { useCarBrandModal } from '../model/hooks/use-car-brand-modal';
 import { useNotificationActions } from '../../notifications';
 import { useChooseBrand } from '../model/hooks';
+import { TEditBrandDto } from '../model/dto/edit-brand.dto';
 
 export const usePostCarBrand = () => {
   const queryClient = useQueryClient();
@@ -29,7 +30,7 @@ export const usePostCarBrand = () => {
   const { mutate, ...props } = useMutation<
     ICarBrand,
     AxiosError<IServerError>,
-   CarBrandForm
+    CarBrandForm
   >({
     mutationFn: (data: CarBrandForm) => createOne({ ...data }),
     mutationKey: [SERVICE_URLS.carbrand],
@@ -123,5 +124,28 @@ export const useDeleteCarBrand = () => {
 };
 
 export const useEditBrand = () => {
-  return {};
+  const queryClient = useQueryClient();
+
+  const { addError, addSuccess, remove, addInfo } = useNotificationActions();
+
+  const { mutate, ...props } = useMutation({
+    mutationFn: (data: TEditBrandDto) => editOne(data),
+    onSuccess: () => {
+      remove('info');
+      queryClient.invalidateQueries({
+        queryKey: [SERVICE_URLS.carbrand],
+      });
+      addSuccess();
+    },
+    onError: (data) => {
+      remove('info');
+      addError();
+    },
+  });
+  const handleMutate = (data: TEditBrandDto) => {
+    addInfo();
+    mutate(data);
+  };
+
+  return { mutate: handleMutate, ...props };
 };

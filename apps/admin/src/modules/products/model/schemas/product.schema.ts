@@ -39,10 +39,10 @@ export const productSchema = z
       'liftback',
       'compact',
       'tractor',
-    ]),
-    volume: z.number({ message: 'Обязательное поле' }).min(0),
-    gearbox: z.enum(['manual', 'automatic', 'robotic', 'variator']),
-    fuel: z.enum(['gasoline', 'diesel', 'hybrid', 'electric']),
+    ]).optional(),
+    volume: z.number({ message: 'должно быть числом' }).optional(),
+    gearbox: z.enum(['manual', 'automatic', 'robotic', 'variator']).optional(),
+    fuel: z.enum(['gasoline', 'diesel', 'hybrid', 'electric']).optional(),
     engine_type: z.string().optional(),
     VIN: z.string().optional(),
     product_pictures: z
@@ -64,7 +64,7 @@ export const productSchema = z
     price: z.number({ message: 'Обязательное поле' }).min(0),
     condition: z.enum(['used', 'new']),
     count: z.number().min(1, 'Минимальное количество: 1'),
-    productType: z.enum(['tire', 'disc', 'car'], {
+    productType: z.enum(['tire', 'disc', 'engine',"other"], {
       required_error: 'Выберите тип продукта',
     }),
     tires_diametr: z.enum([...diameterOptions, 'null']).optional(),
@@ -89,27 +89,5 @@ export const productSchema = z
     disc_brand_id: z.string().uuid('Некорректный ID').optional(),
     disc_model: z.string().optional(),
   })
-  // .superRefine((data, ctx) => {
-  //   console.log(data);
-  //   if (data.productType === 'tire') {
-  //     if (!data.tires_diametr) {
-  //       ctx.addIssue({
-  //         code: z.ZodIssueCode.custom,
-  //         message: 'Обязательное поле',
-  //         path: ['tires_diametr'],
-  //       });
-  //     }
-  //   }
-
-  //   if (data.productType === 'disc') {
-  //     if (!data.disc_diametr) {
-  //       ctx.addIssue({
-  //         code: z.ZodIssueCode.custom,
-  //         message: 'Обязательное поле',
-  //         path: ['disc_diametr'],
-  //       });
-  //     }
-  //   }
-  // });
 
 export type ProductFormData = z.infer<typeof productSchema>;

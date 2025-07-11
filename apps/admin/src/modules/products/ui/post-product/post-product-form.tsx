@@ -29,15 +29,12 @@ export const PostProductForm = () => {
     resolver: zodResolver(productSchema),
     defaultValues: {
       condition: 'used',
-      gearbox: 'manual',
-      fuel: 'gasoline',
-      type_of_body: 'sedan',
       count: 1,
       price: 0,
       volume: 0,
-      productType: 'car',
+      productType: "other",
       discount: 0,
-      currency: "USD"
+      currency: "USD",
     },
   });
 

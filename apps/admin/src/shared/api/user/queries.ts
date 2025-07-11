@@ -6,10 +6,10 @@ import { IServerError } from '../../types/server-error';
 import { getMe } from './services';
 import { QUERY_KEYS } from '../../constants';
 import { useEffect } from 'react';
-import { useAuthStore } from '../../../store/auth.store';
+import { useUserStore } from '../../../store/user.store';
 
 export const useGetMe = (): { data?: IUser } & ApiOperationState => {
-  const { login, logout } = useAuthStore();
+  const { login, logout } = useUserStore();
 
   const {
     isError,
@@ -26,12 +26,12 @@ export const useGetMe = (): { data?: IUser } & ApiOperationState => {
 
   useEffect(() => {
     if (isSuccess) {
-      login();
+      login(data);
     }
     if (isError) {
       logout();
     }
-  }, [isSuccess, isError, login, logout]);
+  }, [isSuccess, isError, login, logout, data]);
 
   return {
     data,

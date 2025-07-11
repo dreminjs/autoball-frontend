@@ -6,6 +6,7 @@ import {
 import { instance } from '../../../shared/api/api-instance';
 import { SERVICE_URLS } from '../../../shared/constants';
 import { CarBrandForm } from '../model/types/car-brand';
+import { TEditBrandDto } from '../model/dto/edit-brand.dto';
 
 export const createOne = async (data: CarBrandForm) => {
   const formData = new FormData();
@@ -21,14 +22,16 @@ export const findOne = async (id: string): Promise<ICarBrand> => {
   return (await instance.get(`${SERVICE_URLS.carbrand}/${id}`)).data;
 };
 
-export const editOne = async (data: CarBrandForm, id: string): Promise<ICarBrand> => {
+export const editOne = async (
+  data: TEditBrandDto,
+): Promise<ICarBrand> => {
   const formData = new FormData();
 
-  if(data.brand_logo) formData.append('file', data.brand_logo);
+  if (data.brand_logo) formData.append('file', data.brand_logo);
 
   formData.append('data', JSON.stringify({ name: data.name }));
 
-  return (await instance.put(`${SERVICE_URLS.carbrand}/${id}`, formData)).data;
+  return (await instance.put(`${SERVICE_URLS.carbrand}/${data.id}`, formData)).data;
 };
 
 export const deleteOne = async (id: string) => {

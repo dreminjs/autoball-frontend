@@ -8,22 +8,20 @@ type IProps = ICarBrand & {
   onChoose: (data: ICarBrand & Actions) => void;
 };
 
-export const CarBrandItem: FC<IProps> = ({ name, picture, onChoose, id }) => {  
-  
+export const CarBrandItem: FC<IProps> = ({ name, picture, onChoose, id }) => {
   return (
     <li className="border border-gray-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 bg-white mb-5">
       <div className="flex items-center justify-between flex-wrap p-4">
         <div className="flex items-center gap-6">
           <div className="w-20 h-20 flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden">
             <img
-              src={`https://console-production-f4fc.up.railway.app/api/v1/buckets/avtobol/objects/download?preview=true&prefix=${picture}&version_id=null`}
+              loading='lazy'
+              src={`http://localhost:9000/avtobol/${picture}`}
               alt={name}
-              className="object-contain w-full h-full"
-            />
+              className="object-fit w-full h-full"
+            />  
           </div>
-          <p className="text-sm md:text-xl font-medium text-gray-800">
-            {name}
-          </p>
+          <p className="text-sm md:text-xl font-medium text-gray-800">{name}</p>
         </div>
 
         <div className="flex gap-3 items-center ml-2">

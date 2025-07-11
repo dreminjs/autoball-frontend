@@ -14,16 +14,9 @@ export const useProducts = (categories: IGetProductsQueryParameters = {}) => {
     hasNextPage,
     isSuccess,
     isError,
-  } = useGetProducts({ ...categories  });
-
-
+  } = useGetProducts({ ...categories });
   useEffect(() => {
-    console.log({
-      inView,
-      hasNextPage
-    })
     if (inView && hasNextPage) {
-      console.log('In view');
       fetchNextPage();
     }
   }, [inView, fetchNextPage, hasNextPage]);

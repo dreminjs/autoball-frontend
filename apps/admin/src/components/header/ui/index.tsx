@@ -3,11 +3,11 @@ import { useSetAtom } from 'jotai';
 import { Navigation } from './nav/nav';
 import { mobileMenuVisibleAtom } from '../../../store/menu.atom';
 import { Container } from '../../container';
-import { useAuthStore } from '../../../store/auth.store';
+import { useUserStore } from '../../../store/user.store';
 
 export const Header = () => {
 
-  const { auth } = useAuthStore()
+  const { user } = useUserStore()
 
   const setMenuDrawerVisible = useSetAtom(mobileMenuVisibleAtom)
 
@@ -15,7 +15,7 @@ export const Header = () => {
     <header className="py-4 bg-gradient-to-r from-[#e6f0f7] to-[#d4e3ed] text-[#2d3748] mb-5 print:hidden">
       <Container className="flex items-center justify-between gap-5">
         <img src={logo} alt={'autoball logo'} className="w-[55px] h-[55px] md:w-[70px] md:h-[70px]" />
-        {auth && <Navigation />}
+        {user && <Navigation />}
         <button onClick={() => setMenuDrawerVisible(true)} className="block sm:hidden">
           <img
             src="/icon-menu.svg"

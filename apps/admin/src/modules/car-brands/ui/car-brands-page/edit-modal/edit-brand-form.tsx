@@ -2,12 +2,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { carBrandSchema } from "../../../model/schemas/car-brand.schema";
 import { CarBrandForm } from "../../../model/types/car-brand";
+import { useChooseBrand } from "../../../model/hooks";
 
 export const EditBrandForm = ({
   isLoading
 }: {
   isLoading?: boolean;
 }) => {
+  const { choosedBrand } = useChooseBrand();
   const {
     register,
     handleSubmit,
@@ -16,12 +18,13 @@ export const EditBrandForm = ({
     setValue,
     reset
   } = useForm<CarBrandForm>({
-    resolver: zodResolver(carBrandSchema)
+    resolver: zodResolver(carBrandSchema),
+    defaultValues: {
+      name: choosedBrand?.name
+    }
   });
 
-  const preview = watch("brand_logo") ? URL.createObjectURL(watch('brand_logo')) : null;
-
-  // TODO: IMPLETEMENT EDIT BRAND
+  const preview = watch("brand_logo") ? URL.createObjectURL(watch('brand_logo')) : `http://localhost:9000/avtobol/${choosedBrand?.picture}`
 
   return (
     <form onSubmit={handleSubmit((data) => console.log(data))} className="space-y-6">
@@ -48,7 +51,7 @@ export const EditBrandForm = ({
         </label>
         <div className="flex items-center gap-4">
           {preview && (
-            <div className="w-16 h-16 rounded-lg overflow-hidden border">
+            <div className="w-15 h-12 rounded-lg overflow-hidden border">
               <img
                 src={preview}
                 alt="Preview"

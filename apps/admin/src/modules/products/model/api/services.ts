@@ -6,6 +6,9 @@ import { IProduct } from '@autoball-frontend/shared-types';
 import { IToggleScanStatusDto } from '../types/toggle-scan-status.dto';
 import { IToggleAvailableStatusDto } from '../types/toggle-availible-status.dto';
 import { ProductFormData } from '../schemas/product.schema';
+import { StrictFormData } from '../../../../shared/types/strict-form-data';
+import { PostProductDto } from '../types/product.interface';
+import { transformPostData } from '../lib/transform-post-data';
 
 export const findMany = async (
   dto: IGetProductsQueryParameters & { cursor: unknown }
@@ -89,9 +92,9 @@ export const toggleAvailibleStatus = async (dto: IToggleAvailableStatusDto) => {
 };
 
 export const createOne = async (data: ProductFormData) => {
-  const formData = new FormData();
+  const formData = new FormData()
 
-  formData.append('product_data', JSON.stringify(data));
+  formData.append('product_data', JSON.stringify(transformPostData(data)));
 
   if (data.product_pictures && data.product_pictures.length > 0) {
     data.product_pictures.forEach((picture) => {

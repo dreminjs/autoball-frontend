@@ -17,7 +17,6 @@ export const ProductsPage = () => {
     <>
       <div>
         <Toolbar onShowDrawer={() => setIsDrawerVisible(true)} />
-
         <ProductsList
           libRef={ref}
           errorMessage={states.error?.response?.data.detail}
