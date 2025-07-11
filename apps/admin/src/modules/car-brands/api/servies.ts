@@ -29,7 +29,7 @@ export const editOne = async (
 
   if (data.brand_logo) formData.append('file', data.brand_logo);
 
-  formData.append('data', JSON.stringify({ name: data.name }));
+  formData.append('updated_data', JSON.stringify({ name: data.name }));
 
   return (await instance.put(`${SERVICE_URLS.carbrand}/${data.id}`, formData)).data;
 };

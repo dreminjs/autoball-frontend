@@ -1,14 +1,11 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { carBrandSchema } from "../../../model/schemas/car-brand.schema";
-import { CarBrandForm } from "../../../model/types/car-brand";
-import { useChooseBrand } from "../../../model/hooks";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { carBrandSchema } from '../../../model/schemas/car-brand.schema';
+import { CarBrandForm } from '../../../model/types/car-brand';
+import { useChooseBrand } from '../../../model/hooks';
+import { useEditBrand } from '../../../api/queries';
 
-export const EditBrandForm = ({
-  isLoading
-}: {
-  isLoading?: boolean;
-}) => {
+export const EditBrandForm = ({ isLoading }: { isLoading?: boolean }) => {
   const { choosedBrand } = useChooseBrand();
   const {
     register,
@@ -16,18 +13,31 @@ export const EditBrandForm = ({
     formState: { errors },
     watch,
     setValue,
-    reset
+    reset,
   } = useForm<CarBrandForm>({
     resolver: zodResolver(carBrandSchema),
     defaultValues: {
-      name: choosedBrand?.name
-    }
+      name: choosedBrand?.name,
+    },
   });
 
-  const preview = watch("brand_logo") ? URL.createObjectURL(watch('brand_logo')) : `http://localhost:9000/avtobol/${choosedBrand?.picture}`
+  const preview = watch('brand_logo')
+    ? URL.createObjectURL(watch('brand_logo'))
+    : `http://localhost:9000/avtobol/${choosedBrand?.picture}`;
+
+  const { mutate } = useEditBrand();
 
   return (
-    <form onSubmit={handleSubmit((data) => console.log(data))} className="space-y-6">
+    <form
+      onSubmit={handleSubmit((data) =>
+        mutate({
+          ...data,
+          id: choosedBrand?.id || '',
+          brand_logo: watch('brand_logo'),
+        })
+      )}
+      className="space-y-6"
+    >
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Имя бренда
@@ -76,7 +86,9 @@ export const EditBrandForm = ({
           </label>
         </div>
         {errors.brand_logo && (
-          <p className="mt-1 text-sm text-red-600">{errors.brand_logo.message}</p>
+          <p className="mt-1 text-sm text-red-600">
+            {errors.brand_logo.message}
+          </p>
         )}
       </div>
       <div className="flex justify-end gap-3 pt-4">

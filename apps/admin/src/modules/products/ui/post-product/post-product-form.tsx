@@ -32,9 +32,9 @@ export const PostProductForm = () => {
       count: 1,
       price: 0,
       volume: 0,
-      productType: "other",
+      productType: 'other',
       discount: 0,
-      currency: "USD",
+      currency: 'USD',
     },
   });
 
@@ -102,6 +102,10 @@ export const PostProductForm = () => {
     }
   }, [productType, methods]);
 
+  useEffect(() => {
+    console.log(methods.watch("type_of_body"))
+  },[methods.watch("type_of_body")])
+
   return (
     <>
       <FormProvider {...methods}>
@@ -114,7 +118,7 @@ export const PostProductForm = () => {
             options={[
               { value: 'tire', label: 'Шины' },
               { value: 'disc', label: 'Диски' },
-              { value: 'car', label: 'Другие детали' },
+              { value: 'other', label: 'Другие детали' },
             ]}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -180,6 +184,13 @@ export const PostProductForm = () => {
               error={methods.formState.errors.volume?.message}
               register={methods.register}
             />
+            <TextInput
+              label="Тип двигателя"
+              name="engine_type"
+              placeholder='TDI'
+              error={methods.formState.errors.volume?.message}
+              register={methods.register}
+            />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <SelectInput
@@ -227,14 +238,13 @@ export const PostProductForm = () => {
               type={productType}
             />
           )}
-          {
-            productType === 'tire' && 
+          {productType === 'tire' && (
             <TierFields
               register={methods.register}
               errors={methods.formState.errors}
               type={productType}
             />
-          }
+          )}
 
           <DndProvider backend={HTML5Backend}>
             <PhotoUploader

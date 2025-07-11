@@ -10,6 +10,7 @@ interface IProps {
   type?: React.HTMLInputTypeAttribute;
   step?: string;
   rows?: number;
+  placeholder?: string;
 }
 
 export const TextInput: FC<IProps> = ({
@@ -20,8 +21,10 @@ export const TextInput: FC<IProps> = ({
   type,
   step,
   rows,
+  placeholder,
 }) => {
   const inputProps = {
+    ...(placeholder && { placeholder }),
     className: 'w-full p-2 border rounded',
     ...(step && { step }),
   };
@@ -34,7 +37,7 @@ export const TextInput: FC<IProps> = ({
       ) : (
         <input
           type={type}
-          {...register(name, { ...{ valueAsNumber: type === 'number' }, })}
+          {...register(name, { ...{ valueAsNumber: type === 'number' } })}
           {...inputProps}
         />
       )}

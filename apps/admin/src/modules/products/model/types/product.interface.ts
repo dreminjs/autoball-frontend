@@ -9,9 +9,9 @@ export type EngineDto = Pick<
   ProductFormData,
   'engine_type' | 'gearbox' | 'fuel' | 'volume'
 > & {
-  gearbox: NonNullable<ProductFormData['gearbox']>;
-  fuel: NonNullable<ProductFormData['fuel']>;
-  volume: NonNullable<ProductFormData['volume']>;
+  gearbox: NonNullable<ProductFormData['gearbox']>
+  fuel: NonNullable<ProductFormData['fuel']>
+  volume: NonNullable<ProductFormData['volume']>
 };
 
 export interface DiscDto {

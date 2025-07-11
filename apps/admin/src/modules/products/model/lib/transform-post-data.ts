@@ -9,13 +9,13 @@ export const transformPostData = (data: ProductFormData): PostProductDto => {
     currency: data.currency,
     discount: data.discount,
     year: data.year,
-    type_of_body: data.type_of_body,
     VIN: data.VIN,
     note: data.note,
     description: data.description,
     price: data.price,
     condition: 'used',
     count: data.count,
+    ...(data.type_of_body && { type_of_body: data.type_of_body }),
   };
 
   switch (data.productType) {

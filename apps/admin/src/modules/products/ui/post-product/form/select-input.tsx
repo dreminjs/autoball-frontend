@@ -22,7 +22,7 @@ export const SelectInput: FC<IProps> = ({
     <label className="block mb-1">{label}</label>
     <select {...register(name)} className="w-full p-2 border rounded">
       {hasNullOption && (
-        <option value="not-matter">не важно</option>
+        <option value="">не важно</option>
       )}
       {options.map((option) => (
         <option key={option.value} value={option.value}>

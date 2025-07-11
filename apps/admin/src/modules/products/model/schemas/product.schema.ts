@@ -39,10 +39,11 @@ export const productSchema = z
       'liftback',
       'compact',
       'tractor',
+      ""
     ]).optional(),
     volume: z.number({ message: 'должно быть числом' }).optional(),
-    gearbox: z.enum(['manual', 'automatic', 'robotic', 'variator']).optional(),
-    fuel: z.enum(['gasoline', 'diesel', 'hybrid', 'electric']).optional(),
+    gearbox: z.enum(['manual', 'automatic', 'robotic', 'variator', ""]).optional(),
+    fuel: z.enum(['gasoline', 'diesel', 'hybrid', 'electric', ""]).optional(),
     engine_type: z.string().optional(),
     VIN: z.string().optional(),
     product_pictures: z
