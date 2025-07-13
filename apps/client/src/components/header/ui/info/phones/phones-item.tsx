@@ -15,8 +15,8 @@ export const PhonesItem: FC<Props> = ({
   tag: Tag = 'li',
 }) => {
   return (
-    <Tag className="flex gap-2 mb-2 text-xl">
-      <Link href={`tel:${content}`}>
+    <Tag className="flex gap-4 mb-2 text-xl">
+      <Link className="hover:underline active:underline" href={`tel:+${content.replace(/\D/g, '')}`}>
         <p>{content}</p>
       </Link>
       <div className="flex gap-2">

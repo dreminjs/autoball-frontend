@@ -24,7 +24,7 @@ export const ProductsFilterDrawer: FC<IProps> = ({ isOpen, onClose }) => {
   return (
     <Drawer open={isOpen} onClose={onClose}>
       <div className="px-[50px] py-5">
-        <ChooseBrand type={'car'} />
+        <ChooseBrand type={'other'} />
         <ChooseSeries />
         <ChooseCarPart />
         <ChooseYear />

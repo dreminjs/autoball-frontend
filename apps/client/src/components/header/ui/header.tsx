@@ -1,12 +1,11 @@
-import { Container } from '@/components/container';
 import { Info } from './info/info';
+import { NavigationList } from './navigation/navigation-list';
 
 export const Header = () => {
   return (
-    <header className='p-5'>
-      <Container className='flex items-center'>
-        <Info />
-      </Container>
+    <header>
+      <Info />
+      <NavigationList navClassName='hidden md:block'/>
     </header>
   );
 };
