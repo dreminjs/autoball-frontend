@@ -1,16 +1,19 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import './styles.css';
-import {} from "@autoball-frontend/shared-types" 
+import { Layout } from '@/components/layout';
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Welcome to !</title>
+        <title>Авторазборка avtobol.by. Б/У запчасти из Европы</title>
+        <meta name="description" content="Авторазборка avtobol.by. Оригинальные б/у запчасти на многие марки авто." />
       </Head>
       <main className="app">
-        <Component {...pageProps} />
+        <Layout >
+           <Component {...pageProps} />
+        </Layout>
       </main>
     </>
   );

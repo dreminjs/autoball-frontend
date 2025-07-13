@@ -1,0 +1,14 @@
+import { Header } from "@/components/header"
+import { PropsWithChildren } from "react"
+
+
+
+export const Layout = (props: PropsWithChildren) => {
+
+
+    return (
+        <>
+            <Header/>
+        </>
+    )
+}
