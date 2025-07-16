@@ -2,7 +2,7 @@ import { UseFormRegister, FieldErrors } from 'react-hook-form';
 import { ProductFormData } from '../../../model/schemas/product.schema';
 import { FC } from 'react';
 import { TextInput } from './text-input';
-import { SelectInput } from './select-input';
+import { SelectInput } from '../../edit-product/form/select-input';
 import { diameterOptions } from '../../../model/data';
 import { BrandType } from '../../../../../shared/types/brands/type';
 import { ChooseBrandDisc } from './choose-brand-disc/choose-brand-disc';
@@ -32,35 +32,42 @@ export const DiscFields: FC<IProps> = ({ errors, register, type }) => {
           name="disc_width"
           type="number"
           register={register}
-          error={errors.tires_width?.message}
+          error={errors.disc_width?.message}
         />
         <TextInput
           label="Модель"
           name="disc_model"
           type="text"
           register={register}
-          error={errors.tires_height?.message}
+          error={errors.disc_model?.message}
         />
         <TextInput
           label="DIA"
           name="disc_dia"
           type="number"
           register={register}
-          error={errors.tires_height?.message}
+          error={errors.disc_dia?.message}
         />
         <TextInput
           label="PCD"
           name="disc_pcd"
           type="number"
           register={register}
-          error={errors.tires_height?.message}
+          error={errors.disc_pcd?.message}
+        />
+         <TextInput
+          label="Вылет"
+          name="disc_ejection"
+          type="number"
+          register={register}
+          error={errors.disc_ejection?.message}
         />
         <TextInput
           label="Кол-во отверстий"
           name="disc_holes"
           type="number"
           register={register}
-          error={errors.tires_height?.message}
+          error={errors.disc_holes?.message}
         />
         <div className='w-[300px]'>
           <ChooseBrandDisc />

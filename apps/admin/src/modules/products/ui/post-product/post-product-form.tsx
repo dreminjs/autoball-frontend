@@ -9,7 +9,7 @@ import {
   fuelOptions,
   currenciesOptions,
 } from '../../model/data';
-import { SelectInput } from './form/select-input';
+import { SelectInput } from '../edit-product/form/select-input';
 import { TextInput } from './form/text-input';
 import { DndProvider } from 'react-dnd';
 import { Photo, PhotoUploader } from './form/photo-uploader';
@@ -23,8 +23,14 @@ import { usePostProduct } from '../../model/api/queries';
 import { useEffect } from 'react';
 import { useResetForm } from '../../model/hooks/post-products/use-reset-form';
 import { TierFields } from './form/tier-fields';
+import { useChooseDiscBrand } from '../../model/hooks/post-products/disc/use-choose-disc';
+import { useChooseTireBrand } from '../../model/hooks/post-products/tire/use-choose-tire';
 
 export const PostProductForm = () => {
+  const { choosedDiscBrand } = useChooseDiscBrand();
+
+  const { choosedTireBrand } = useChooseTireBrand();
+
   const methods = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
     defaultValues: {
@@ -32,7 +38,7 @@ export const PostProductForm = () => {
       count: 1,
       price: 0,
       volume: 0,
-      productType: 'other',
+      productType: 'car',
       discount: 0,
       currency: 'USD',
     },
@@ -45,7 +51,7 @@ export const PostProductForm = () => {
   const productType = methods.watch('productType');
 
   const onSubmit = methods.handleSubmit((data: ProductFormData) => {
-    mutate(data);
+    mutate({ ...data, disc_brand_id: choosedDiscBrand?.id, tire_brand_id: choosedTireBrand?.id });
   });
 
   useResetForm(isSuccess, methods.reset);
@@ -102,10 +108,6 @@ export const PostProductForm = () => {
     }
   }, [productType, methods]);
 
-  useEffect(() => {
-    console.log(methods.watch("type_of_body"))
-  },[methods.watch("type_of_body")])
-
   return (
     <>
       <FormProvider {...methods}>
@@ -118,7 +120,7 @@ export const PostProductForm = () => {
             options={[
               { value: 'tire', label: 'Шины' },
               { value: 'disc', label: 'Диски' },
-              { value: 'other', label: 'Другие детали' },
+              { value: 'car', label: 'Другие детали' },
             ]}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -173,6 +175,7 @@ export const PostProductForm = () => {
               label="Год выпуска"
               name="year"
               type="number"
+              placeholder='2000'
               error={methods.formState.errors.year?.message}
               register={methods.register}
             />
@@ -187,7 +190,7 @@ export const PostProductForm = () => {
             <TextInput
               label="Тип двигателя"
               name="engine_type"
-              placeholder='TDI'
+              placeholder="TDI"
               error={methods.formState.errors.volume?.message}
               register={methods.register}
             />

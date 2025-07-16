@@ -20,7 +20,6 @@ export const useSetDefualtValues = () => {
   const { onChooseCarPart } = useChooseCarPart();
   const { onChooseBrand } = useChooseCarBrand();
 
-
   return {
     onSetValue: (data: IPayload) => {
         onChooseTireBrand(data.tire)

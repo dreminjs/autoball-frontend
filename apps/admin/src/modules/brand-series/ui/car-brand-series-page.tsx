@@ -4,7 +4,7 @@ import { PostSeriesModal } from './post-modal';
 import { DeleteSeriesModal } from './delete-modal/delete-series-modal';
 import { useChooseSeries } from '../model/hooks/use-choose-series';
 import { EditSeriesModal } from './edit-modal/edit-series-modal';
-import { CarBrandSeriresList } from "./list/list" 
+import { CarBrandSeriresList } from './list/list';
 
 export const CarBrandSeriesPage = () => {
   const location = useLocation();
@@ -13,13 +13,13 @@ export const CarBrandSeriesPage = () => {
   const brandId = searchParams.get('brandId');
   const brandName = searchParams.get('brandName');
 
-  const { onChooseBrand, choosedSeries, onCancel } = useChooseSeries();
-  
+  const { onChooseSeries, choosedSeries, onCancel } = useChooseSeries();
+
   return (
     <>
       <div>
         <Toolbar brandName={brandName} />
-        <CarBrandSeriresList brandId={brandId} onChoose={onChooseBrand} />
+        <CarBrandSeriresList brandId={brandId} onChoose={onChooseSeries} />
       </div>
       <PostSeriesModal />
       <DeleteSeriesModal
@@ -28,8 +28,12 @@ export const CarBrandSeriesPage = () => {
         series={{ id: choosedSeries?.id, name: choosedSeries?.name }}
       />
       <EditSeriesModal
-        series={{ id: choosedSeries?.id, name: choosedSeries?.name, year: choosedSeries?.year }}
-        isOpen={choosedSeries?.type === "edit"}
+        series={{
+          id: choosedSeries?.id,
+          name: choosedSeries?.name,
+          year: choosedSeries?.year,
+        }}
+        isOpen={choosedSeries?.type === 'edit'}
         onClose={onCancel}
       />
     </>

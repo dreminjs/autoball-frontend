@@ -1,16 +1,6 @@
 import { z } from 'zod';
 import { currenciesOptions, diameterOptions } from '../data';
 
-const optionalNumber = z
-  .union([
-    z.number(),
-    z
-      .string()
-      .transform((val) => (val === '' ? undefined : Number(val)))
-      .refine((val) => (val && isNaN(val) ? undefined : val)),
-  ])
-  .optional();
-
 export const productSchema = z
   .object({
     OEM: z.string().min(1, 'Обязательное поле'),
@@ -65,7 +55,7 @@ export const productSchema = z
     price: z.number({ message: 'Обязательное поле' }).min(0),
     condition: z.enum(['used', 'new']),
     count: z.number().min(1, 'Минимальное количество: 1'),
-    productType: z.enum(['tire', 'disc', 'engine',"other"], {
+    productType: z.enum(['tire', 'disc', 'car'], {
       required_error: 'Выберите тип продукта',
     }),
     tires_diametr: z.enum([...diameterOptions, 'null']).optional(),

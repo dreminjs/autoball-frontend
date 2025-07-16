@@ -2,7 +2,7 @@ import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { TextInput } from './text-input';
 import { ProductFormData } from '../../../model/schemas/product.schema';
 import { FC } from 'react';
-import { SelectInput } from './select-input';
+import { SelectInput } from '../../edit-product/form/select-input';
 import { diameterOptions } from '../../../model/data';
 import { BrandType } from '../../../../../shared/types/brands/type';
 import { ChooseBrandTire } from './choose-brand-tire/choose-brand-tire';

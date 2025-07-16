@@ -12,7 +12,7 @@ export const findMany = async (dto: IInfinityScrollQueryParametersDto & Pick<IFi
     queryParameters.append("take",String(dto.take))
     queryParameters.append("status",String(dto.status))
 
-    return (await instance.get(`${SERVICE_URLS.orders}?${queryParameters.toString()}`, )).data
+    return (await instance.get(`${SERVICE_URLS.orders}/all?${queryParameters.toString()}`, )).data
 }
 export const patchOne = async (dto: IPatchOrderStatusDto) => {
     return await instance.patch(`${SERVICE_URLS.orders}/${dto.order_id}?status=${dto.status}`)

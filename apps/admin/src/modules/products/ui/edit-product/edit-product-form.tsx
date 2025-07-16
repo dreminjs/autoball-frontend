@@ -22,17 +22,18 @@ import { ChoosedCharacteristics } from './form/characteristics/add-car-part-char
 import { usePostProduct } from '../../model/api/queries';
 import { FC, useEffect } from 'react';
 import { useResetForm } from '../../model/hooks/post-products/use-reset-form';
-import { TierFields } from './form/tier-fields';
-import { useSetDefualtValues } from '../../model/hooks/edit-products/use-set-defualt-values';
-import { IProduct } from '@autoball-frontend/shared-types';
+import { TierFields } from '../post-product/form/tier-fields';
 
-type Props = Partial<IProduct> & {productType: "car" | "tire" | "disc" }
+import { IProduct } from '@autoball-frontend/shared-types';
+import { useSetDefualtValues } from '../../model/hooks/edit-products/use-set-defualt-values';
+
+type Props = Partial<IProduct> & { productType: 'car' | 'tire' | 'disc' };
 
 export const EditProductForm: FC<Props> = (props) => {
   const methods = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
     defaultValues: {
-      condition: "used",
+      condition: 'used',
       gearbox: props.gearbox,
       fuel: props.fuel,
       type_of_body: props.type_of_body,
@@ -43,7 +44,7 @@ export const EditProductForm: FC<Props> = (props) => {
       discount: 0,
       currency: props.currency,
       OEM: props.OEM,
-      VIN: props.VIN
+      VIN: props.VIN,
     },
   });
 
@@ -57,25 +58,34 @@ export const EditProductForm: FC<Props> = (props) => {
     mutate(data);
   });
 
-  // const {onSetValue} = useSetDefualtValues()
-
   useResetForm(isSuccess, methods.reset);
 
-    useEffect(() => {
+  const { onSetValue } = useSetDefualtValues();
+
+  useEffect(() => {
     if (props) {
-      methods.reset({
-        ...methods.getValues(),
+      methods.setValue('condition', 'used');
+      methods.setValue('gearbox', props.gearbox);
+      methods.setValue('fuel', props.fuel);
+      methods.setValue('type_of_body', props.type_of_body);
+      methods.setValue('count', props?.count || 1);
+      methods.setValue('price', props?.price || 0);
+      methods.setValue('volume', props.volume);
+      methods.setValue('productType', props.productType);
+      methods.setValue('discount', 0);
+      methods.setValue('currency', props.currency || 'USD');
+      methods.setValue('OEM', props.OEM || '');
+      methods.setValue('VIN', props.VIN);
+
+      onSetValue({
+        // tire: {id: props.tire_id},
+        disc: null,
+        series: null,
+        carPart: null,
+        carBrand: null,
       });
-      // TODO: IMPLEMENT
-      // onSetValue({
-      //   tire: 
-      //   disc: undefined,
-      //   series: undefined,
-      //   carPart: undefined,
-      //   carBrand: undefined
-      // })
     }
-  }, [props, methods]);
+  }, [props, methods, onSetValue]);
 
   useEffect(() => {
     if (productType !== 'disc') {
@@ -254,14 +264,13 @@ export const EditProductForm: FC<Props> = (props) => {
               type={productType}
             />
           )}
-          {
-            productType === 'tire' && 
+          {productType === 'tire' && (
             <TierFields
               register={methods.register}
               errors={methods.formState.errors}
               type={productType}
             />
-          }
+          )}
 
           <DndProvider backend={HTML5Backend}>
             <PhotoUploader

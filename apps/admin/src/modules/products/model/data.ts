@@ -102,5 +102,5 @@ export const currenciesLabels: Record<Extract<Currency, "USD" |  "PLN">, string>
 export const typesBrandsLabels: Record<BrandType, string> = {
   tire: 'шин',
   disc: 'дисков',
-  other: "другие"
+  car: "запчастей "
 }

@@ -11,6 +11,7 @@ import { IServerError } from '../../../shared/types/server-error';
 import {
   IPostCarSeriesForm,
   IEditCarSeriesDto,
+  IEditCarSeriesForm,
 } from '../model/types/carseries.interface';
 import { useNotificationActions } from '../../notifications';
 import { useCarSeriesModal } from '../model/hooks/use-car-series-modal';
@@ -110,10 +111,10 @@ export const useEditCarSeries = (id: string) => {
   const { mutate, ...props } = useMutation<
     ICarSeries,
     AxiosError<IServerError>,
-    { id: string; data: IEditCarSeriesDto }
+    { id: string; data: IEditCarSeriesForm }
   >({
     mutationKey: [SERVICE_URLS.carseries],
-    mutationFn: ({ id, data }) => editOne(data, id),
+    mutationFn: ({ id, data }) => editOne({...data,year: `${data.from} - ${data.to}`}, id),
     onSuccess: () => {
       remove('info');
       queryClient.invalidateQueries({

@@ -2,7 +2,7 @@ import { FC, Fragment } from 'react';
 import { ICarBrand } from '@autoball-frontend/shared-types';
 import { Actions } from '../../../model/types/actions';
 import { IInfiteScrollResponse } from '../../../../../shared';
-import { CarBrandItem } from './list-item';
+import { CarBrandItem } from './car-brand-item';
 import { ApiOperationState } from '../../../../../shared/types/api-operation-state.interface';
 import { List } from '../../../../../components';
 

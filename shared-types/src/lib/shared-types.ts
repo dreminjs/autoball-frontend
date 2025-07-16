@@ -49,6 +49,7 @@ export interface IProduct {
   created_at: string;
   currency: Currency
   
+  disc_id?: string
   disc_brand_name: string | null;
   disc_dia: number | null;
   disc_diametr: string | null;
@@ -57,6 +58,7 @@ export interface IProduct {
   disc_model: string | null;
   disc_pcd: number | null;
   disc_width: number | null;
+  tire_id?: string 
   tire_brand_name: string | null;
   tire_car_type: string | null;
   tire_diametr: string | null;

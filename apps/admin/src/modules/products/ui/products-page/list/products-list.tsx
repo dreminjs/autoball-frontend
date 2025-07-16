@@ -1,6 +1,6 @@
 import { IProduct } from '@autoball-frontend/shared-types';
 import { FC } from 'react';
-import { ProductItem } from './product-item';
+import { ProductItem } from './product-item/product-item';
 import { IInfiteScrollResponse } from '../../../../../shared';
 
 interface IProps {

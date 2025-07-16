@@ -11,7 +11,7 @@ export const data: INavItem[] = [
   },
   {
     to: 'oplata-i-dostavka',
-    content: 'Гарантия и Доставка',
+    content: 'Оплата и Доставка',
   },
   {
     to: 'o-nas',
