@@ -2,6 +2,7 @@ import Head from 'next/head';
 import 'photoswipe/style.css';
 import { YandexMap } from "./yandex-map"
 import { Gallery } from './gallery';
+import { Info } from './info';
 
 export const AboutUsPage = () => {
   return (
@@ -17,9 +18,7 @@ export const AboutUsPage = () => {
         <h1 className="text-3xl font-bold text-center mb-12 text-gray-900">
           О нас{' '}
         </h1>
-        <p className='mb-4 text-2xl'>
-          Наш email: avtobol@mail.ru
-        </p>
+        <Info />
         <Gallery />
         <YandexMap/>
       </section>
