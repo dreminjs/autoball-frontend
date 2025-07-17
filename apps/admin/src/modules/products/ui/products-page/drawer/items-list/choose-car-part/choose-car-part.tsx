@@ -11,10 +11,10 @@ export const ChooseCarPart = () => {
 
   return (
     <Accordion className="border border-gray-200 rounded-lg max-w-xs shadow-sm mb-2 bg-white">
-      <AccordionTitle title={'тип запчасти'} />
+      <AccordionTitle title={'Тип запчасти'} />
       <AccordionDetails>
         <InputSearch search={search} onChange={onChangeSearchValue} />
-        <CarPartList data={data} ref={inViewRef} states={states} />
+        <CarPartList data={data} ref={inViewRef} states={states}  />
       </AccordionDetails>
     </Accordion>
   );

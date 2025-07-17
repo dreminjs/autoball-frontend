@@ -1,11 +1,12 @@
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { TextInput } from './text-input';
 import { ProductFormData } from '../../../model/schemas/product.schema';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { SelectInput } from '../../edit-product/form/select-input';
 import { diameterOptions } from '../../../model/data';
 import { BrandType } from '../../../../../shared/types/brands/type';
 import { ChooseBrandTire } from './choose-brand-tire/choose-brand-tire';
+import { ChoosedTireBrand } from './choosed-tire-brand';
 
 interface IProps {
   register: UseFormRegister<ProductFormData>;
@@ -14,12 +15,15 @@ interface IProps {
 }
 
 export const TierFields: FC<IProps> = ({ register, errors, type }) => {
+  const [isAccordionActive, setIsAccordionActive] = useState(false);
+
   return (
-  <div className="bg-blue-50 p-4 rounded-lg">
-      <h3 className="text-lg font-semibold mb-3">Характеристики диска</h3>
+    <div className="bg-blue-50 p-4 rounded-lg mb-2">
+      <h3 className="text-lg font-semibold mb-3">Характеристики шин</h3>
       <div
-        className="grid grid-rows-3 grid-cols-1 md:grid-cols-3 gap-4"
-        style={{ gridTemplateRows: '100px 100px' }}
+        className={`grid grid-cols-3 gap-2 ${
+          isAccordionActive ? 'items-start' : 'items-end'
+        }`}
       >
         <SelectInput
           label="Диаметр шины"
@@ -64,9 +68,10 @@ export const TierFields: FC<IProps> = ({ register, errors, type }) => {
           register={register}
           error={errors.tires_residue?.message}
         />
-        <div className="w-[300px]">
-          <ChooseBrandTire />
-        </div>
+        <ChooseBrandTire
+          onClick={() => setIsAccordionActive((prev) => !prev)}
+        />
+        <ChoosedTireBrand />
       </div>
     </div>
   );

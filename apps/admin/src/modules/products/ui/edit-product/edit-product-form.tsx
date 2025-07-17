@@ -12,7 +12,7 @@ import {
 import { SelectInput } from './form/select-input';
 import { TextInput } from './form/text-input';
 import { DndProvider } from 'react-dnd';
-import { Photo, PhotoUploader } from './form/photo-uploader/photo-uploader';
+import { PhotoUploader } from './form/photo-uploader/photo-uploader';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { RadioGroup } from './form/radio-group';
 import { DiscFields } from './form/disc-fields';
@@ -63,6 +63,7 @@ export const EditProductForm: FC<Props> = (props) => {
   const { onSetValue } = useSetDefualtValues();
 
   useEffect(() => {
+    console.log(props);
     if (props) {
       methods.setValue('condition', 'used');
       methods.setValue('gearbox', props.gearbox);
@@ -76,16 +77,36 @@ export const EditProductForm: FC<Props> = (props) => {
       methods.setValue('currency', props.currency || 'USD');
       methods.setValue('OEM', props.OEM || '');
       methods.setValue('VIN', props.VIN);
+      methods.setValue('year', props.year || 2000);
 
       onSetValue({
-        // tire: {id: props.tire_id},
-        disc: null,
-        series: null,
-        carPart: null,
-        carBrand: null,
+        disc:
+          props.disc_brand_name && props.disc_id
+            ? {
+                id: props.disc_id,
+                name: props.disc_brand_name,
+              }
+            : null,
+        ...(props.car_brand_id && props.car_brand_name
+          ? { carBrand: { name: props.car_brand_name, id: props.car_brand_id } }
+          : { carBrand: null }),
+        ...(props.car_series_id && props.car_series_name
+          ? { series: { name: props.car_series_name, id: props.car_series_id } }
+          : { series: null }),
+        ...(props.car_part_id && props.car_part_name
+          ? { carPart: { name: props.car_part_name, id: props.car_part_name } }
+          : { carPart: null }),
+
+        tire:
+          props.tire_brand_name && props.tire_id
+            ? {
+                id: props.tire_id,
+                name: props.tire_brand_name,
+              }
+            : null,
       });
     }
-  }, [props, methods, onSetValue]);
+  }, [props]);
 
   useEffect(() => {
     if (productType !== 'disc') {
@@ -143,146 +164,147 @@ export const EditProductForm: FC<Props> = (props) => {
     <>
       <FormProvider {...methods}>
         <form onSubmit={onSubmit} className="space-y-4 p-4 mx-auto">
-          <h2 className="text-2xl font-bold">Редактирование продукта</h2>
-          <RadioGroup
-            label="Тип продукта"
-            name="productType"
-            register={methods.register}
-            options={[
-              { value: 'tire', label: 'Шины' },
-              { value: 'disc', label: 'Диски' },
-              { value: 'car', label: 'Другие детали' },
-            ]}
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <TextInput
-              label="OEM номер"
-              name="OEM"
-              register={methods.register}
-              error={methods.formState.errors.OEM?.message}
-            />
-            <TextInput
-              label="VIN"
-              name="VIN"
-              register={methods.register}
-              type="text"
-            />
+          <div className='flex gap-2'>
+            <div className='max-w-[900px]'>
+              <h2 className="text-2xl font-bold">Редактирование продукта</h2>
+              <RadioGroup
+                label="Тип продукта"
+                name="productType"
+                register={methods.register}
+                options={[
+                  { value: 'tire', label: 'Шины' },
+                  { value: 'disc', label: 'Диски' },
+                  { value: 'car', label: 'Другие детали' },
+                ]}
+              />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <TextInput
+                  label="OEM номер"
+                  name="OEM"
+                  register={methods.register}
+                  error={methods.formState.errors.OEM?.message}
+                />
+                <TextInput
+                  label="VIN"
+                  name="VIN"
+                  register={methods.register}
+                  type="text"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <SelectInput
+                  label={'Выберите валюту'}
+                  name={'currency'}
+                  register={methods.register}
+                  options={currenciesOptions.map((el) => ({
+                    label: el,
+                    value: el,
+                  }))}
+                />
+                <TextInput
+                  label={`Цена (${methods.watch('currency')})`}
+                  name="price"
+                  type="number"
+                  error={methods.formState.errors.price?.message}
+                  register={methods.register}
+                />
+                <TextInput
+                  label={`Скидка в %`}
+                  name="discount"
+                  type="number"
+                  error={methods.formState.errors.discount?.message || ''}
+                  register={methods.register}
+                />
+
+                <TextInput
+                  label="Количество"
+                  name="count"
+                  type="number"
+                  error={methods.formState.errors.count?.message}
+                  register={methods.register}
+                />
+
+                <TextInput
+                  label="Год выпуска"
+                  name="year"
+                  type="number"
+                  error={methods.formState.errors.year?.message}
+                  register={methods.register}
+                />
+                <TextInput
+                  label="Объем двигателя"
+                  name="volume"
+                  type="number"
+                  step="0.1"
+                  error={methods.formState.errors.volume?.message}
+                  register={methods.register}
+                />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <SelectInput
+                  label="Тип кузова"
+                  name="type_of_body"
+                  register={methods.register}
+                  options={bodyTypeOptions}
+                />
+                <SelectInput
+                  label="Коробка передач"
+                  name="gearbox"
+                  register={methods.register}
+                  options={gearboxOptions}
+                />
+                <SelectInput
+                  label="Тип топлива"
+                  name="fuel"
+                  register={methods.register}
+                  options={fuelOptions}
+                />
+              </div>
+              <div className="flex gap-2 flex-wrap items-center">
+                <Button type="button" onClick={onToggleModal}>
+                  Добавить характерстики запчасти
+                </Button>
+                <ChoosedCharacteristics />
+              </div>
+              <TextInput
+                label="Описание"
+                name="description"
+                register={methods.register}
+                rows={3}
+              />
+
+              <TextInput
+                label="Примечания"
+                name="note"
+                register={methods.register}
+                rows={2}
+              />
+              {productType === 'disc' && (
+                <DiscFields
+                  register={methods.register}
+                  errors={methods.formState.errors}
+                  type={productType}
+                />
+              )}
+              {productType === 'tire' && (
+                <TierFields
+                  register={methods.register}
+                  errors={methods.formState.errors}
+                  type={productType}
+                />
+              )}
+
+              <Button type="submit">Создать продукт</Button>
+            </div>
+            <DndProvider backend={HTML5Backend}>
+              <PhotoUploader
+                existingPhotos={props.pictures}
+                name={'product_pictures'}
+                isClear={isSuccess}
+              />
+            </DndProvider>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <SelectInput
-              label={'Выберите валюту'}
-              name={'currency'}
-              register={methods.register}
-              options={currenciesOptions.map((el) => ({
-                label: el,
-                value: el,
-              }))}
-            />
-            <TextInput
-              label={`Цена (${methods.watch('currency')})`}
-              name="price"
-              type="number"
-              error={methods.formState.errors.price?.message}
-              register={methods.register}
-            />
-            <TextInput
-              label={`Скидка в %`}
-              name="discount"
-              type="number"
-              error={methods.formState.errors.discount?.message || ''}
-              register={methods.register}
-            />
-
-            <TextInput
-              label="Количество"
-              name="count"
-              type="number"
-              error={methods.formState.errors.count?.message}
-              register={methods.register}
-            />
-
-            <TextInput
-              label="Год выпуска"
-              name="year"
-              type="number"
-              error={methods.formState.errors.year?.message}
-              register={methods.register}
-            />
-            <TextInput
-              label="Объем двигателя"
-              name="volume"
-              type="number"
-              step="0.1"
-              error={methods.formState.errors.volume?.message}
-              register={methods.register}
-            />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <SelectInput
-              label="Тип кузова"
-              name="type_of_body"
-              register={methods.register}
-              options={bodyTypeOptions}
-            />
-            <SelectInput
-              label="Коробка передач"
-              name="gearbox"
-              register={methods.register}
-              options={gearboxOptions}
-            />
-            <SelectInput
-              label="Тип топлива"
-              name="fuel"
-              register={methods.register}
-              options={fuelOptions}
-            />
-          </div>
-          <div className="flex gap-2 flex-wrap items-center">
-            <Button type="button" onClick={onToggleModal}>
-              Добавить характерстики запчасти
-            </Button>
-            <ChoosedCharacteristics />
-          </div>
-          <TextInput
-            label="Описание"
-            name="description"
-            register={methods.register}
-            rows={3}
-          />
-
-          <TextInput
-            label="Примечания"
-            name="note"
-            register={methods.register}
-            rows={2}
-          />
-          {productType === 'disc' && (
-            <DiscFields
-              register={methods.register}
-              errors={methods.formState.errors}
-              type={productType}
-            />
-          )}
-          {productType === 'tire' && (
-            <TierFields
-              register={methods.register}
-              errors={methods.formState.errors}
-              type={productType}
-            />
-          )}
-
-          <DndProvider backend={HTML5Backend}>
-            <PhotoUploader
-              name={'product_pictures'}
-              onPhotosChange={function (photos: Photo[]): void {
-                throw new Error('Function not implemented.');
-              }}
-              isClear={isSuccess}
-            />
-          </DndProvider>
-
-          <Button type="submit">Создать продукт</Button>
         </form>
       </FormProvider>
       <AddCarPartCharacteristicsModal isOpen={isOpen} onClose={onToggleModal} />

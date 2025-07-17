@@ -12,13 +12,11 @@ export interface Photo {
 
 interface IProps {
   name: keyof ProductFormData;
-  onPhotosChange: (photos: Photo[]) => void;
   maxFiles?: number;
   isClear: boolean;
 }
 
 export const PhotoUploader: FC<IProps> = ({
-  onPhotosChange,
   name,
   maxFiles = 5,
   isClear,
@@ -92,7 +90,7 @@ export const PhotoUploader: FC<IProps> = ({
     [setValue, name]
   );
 
-  const handlePhotoRotate = useCallback(
+  const handlePhotoRotate = 
     (id: string, newFile: File, newPreview: string) => {
       setPhotos((prev) =>
         prev.map((photo) =>
@@ -101,26 +99,21 @@ export const PhotoUploader: FC<IProps> = ({
             : photo
         )
       );
-      onPhotosChange(photos);
-    },
-    [onPhotosChange, photos]
-  );
+    }
 
-  const handleDrop = useCallback(
+  const handleDrop =
     (e: React.DragEvent<HTMLDivElement>) => {
       e.preventDefault();
       e.stopPropagation();
       if (e.dataTransfer.files.length) {
         handleFiles(e.dataTransfer.files);
       }
-    },
-    [handleFiles]
-  );
+    }
 
-  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-  }, []);
+  }
 
   useEffect(() => {
     if (isClear) {

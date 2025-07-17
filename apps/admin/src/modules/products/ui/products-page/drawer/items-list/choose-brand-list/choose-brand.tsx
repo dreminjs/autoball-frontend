@@ -18,7 +18,7 @@ export const ChooseBrand: FC<IProps> = ({ type }) => {
  
   return (
     <Accordion className="border border-gray-200 rounded-lg max-w-xs shadow-sm mb-2 bg-white">
-    <AccordionTitle title={`бренды ${typesBrandsLabels[type]}`} />
+    <AccordionTitle title={`Бренды ${typesBrandsLabels[type]}`} />
       <AccordionDetails>
         <InputSearch search={search} onChange={onChangeSearchValue} />
         <BrandList

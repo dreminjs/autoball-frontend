@@ -4,7 +4,7 @@ import {
   IInfiteScrollResponse,
   IProduct,
 } from '@autoball-frontend/shared-types';
-import { ListItem } from './list-item';
+import { OrderItem } from './list-item';
 import { InfiniteData } from '@tanstack/react-query';
 import { ApiOperationState } from '../../../../../shared';
 
@@ -17,7 +17,7 @@ interface IProps {
 export const ProductArticlesList: FC<IProps> = ({ states, data, libRef }) => {
   return (
     <List
-      className="h-[420px] p-2"
+      className="h-[420px] p-4 border-2"
       isPending={states.isPending}
       isError={states.isError}
       error={states.error?.response?.data.detail}
@@ -25,7 +25,7 @@ export const ProductArticlesList: FC<IProps> = ({ states, data, libRef }) => {
     >
       {data?.pages.map((page) =>
         page.items.map((item) => (
-          <ListItem
+          <OrderItem
             currency={item.currency}
             price={item.price}
             article={item.article}

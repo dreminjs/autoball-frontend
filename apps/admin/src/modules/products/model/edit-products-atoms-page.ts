@@ -13,6 +13,10 @@ export const discBrandAtom = atom<IListItem | null>(null)
 
 export const tireBrandAtom = atom<IListItem | null>(null)
 
+export const deletedPhotosAtom = atom<string[]>([])
+
+editProductsStore.set(deletedPhotosAtom, [])
+
 editProductsStore.set(tireBrandAtom, null)
 
 editProductsStore.set(discBrandAtom, null)

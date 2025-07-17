@@ -13,7 +13,7 @@ export const ChooseSeries: FC = () => {
 
   return (
     <Accordion className="border border-gray-200 rounded-lg max-w-xs shadow-sm mb-2 bg-white">
-    <AccordionTitle title={'серию бренда запчасти'} />
+    <AccordionTitle title={'Серию бренда запчасти'} />
       <AccordionDetails>
         {chooseBrandId ? (
           <CarSeriesList ref={inViewRef} data={data} states={states} />

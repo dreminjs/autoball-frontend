@@ -10,7 +10,7 @@ export const ChoosedCharacteristics = () => {
   const { onChooseSeries, choosedSeries } = useChooseSeries();
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2">
       {brand && (
         <div className="flex items-center justify-between p-3 bg-gray-100 rounded-lg">
           <span className="font-medium">Выбранный бренд: {brand.name}</span>

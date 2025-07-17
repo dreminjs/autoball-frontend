@@ -30,8 +30,11 @@ export interface ITokens {
 export interface IProduct {
   id: string;
   pictures: string[];
+  car_brand_id: string
   car_brand_name: string;
+  car_series_id: string
   car_series_name: string;
+  car_part_id: string
   car_part_name: string;
   year: number;
   volume: number;

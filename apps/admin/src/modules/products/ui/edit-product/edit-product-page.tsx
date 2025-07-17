@@ -25,6 +25,7 @@ export const EditProductPage = () => {
           isDisc: data?.disc_brand_name ? true : false,
           isTire: data?.tire_brand_name ? true : false,
         })}
+        pictures={data?.pictures}
       />
     </div>
   );

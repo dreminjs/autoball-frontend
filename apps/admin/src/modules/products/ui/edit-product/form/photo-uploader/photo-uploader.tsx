@@ -1,39 +1,70 @@
 import { useState, useRef, useCallback, FC, useEffect } from 'react';
-import { PhotoItem } from './photo-item';
 import { useFormContext } from 'react-hook-form';
 import { ProductFormData } from '../../../../model/schemas/product.schema';
+import { PhotosList } from './photos-list';
+import { useSetAtom } from 'jotai';
+import { deletedPhotosAtom } from '../../../../model/edit-products-atoms-page';
 
 export interface Photo {
   id: string;
-  file: File;
+  file?: File;
   preview: string;
   rotatedFile?: File;
+  existingFileName?: string;
+  isExisting?: boolean;
 }
 
 interface IProps {
   name: keyof ProductFormData;
-  onPhotosChange: (photos: Photo[]) => void;
   maxFiles?: number;
   isClear: boolean;
+  existingPhotos?: string[];
 }
 
 export const PhotoUploader: FC<IProps> = ({
-  onPhotosChange,
   name,
+  maxFiles = 10,
   isClear,
+  existingPhotos = [],
 }) => {
   const [photos, setPhotos] = useState<Photo[]>([]);
+
+  const setDeletedPhotos = useSetAtom(deletedPhotosAtom)
+
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { register, setValue, watch } = useFormContext();
-  const currentFiles: File[] = watch(name) || [];
+
+  const { register, setValue } = useFormContext();
+
+  const updateFormValue = useCallback(
+    (photosList: Photo[]) => {
+      const filesToSubmit: (File | string)[] = photosList.map((photo) => {
+        return photo.isExisting ? photo.existingFileName! : photo.file!;
+      });
+
+      setValue(name, filesToSubmit.length > 0 ? filesToSubmit : null, {
+        shouldValidate: true,
+      });
+    },
+    [setValue]
+  );
+
+  useEffect(() => {
+    if (existingPhotos.length > 0) {
+      setPhotos(() => {
+        return existingPhotos.map((photo) => ({
+          id: `existing-${photo}`,
+          preview: `http://localhost:9000/avtobol/${photo}`,
+          existingFileName: photo,
+          isExisting: true,
+        }));
+      });
+    }
+  }, [existingPhotos, existingPhotos?.length]);
 
   const handleFiles = useCallback(
     (files: FileList) => {
       const newPhotos: Photo[] = [];
-      const filesArray = Array.from(files).slice(
-        0,
-        10 - currentFiles.length
-      );
+      const filesArray = Array.from(files).slice(0, maxFiles - photos?.length);
 
       filesArray.forEach((file) => {
         if (!file.type.match('image.*')) return;
@@ -44,19 +75,19 @@ export const PhotoUploader: FC<IProps> = ({
             id: `${Date.now()}-${file.name}`,
             file,
             preview: e.target!.result as string,
+            isExisting: false,
           });
 
           if (newPhotos.length === filesArray.length) {
             const updatedPhotos = [...photos, ...newPhotos];
             setPhotos(updatedPhotos);
-            const filesToSubmit = updatedPhotos.map((photo) => photo.file);
-            setValue(name, filesToSubmit, { shouldValidate: true });
+            updateFormValue(updatedPhotos);
           }
         };
         reader.readAsDataURL(file);
       });
     },
-    [photos, setValue, name, currentFiles.length]
+    [photos, maxFiles, updateFormValue]
   );
 
   const movePhoto = useCallback(
@@ -65,30 +96,24 @@ export const PhotoUploader: FC<IProps> = ({
         const newPhotos = [...prev];
         const [movedPhoto] = newPhotos.splice(fromIndex, 1);
         newPhotos.splice(toIndex, 0, movedPhoto);
-
-        const filesToSubmit = newPhotos.map((photo) => photo.file);
-        setValue(name, filesToSubmit, { shouldValidate: true });
-
+        updateFormValue(newPhotos);
         return newPhotos;
       });
     },
-    [setValue, name]
+    [updateFormValue]
   );
 
   const removePhoto = useCallback(
-    (id: string) => {
+    (name: string) => {
+      console.log(name)
+      setDeletedPhotos(prev => [...prev, name])
       setPhotos((prev) => {
-        const newPhotos = prev.filter((photo) => photo.id !== id);
-
-        const filesToSubmit = newPhotos.map((photo) => photo.file);
-        setValue(name, filesToSubmit.length > 0 ? filesToSubmit : null, {
-          shouldValidate: true,
-        });
-
+        const newPhotos = prev.filter((photo) => photo.existingFileName !== name);
+        updateFormValue(newPhotos);
         return newPhotos;
       });
     },
-    [setValue, name]
+    [updateFormValue]
   );
 
   const handlePhotoRotate = useCallback(
@@ -96,13 +121,17 @@ export const PhotoUploader: FC<IProps> = ({
       setPhotos((prev) =>
         prev.map((photo) =>
           photo.id === id
-            ? { ...photo, file: newFile, preview: newPreview }
+            ? {
+                ...photo,
+                file: newFile,
+                preview: newPreview,
+                isExisting: false,
+              }
             : photo
         )
       );
-      onPhotosChange(photos);
     },
-    [onPhotosChange, photos]
+    []
   );
 
   const handleDrop = useCallback(
@@ -126,7 +155,7 @@ export const PhotoUploader: FC<IProps> = ({
       setPhotos([]);
     }
   }, [isClear]);
-  
+
   return (
     <div>
       <label className="block mb-2 text-sm font-medium text-gray-700">
@@ -139,26 +168,13 @@ export const PhotoUploader: FC<IProps> = ({
         className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-500 transition-colors"
       >
         <div className="flex flex-col items-center justify-center">
-          <svg
-            className="w-12 h-12 text-gray-400 mb-3"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-            ></path>
-          </svg>
+          <img className='w-[50px] h-[50px]' src="/upload-file.svg" alt="upload file" />
           <p className="text-gray-600 mb-1">
             <span className="font-semibold">Нажмите для загрузки</span> или
             перетащите файлы сюда
           </p>
           <p className="text-xs text-gray-500">
-            Поддерживаются изображения (JPG, PNG, etc.)
+            Поддерживаются изображения (JPG, etc.)
           </p>
         </div>
         <input
@@ -171,21 +187,12 @@ export const PhotoUploader: FC<IProps> = ({
           onChange={(e) => e.target.files && handleFiles(e.target.files)}
         />
       </div>
-
-      {photos.length > 0 && (
-        <div className="mt-4 flex flex-wrap">
-          {photos.map((photo, index) => (
-            <PhotoItem
-              key={photo.id}
-              photo={photo}
-              index={index}
-              movePhoto={movePhoto}
-              removePhoto={removePhoto}
-              onPhotoRotate={handlePhotoRotate}
-            />
-          ))}
-        </div>
-      )}
+      <PhotosList
+        photos={photos}
+        movePhoto={movePhoto}
+        removePhoto={removePhoto}
+        onPhotoRotate={handlePhotoRotate}
+      />
     </div>
   );
 };

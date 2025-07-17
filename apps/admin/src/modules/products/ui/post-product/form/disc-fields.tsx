@@ -1,11 +1,12 @@
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
 import { ProductFormData } from '../../../model/schemas/product.schema';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { TextInput } from './text-input';
 import { SelectInput } from '../../edit-product/form/select-input';
 import { diameterOptions } from '../../../model/data';
 import { BrandType } from '../../../../../shared/types/brands/type';
 import { ChooseBrandDisc } from './choose-brand-disc/choose-brand-disc';
+import { ChoosedDiscBrand } from './choosed-disc-brand';
 
 interface IProps {
   register: UseFormRegister<ProductFormData>;
@@ -14,13 +15,13 @@ interface IProps {
 }
 
 export const DiscFields: FC<IProps> = ({ errors, register, type }) => {
+
+  const [isAccordionActive,setIsAccordionActive] = useState(false)
+
   return (
-    <div className="bg-blue-50 p-4 rounded-lg">
+    <div className="bg-blue-50 p-4 rounded-lg mb-2">
       <h3 className="text-lg font-semibold mb-3">Характеристики диска</h3>
-      <div
-        className="grid grid-rows-2 grid-cols-1 md:grid-cols-3 gap-4"
-        style={{ gridTemplateRows: '100px 100px' }}
-      >
+      <div className={`grid grid-cols-3 gap-2 ${isAccordionActive ? "items-start" : "items-end"}`}>
         <SelectInput
           label="Диаметр диска"
           name="disc_diametr"
@@ -55,7 +56,7 @@ export const DiscFields: FC<IProps> = ({ errors, register, type }) => {
           register={register}
           error={errors.disc_pcd?.message}
         />
-         <TextInput
+        <TextInput
           label="Вылет"
           name="disc_ejection"
           type="number"
@@ -69,9 +70,8 @@ export const DiscFields: FC<IProps> = ({ errors, register, type }) => {
           register={register}
           error={errors.disc_holes?.message}
         />
-        <div className='w-[300px]'>
-          <ChooseBrandDisc />
-        </div>
+        <ChooseBrandDisc onToggleActiveAccordion={() => setIsAccordionActive(prev => !prev) } />
+        <ChoosedDiscBrand />
       </div>
     </div>
   );

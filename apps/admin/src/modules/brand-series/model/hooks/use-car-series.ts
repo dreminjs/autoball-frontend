@@ -22,7 +22,7 @@ export const useCarSeries = (brandId: string | null) => {
   }, [inView, fetchNextPage, hasNextPage]);
 
   return {
-    states: { isError, isPending: isLoading, error: error?.response?.data.detail, isSuccess },
+    states: { isError, isPending: isLoading, error, isSuccess },
     data,
     inViewRef: ref,
   };

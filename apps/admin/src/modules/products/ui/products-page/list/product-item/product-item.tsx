@@ -38,17 +38,8 @@ export const ProductItem: FC<Props> = (props) => {
     }
   };
 
-  const hasDiscInfo =
-    props.disc_id ||
-    props.disc_brand_name ||
-    props.disc_diametr ||
-    props.disc_width;
-  const hasTireInfo =
-    props.tire_id ||
-    props.tire_brand_name ||
-    props.tire_diametr ||
-    props.tire_width;
-
+  const hasDiscInfo = props.disc_id;
+  const hasTireInfo = props.tire_id;
   const showCarSpecs = props.volume;
 
   return (
@@ -68,7 +59,7 @@ export const ProductItem: FC<Props> = (props) => {
       )}
 
       <div className="flex flex-col sm:flex-row gap-4">
-      <Images content={props.pictures} /> 
+        <Images content={props.pictures} />
 
         <div className="flex-1">
           <h3 className="text-xl font-semibold text-gray-800 mb-2">

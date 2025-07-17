@@ -6,8 +6,8 @@ interface IProps {
   photo: Photo;
   index: number;
   movePhoto: (fromIndex: number, toIndex: number) => void;
-  removePhoto: (id: string) => void;
-  onPhotoRotate: (id: string, newFile: File, newPreview: string) => void;
+  removePhoto: (name: string) => void;
+  onPhotoRotate?: (id: string, newFile: File, newPreview: string) => void;
 }
 
 export const PhotoItem: FC<IProps> = ({
@@ -17,46 +17,49 @@ export const PhotoItem: FC<IProps> = ({
   removePhoto,
   onPhotoRotate,
 }) => {
+  console.log(photo);
   const ref = useRef<HTMLDivElement>(null);
 
   const rotateImage = async (degrees: number) => {
-    const img = new Image();
-    img.src = photo.preview;
+    if (onPhotoRotate && photo.file) {
+      const img = new Image();
+      img.src = photo.preview;
 
-    await new Promise((resolve) => {
-      img.onload = resolve;
-    });
+      await new Promise((resolve) => {
+        img.onload = resolve;
+      });
 
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d')!;
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d')!;
 
-    if (degrees % 180 === 90) {
-      canvas.width = img.height;
-      canvas.height = img.width;
-    } else {
-      canvas.width = img.width;
-      canvas.height = img.height;
+      if (degrees % 180 === 90) {
+        canvas.width = img.height;
+        canvas.height = img.width;
+      } else {
+        canvas.width = img.width;
+        canvas.height = img.height;
+      }
+
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.rotate((degrees * Math.PI) / 180);
+      ctx.drawImage(img, -img.width / 2, -img.height / 2);
+
+      const newPreview = canvas.toDataURL('image/jpeg');
+
+      const blob = await new Promise<Blob>((resolve) =>
+        canvas.toBlob((blob) => resolve(blob!), 'image/jpeg', 0.9)
+      );
+
+      const rotatedFile = new File([blob], photo.file.name, {
+        type: 'image/jpeg',
+        lastModified: Date.now(),
+      });
+      onPhotoRotate(photo.id, rotatedFile, newPreview);
     }
-
-    ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.rotate((degrees * Math.PI) / 180);
-    ctx.drawImage(img, -img.width / 2, -img.height / 2);
-
-    const newPreview = canvas.toDataURL('image/jpeg');
-
-    const blob = await new Promise<Blob>((resolve) =>
-      canvas.toBlob((blob) => resolve(blob!), 'image/jpeg', 0.9)
-    );
-
-    const rotatedFile = new File([blob], photo.file.name, {
-      type: 'image/jpeg',
-      lastModified: Date.now(),
-    });
-    onPhotoRotate(photo.id, rotatedFile, newPreview);
   };
 
   const handleRotate = () => {
-    rotateImage(90); 
+    rotateImage(90);
   };
 
   const [, drop] = useDrop({
@@ -101,23 +104,29 @@ export const PhotoItem: FC<IProps> = ({
     >
       <img
         src={photo.preview}
-        alt={photo.file.name}
+        alt={photo.file?.name ? photo.file.name : photo.preview}
         className="w-full h-full object-cover"
       />
       <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 flex justify-between p-1">
         <button
-          onClick={() => removePhoto(photo.id)}
+          onClick={() => {
+            const fileName = photo?.existingFileName || photo.file?.name;
+            if (fileName) removePhoto(fileName);
+          }}
           className="bg-red-500 text-white border-none rounded px-2 py-1 text-xs cursor-pointer"
         >
           Удалить
         </button>
-        <button
-          type='button'
-          onClick={handleRotate}
-          className="bg-blue-500 text-white border-none rounded px-2 py-1 text-xs cursor-pointer ml-1"
-        >
-          Повернуть
-        </button>
+
+        {onPhotoRotate && (
+          <button
+            type="button"
+            onClick={handleRotate}
+            className="bg-blue-500 text-white border-none rounded px-2 py-1 text-xs cursor-pointer ml-1"
+          >
+            Повернуть
+          </button>
+        )}
       </div>
     </div>
   );

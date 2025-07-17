@@ -5,16 +5,18 @@ interface IProps<T extends FieldValues> {
   name: Path<T>;
   register: UseFormRegister<T>;
   error?: string;
+  marginBottom?: string 
 }
 
 export const TextareaField = <T extends FieldValues>({
   label,
   name,
   error,
-  register
+  register,
+  marginBottom = "5px"
 }: IProps<T>) => {
   return (
-    <div>
+    <div className={`mb-[${marginBottom}]`}>
       <label className="block mb-1">{label}</label>
       <textarea
         className="w-full p-2 border rounded"

@@ -14,13 +14,13 @@ export const ChooseProductArticles: FC = () => {
   const { ref, data, states } = useProducts({ article: debouncedArticle });
 
   return (
-    <>
-      <InputSearch search={article} onChange={(data) => setArticle(data)} />
+    <div className='min-w-[45%]'>
+      <InputSearch placeholder='Поиск по артиклю...' search={article} onChange={(data) => setArticle(data)} />
       <ProductArticlesList
         data={data}
         states={states}
         libRef={ref}
       />
-    </>
+    </div>
   );
 };
