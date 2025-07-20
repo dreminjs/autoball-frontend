@@ -10,8 +10,8 @@ import {
 } from '../modules/products';
 import { Provider } from 'jotai';
 import { carBrandsStore } from '../modules/car-brands/model/atoms';
-import { CarBrandSeriesPage } from '../modules/brand-series/ui/car-brand-series-page';
-import { brandSeriesStore } from '../modules/brand-series/model/atoms';
+import { CarBrandSeriesPage } from '../modules/car-series/ui/car-brand-series-page';
+import { brandSeriesStore } from '../modules/car-series/model/atoms';
 import {
   DiscBrandPage,
   TireBrandPage,

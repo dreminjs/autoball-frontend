@@ -1,17 +1,16 @@
-import { MenuDrawer } from "@/components/drawer/menu-drawer"
-import { Header } from "@/components/header"
-import { PropsWithChildren } from "react"
-
-
+import { MenuDrawer } from '@/components/drawer/menu-drawer';
+import { Header } from '@/components/header';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { PropsWithChildren } from 'react';
 
 export const Layout = (props: PropsWithChildren) => {
+  const queryClient = new QueryClient();
 
-
-    return (
-        <>
-            <MenuDrawer />
-            <Header/>
-            {props.children}
-        </>
-    )
-}
+  return (
+    <QueryClientProvider client={queryClient}>
+      <MenuDrawer />
+      <Header />
+      <div className="px-5">{props.children}</div>
+    </QueryClientProvider>
+  );
+};

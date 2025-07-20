@@ -12,6 +12,7 @@ export const Logo: FC<Props> = ({ className, ...props }) => (
   <Link href={'/'} {...{className}}>
     <Image
       {...props}
+      priority
       src={'/autoball-logo.png'}
       alt={'Логотип'}
     />

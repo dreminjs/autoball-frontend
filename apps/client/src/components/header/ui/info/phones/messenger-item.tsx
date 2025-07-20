@@ -18,7 +18,7 @@ export const MessengerItem: FC<Props> = ({ messenger, tel }) => {
       aria-label={`Написать в ${messenger} на номер ${tel}`}
       className="hover:opacity-80 transition-opacity"
     >
-      <Image width={30} height={30} src={`${messenger}.svg`} alt={'мессенджер'} />
+      <Image width={30} height={30} src={`/${messenger}.svg`} alt={'мессенджер'} />
     </Link>
   );
 };

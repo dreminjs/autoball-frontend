@@ -2,16 +2,16 @@ type uuid = string;
 
 export interface IUser {
   id: string;
+  is_verified: false;
   name: string;
-  email: string;
-  phone_number: string;
-  role: Role
+  role: Role;
+  status: string
 }
 
 export interface ICarBrand {
   id: uuid;
-  name: string
-  picture: string
+  name: string;
+  picture: string;
 }
 
 export interface ICarSeries {
@@ -30,11 +30,11 @@ export interface ITokens {
 export interface IProduct {
   id: string;
   pictures: string[];
-  car_brand_id: string
+  car_brand_id: string;
   car_brand_name: string;
-  car_series_id: string
+  car_series_id: string;
   car_series_name: string;
-  car_part_id: string
+  car_part_id: string;
   car_part_name: string;
   year: number;
   volume: number;
@@ -48,11 +48,11 @@ export interface IProduct {
   OEM: string;
   VIN: string;
   article: string;
-  availability: TAvailability
+  availability: TAvailability;
   created_at: string;
-  currency: Currency
-  
-  disc_id?: string
+  currency: Currency;
+
+  disc_id?: string;
   disc_brand_name: string | null;
   disc_dia: number | null;
   disc_diametr: string | null;
@@ -61,7 +61,7 @@ export interface IProduct {
   disc_model: string | null;
   disc_pcd: number | null;
   disc_width: number | null;
-  tire_id?: string 
+  tire_id?: string;
   tire_brand_name: string | null;
   tire_car_type: string | null;
   tire_diametr: string | null;
@@ -71,10 +71,10 @@ export interface IProduct {
   tire_residue: number | null;
   tire_season: string | null;
   tire_width: number | null;
-  
+
   discount: number;
-  is_available: boolean;
-  is_printed: boolean;
+  is_available: boolean | null;
+  is_printed: boolean | null;
   note: string;
   post_by: string;
 }
@@ -94,76 +94,72 @@ export interface ITokens {
 }
 
 export interface IWheelComponentBrand {
-  id: uuid
-  name: string
+  id: uuid;
+  name: string;
 }
 
 export interface ICarPart {
-  id: uuid,
-  name: string
+  id: uuid;
+  name: string;
 }
 
 export interface IOrder {
-    user_id: uuid,
-    user_name: string,
-    user_phone: string,
-    product_id: string,
-    product_brand: string,
-    product_series: string,
-    product_part: string,
-    created_at: string,
-    description: string,
-    status: OrderStatus
-} 
+  user_id: uuid;
+  user_name: string;
+  user_phone: string;
+  product_id: string;
+  product_brand: string;
+  product_series: string;
+  product_part: string;
+  created_at: string;
+  description: string;
+  status: OrderStatus;
+}
 
 export interface IInfiteScrollQueryParameters {
-  search: string
-  cursor: unknown
-  limit: number
+  search: string;
+  cursor: unknown;
+  limit: number;
 }
 
 export interface IListItem {
-  id: uuid
-  name: string
+  id: uuid;
+  name: string;
 }
 
-export type OrderStatus = "open" | "closed"
+export type OrderStatus = 'open' | 'closed';
 
 export type Role = 'admin' | 'worker' | 'client';
 
-export type BodyType = 
+export type BodyType =
   | 'sedan'
   | 'hatchback'
   | 'coupe'
   | 'universal'
   | 'minivan'
   | 'jeep'
-  | 'minibus' 
+  | 'minibus'
   | 'convertible'
   | 'van'
   | 'liftback'
   | 'compact'
   | 'tractor';
 
-export type GearboxType = 
-  | 'manual'
-  | 'automatic'
-  | 'robotic'
-  | 'variator';
+export type GearboxType = 'manual' | 'automatic' | 'robotic' | 'variator';
 
-export type Code = 451 | 456 | 431 | 0
+export type Code = 451 | 456 | 431 | 0;
 
-export type Currency = "USD" | "PLN" | "BYN" | "EUR" | "RUB"
+export type Currency = 'USD' | 'PLN' | 'BYN' | 'EUR' | 'RUB';
 
-export type WheelComponent = "disc" | "tire"
+export type WheelComponent = 'disc' | 'tire';
 
 export type FuelType = 'gasoline' | 'diesel' | 'hybrid' | 'electric';
 
 export type ProductCondition = 'used' | 'new';
 
-export interface IWithPagatination<T> {
-  items: T[]
-  total_count: number
+export interface IWithPaganation<T> {
+  items: T[];
+  total_count: number;
 }
 
 export interface IInfiteScrollResponse<T> {
@@ -171,4 +167,4 @@ export interface IInfiteScrollResponse<T> {
   next_cursor: null | number;
 }
 
-export type TAvailability = "in stock" | "custom order"
+export type TAvailability = 'in stock' | 'custom order';

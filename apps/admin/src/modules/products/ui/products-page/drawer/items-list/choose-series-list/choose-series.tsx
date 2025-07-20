@@ -5,7 +5,7 @@ import { CarSeriesList } from './list/car-series-list';
 import { useAtomValue } from 'jotai';
 import { AccordionTitle } from '../../../../../../../components/accordion-title';
 import { carBrandIdAtom } from '../../../../../model/product-atoms-page';
-import { useCarSeries } from '../../../../../../brand-series/model/hooks/use-car-series';
+import { useCarSeries } from '../../../../../../car-series/model/hooks/use-car-series';
 
 export const ChooseSeries: FC = () => {
   const chooseBrandId = useAtomValue(carBrandIdAtom);

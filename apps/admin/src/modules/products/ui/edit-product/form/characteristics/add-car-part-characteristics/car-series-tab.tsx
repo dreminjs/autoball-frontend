@@ -1,7 +1,7 @@
 import TabPanel from '@mui/lab/TabPanel';
 import { FC, Fragment } from 'react';
 import { List } from '../../../../../../../components';
-import { useCarSeries } from '../../../../../../brand-series/model/hooks/use-car-series';
+import { useCarSeries } from '../../../../../../car-series/model/hooks/use-car-series';
 import { useChooseSeries } from '../../../../../model/hooks/post-products/car/use-choose-series';
 import { ListItem } from '../../../list-item';
 import { useAtomValue } from 'jotai';

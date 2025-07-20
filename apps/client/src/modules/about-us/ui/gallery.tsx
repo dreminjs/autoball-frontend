@@ -49,6 +49,7 @@ export const Gallery = () => {
               height={400}
               className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
               quality={85}
+              priority
               placeholder="blur"
               blurDataURL="/placeholder.jpg"
             />

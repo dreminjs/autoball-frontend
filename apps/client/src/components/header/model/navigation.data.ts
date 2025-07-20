@@ -16,5 +16,6 @@ export const data: INavItem[] = [
   {
     to: 'o-nas',
     content: 'О нас',
-  }
+  },
+  
 ];
