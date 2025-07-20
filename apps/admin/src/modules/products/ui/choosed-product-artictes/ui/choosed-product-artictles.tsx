@@ -2,11 +2,10 @@ import { useChooseOrderProductInfo } from '../../../../orders/model/hooks/post-p
 import { ChoosedProduct } from './choosed-product';
 
 export const ChoosedProductArticles = () => {
-  const { choosedOrderProductsInfo, } =
-    useChooseOrderProductInfo();
+  const { choosedOrderProductsInfo } = useChooseOrderProductInfo();
 
   return (
-    <ul className='h-[450px] overflow-y-scroll p-4 mb-3 border-2'>
+    <ul className="h-[450px] overflow-y-scroll p-4 mb-3 border-2">
       {choosedOrderProductsInfo.length === 0 ? (
         <div className="text-gray-500 italic p-3 bg-gray-50 rounded-lg">
           Ничего не выбрано
@@ -14,6 +13,7 @@ export const ChoosedProductArticles = () => {
       ) : (
         choosedOrderProductsInfo.map((el) => (
           <ChoosedProduct
+            key={el.article}
             article={el.article}
             car_part_name={el.car_part_name}
             car_series_name={el.car_series_name}

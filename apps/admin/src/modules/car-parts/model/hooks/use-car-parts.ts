@@ -14,7 +14,7 @@ export const useCarParts = () => {
   const { data, isError, isPending, isSuccess, error, refetch, fetchNextPage } =
     useGetCarParts({
       search: debouncedSearchValue,
-      limit: 10
+      limit: 10,
     });
 
   const handleChangeSearchValue = (newValue: string) => setSearch(newValue);
@@ -25,7 +25,6 @@ export const useCarParts = () => {
     }
   }, [fetchNextPage, inView]);
    
-
   return {
     onChangeSearchValue: handleChangeSearchValue,
     data,

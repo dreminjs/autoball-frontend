@@ -18,7 +18,13 @@ export const CarBrandsTab: FC<IProps> = ({ currentTab }) => {
   return (
     <TabPanel value={currentTab}>
       <InputSearch search={search} onChange={onChangeSearchValue} />
-      <List className='h-[400px]' {...states} empty={!data?.pages.length}>
+      <List
+        className="h-[400px]"
+        empty={!data?.pages.length}
+        isPending={states.isPending}
+        isError={states.isError}
+        error={states.error?.response?.data.detail}
+      >
         <ListItem
           currentItem={null}
           isSelected={brand === null}

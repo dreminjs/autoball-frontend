@@ -43,7 +43,6 @@ export const usePostCarBrand = () => {
       addSuccess();
     },
     onError: (data) => {
-      // closeModal();
       remove('info');
       queryClient.invalidateQueries({
         queryKey: [SERVICE_URLS.carbrand],

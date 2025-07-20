@@ -8,6 +8,7 @@ import { instance } from '../../../shared/api/api-instance';
 import {
   IInfiteScrollResponse,
   ICarPart,
+  IInfiteScrollQueryParameters,
 } from '@autoball-frontend/shared-types';
 import { AxiosError } from 'axios';
 import { IServerError } from '../../../shared/types/server-error';
@@ -18,15 +19,21 @@ import { useCarPartModal } from '../model/hooks/use-car-parts-modal';
 import { useChooseCarPart } from '../model/hooks/use-choose-car-part';
 import { findMany } from './services';
 
-export const useGetCarParts = (params = {}) => {
+export const useGetCarParts = (
+  params: Omit<IInfiteScrollQueryParameters, 'cursor'>
+) => {
   return useInfiniteQuery<
     IInfiteScrollResponse<ICarPart>,
     AxiosError<IServerError>
   >({
-    queryKey: [SERVICE_URLS.carpart, params],
+    queryKey: [SERVICE_URLS.carpart, ...Object.values(params)],
     queryFn: async ({ pageParam }) => {
       const cursor = typeof pageParam === 'number' ? pageParam : 0;
-      return await findMany({ cursor });
+      return await findMany({
+        cursor,
+        search: params.search,
+        limit: 5,
+      });
     },
     refetchOnWindowFocus: false,
     initialPageParam: 0,
