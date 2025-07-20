@@ -4,7 +4,7 @@ import { IUser } from '@autoball-frontend/shared-types';
 import { AxiosError } from 'axios';
 import { IServerError } from '../../types/server-error';
 import { getMe } from './services';
-import { QUERY_KEYS } from '../../constants';
+import { QUERY_KEYS, SERVICE_URLS } from '../../constants';
 import { useEffect } from 'react';
 import { useUserStore } from '../../../store/user.store';
 
@@ -18,7 +18,7 @@ export const useGetMe = (): { data?: IUser } & ApiOperationState => {
     error,
     data,
   } = useQuery<IUser, AxiosError<IServerError>>({
-    queryKey: [QUERY_KEYS.me],
+    queryKey: [SERVICE_URLS.user, QUERY_KEYS.me],
     queryFn: () => getMe(),
     retry: false,
     refetchOnWindowFocus: false,

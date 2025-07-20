@@ -6,9 +6,18 @@ import { ITokens } from '@autoball-frontend/shared-types';
 export const instance = axios.create({
   baseURL: API_URL,
   withCredentials: true,
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-  },
+});
+
+instance.interceptors.request.use((config) => {
+  const accessToken = localStorage.getItem('accessToken');
+  
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  } else {
+    delete config.headers.Authorization;
+  }
+  
+  return config;
 });
 
 let retryCount = 0;
@@ -18,7 +27,7 @@ instance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     if (
-      error.response.status === 401 &&
+      error.response?.status === 401 &&
       error.config &&
       !error.config._isRetry &&
       retryCount < 2
@@ -29,18 +38,15 @@ instance.interceptors.response.use(
         const res = (await instance.post('auth/refresh')).data as ITokens;
 
         localStorage.setItem('accessToken', res.access_token);
-        instance.defaults.headers[
-          'Authorization'
-        ] = `Bearer ${res.access_token}`;
-
-        if (res.access_token) {
-          window.location.href = '/product';
-        }
+        
+        // Убираем принудительный редирект здесь
         return instance(originalRequest);
       } catch (error: any) {
         if (errorCatch(error) === 'jwt expired') {
-          // set auth false
+          localStorage.removeItem('accessToken');
+          window.location.href = "/";
         }
+        throw error;
       }
     }
 

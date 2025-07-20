@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { items } from '../../model/data';
 import { NavItem } from './nav-item';
+import { LogoutButton } from './logout-button';
 
 interface IProps {
   ulClassName?: string;
@@ -17,7 +18,7 @@ export const Navigation: FC<IProps> = ({
         <NavItem key={idx} {...item} />
       ))}
       <li>
-        <button className="text-lg md:text-xl">Выйти</button>
+        <LogoutButton />
       </li>
     </ul>
   </nav>

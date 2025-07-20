@@ -29,6 +29,7 @@ export const SERVICE_URLS = {
 export const QUERY_KEYS = {
   register: 'register',
   signin: 'sign-in',
+  signout: 'sign-out',
   me: 'me',
   brand: 'brand',
   post: 'post',
