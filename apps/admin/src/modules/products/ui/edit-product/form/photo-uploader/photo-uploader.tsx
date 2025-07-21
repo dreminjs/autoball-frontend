@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, FC, useEffect } from 'react';
+import { useState, useRef, useCallback, FC, useEffect, RefObject } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ProductFormData } from '../../../../model/schemas/product.schema';
 import { PhotosList } from './photos-list';
@@ -19,6 +19,7 @@ interface IProps {
   maxFiles?: number;
   isClear: boolean;
   existingPhotos?: string[];
+  removedPhotos: RefObject<string[]>
 }
 
 export const PhotoUploader: FC<IProps> = ({
@@ -26,6 +27,7 @@ export const PhotoUploader: FC<IProps> = ({
   maxFiles = 10,
   isClear,
   existingPhotos = [],
+  removedPhotos
 }) => {
   const [photos, setPhotos] = useState<Photo[]>([]);
 
@@ -105,13 +107,13 @@ export const PhotoUploader: FC<IProps> = ({
 
   const removePhoto = useCallback(
     (name: string) => {
-      console.log(name)
       setDeletedPhotos(prev => [...prev, name])
       setPhotos((prev) => {
         const newPhotos = prev.filter((photo) => photo.existingFileName !== name);
         updateFormValue(newPhotos);
         return newPhotos;
       });
+      removedPhotos.current.push(name)
     },
     [updateFormValue]
   );

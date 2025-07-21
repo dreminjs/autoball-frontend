@@ -5,10 +5,14 @@ import { IGetProductsQueryParameters } from '../types/get-products-query-paramet
 import { IProduct } from '@autoball-frontend/shared-types';
 import { IToggleScanStatusDto } from '../types/toggle-scan-status.dto';
 import { IToggleAvailableStatusDto } from '../types/toggle-availible-status.dto';
-import { ProductFormData } from '../schemas/product.schema';
+import {
+  EditProductFormData,
+  ProductFormData,
+} from '../schemas/product.schema';
 import { StrictFormData } from '../../../../shared/types/strict-form-data';
-import { PostProductDto } from '../types/product.interface';
+import { EditProductDto, PostProductDto } from '../types/product.interface';
 import { transformPostData } from '../lib/transform-post-data';
+import { transformEditData } from '../lib/transform-edit-data';
 
 export const findMany = async (
   dto: IGetProductsQueryParameters & { cursor: unknown }
@@ -16,8 +20,7 @@ export const findMany = async (
   const queryParameters = new URLSearchParams();
 
   queryParameters.append('cursor', String(dto.cursor));
-  if (dto.countItems)
-    queryParameters.append('take', String(dto.countItems));
+  if (dto.countItems) queryParameters.append('take', String(dto.countItems));
   if (dto.isPrintedStatus !== undefined && dto.isPrintedStatus !== null)
     queryParameters.append('is_printed', String(dto.isPrintedStatus));
   if (dto.carBrandId) queryParameters.append('car_brand_id', dto.carBrandId);
@@ -28,7 +31,7 @@ export const findMany = async (
   if (dto.priceFrom)
     queryParameters.append('price_from', String(dto.priceFrom));
   if (dto.priceTo) queryParameters.append('price_to', String(dto.priceTo));
-  if(dto.article) queryParameters.append("article", dto.article)
+  if (dto.article) queryParameters.append('article', dto.article);
   if (dto.volume) queryParameters.append('volume', String(dto.volume));
   if (dto.fuel) queryParameters.append('fuel', dto.fuel);
   if (dto.gearbox) queryParameters.append('gearbox', dto.gearbox);
@@ -92,10 +95,9 @@ export const toggleAvailibleStatus = async (dto: IToggleAvailableStatusDto) => {
 };
 
 export const createOne = async (data: ProductFormData) => {
-  const formData = new FormData()
+  const formData = new FormData();
 
-  console.log(data)
-  console.log(transformPostData(data))
+  console.log(transformPostData(data));
 
   formData.append('product_data', JSON.stringify(transformPostData(data)));
 
@@ -109,5 +111,28 @@ export const createOne = async (data: ProductFormData) => {
 };
 
 export const findOne = async (id: string): Promise<IProduct> => {
-  return (await instance.get(`${SERVICE_URLS.product}/private/${id}`)).data
-}
+  return (await instance.get(`${SERVICE_URLS.product}/private/${id}`)).data;
+};
+
+export const editOne = async (data: EditProductFormData, id?: string) => {
+  const formData = new FormData();
+
+  formData.append(
+    'new_product_data',
+    JSON.stringify(transformEditData(data))
+  );
+
+  if (data.removedPhotos && data.removedPhotos.length > 0) {
+    data.removedPhotos.forEach((picture) => {
+      formData.append('removed_pictures', picture);
+    });
+  }
+
+  if (data.product_pictures && data.product_pictures.length > 0) {
+    data.product_pictures.forEach((picture) => {
+      formData.append(`product_pictures`, picture);
+    });
+  }
+
+  return await instance.put(`${SERVICE_URLS.product}/${id}`, formData);
+};

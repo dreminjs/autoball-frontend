@@ -20,7 +20,7 @@ export const PostOrderForm = () => {
 
   const notifications = useNotificationActions();
 
-  const { totalPrice, choosedOrderProductsInfo, articles, onClearAll } =
+  const { totalPrice, choosedOrderProductsInfo, ids, onClearAll } =
     useChooseOrderProductInfo();
 
   const { mutate } = usePostOrder(() => {
@@ -31,7 +31,7 @@ export const PostOrderForm = () => {
   const onSubmit = handleSubmit((data) => {
     if (postOrderValidate(choosedOrderProductsInfo, notifications)) {
       mutate({
-        product_articles: articles,
+        product_ids: ids,
         order_data: data,
       });
     }

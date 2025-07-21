@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-query';
 import {
   createOne,
+  editOne,
   findMany,
   findOne,
   toggleAvailibleStatus,
@@ -18,21 +19,18 @@ import { IInfiteScrollResponse } from '../../../../shared';
 import { IToggleAvailableStatusDto } from '../types/toggle-availible-status.dto';
 import { IToggleScanStatusDto } from '../types/toggle-scan-status.dto';
 import {
-  PAGE_URLS,
   QUERY_KEYS,
   SERVICE_URLS,
 } from '../../../../shared/constants';
 import { checkboxesAtom } from '../product-atoms-page';
 import { useSetAtom } from 'jotai';
 import { useNotificationActions } from '../../../notifications';
-import { ProductFormData } from '../schemas/product.schema';
+import { EditProductFormData, ProductFormData } from '../schemas/product.schema';
 import { useChooseCarPart } from '../hooks/post-products/car/use-choose-car-part';
 import { useChooseSeries } from '../hooks/post-products/car/use-choose-series';
 import { useChooseCarBrand } from '../hooks/post-products/car/use-choose-car-brand';
 import { validateProductFields } from '../lib/post-query-validate';
 import { IGetProductsQueryParameters } from '../types/get-products-query-parameters';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 export const useGetProducts = (categories: IGetProductsQueryParameters) => {
   return useInfiniteQuery<
@@ -159,6 +157,7 @@ export const usePostProduct = () => {
   };
   return { mutate: handleMutate, ...props };
 };
+
 
 export const useGetProduct = (id: string) => {
   return useQuery({

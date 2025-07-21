@@ -134,6 +134,67 @@ export const PostProductForm = () => {
                   { value: 'car', label: 'Другие детали' },
                 ]}
               />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
+                {productType === 'engine' && (
+                  <>
+                    <TextInput
+                      label="Объем двигателя"
+                      name="volume"
+                      type="number"
+                      step="0.1"
+                      error={methods.formState.errors.volume?.message}
+                      register={methods.register}
+                    />
+                    <TextInput
+                      label="Тип двигателя"
+                      name="engine_type"
+                      placeholder="TDI"
+                      error={methods.formState.errors.volume?.message}
+                      register={methods.register}
+                    />{' '}
+                    <SelectInput
+                      label="Коробка передач"
+                      name="gearbox"
+                      register={methods.register}
+                      options={gearboxOptions}
+                    />
+                    <SelectInput
+                      label="Тип топлива"
+                      name="fuel"
+                      register={methods.register}
+                      options={fuelOptions}
+                    />
+                  </>
+                )}
+
+                <SelectInput
+                  label="Тип кузова"
+                  name="type_of_body"
+                  register={methods.register}
+                  options={bodyTypeOptions}
+                />
+              </div>
+              <div className="flex gap-2 flex-wrap items-center mb-3">
+                <Button type="button" onClick={onToggleModal}>
+                  Добавить характерстики запчасти
+                </Button>
+                <ChoosedCharacteristics />
+              </div>
+
+              {productType === 'disc' && (
+                <DiscFields
+                  register={methods.register}
+                  errors={methods.formState.errors}
+                  type={productType}
+                />
+              )}
+              {productType === 'tire' && (
+                <TierFields
+                  register={methods.register}
+                  errors={methods.formState.errors}
+                  type={productType}
+                />
+              )}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
                 <TextInput
                   label="OEM номер"
@@ -190,75 +251,23 @@ export const PostProductForm = () => {
                   register={methods.register}
                 />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
+              <div>
                 <TextInput
-                  label="Объем двигателя"
-                  name="volume"
-                  type="number"
-                  step="0.1"
-                  error={methods.formState.errors.volume?.message}
+                  label="Описание"
+                  name="description"
                   register={methods.register}
+                  rows={3}
                 />
-                <TextInput
-                  label="Тип двигателя"
-                  name="engine_type"
-                  placeholder="TDI"
-                  error={methods.formState.errors.volume?.message}
-                  register={methods.register}
-                />
-                <SelectInput
-                  label="Тип кузова"
-                  name="type_of_body"
-                  register={methods.register}
-                  options={bodyTypeOptions}
-                />
-                <SelectInput
-                  label="Коробка передач"
-                  name="gearbox"
-                  register={methods.register}
-                  options={gearboxOptions}
-                />
-                <SelectInput
-                  label="Тип топлива"
-                  name="fuel"
-                  register={methods.register}
-                  options={fuelOptions}
-                />
-              </div>
-              <div className="flex gap-2 flex-wrap items-center mb-3">
-                <Button type="button" onClick={onToggleModal}>
-                  Добавить характерстики запчасти
-                </Button>
-                <ChoosedCharacteristics />
-              </div>
-              <TextInput
-                label="Описание"
-                name="description"
-                register={methods.register}
-                rows={3}
-              />
 
-              <TextInput
-                label="Примечания"
-                name="note"
-                register={methods.register}
-                rows={2}
-              />
-              {productType === 'disc' && (
-                <DiscFields
+                <TextInput
+                  label="Примечания"
+                  name="note"
                   register={methods.register}
-                  errors={methods.formState.errors}
-                  type={productType}
+                  rows={2}
                 />
-              )}
-              {productType === 'tire' && (
-                <TierFields
-                  register={methods.register}
-                  errors={methods.formState.errors}
-                  type={productType}
-                />
-              )}
+              </div>
             </div>
+
             <div>
               <DndProvider backend={HTML5Backend}>
                 <PhotoUploader name={'product_pictures'} isClear={isSuccess} />

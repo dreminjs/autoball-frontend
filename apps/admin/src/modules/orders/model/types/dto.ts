@@ -29,9 +29,10 @@ export type IOrderProductInfo = Pick<
   | 'car_series_name'
    | "disc_brand_name"
    | "tire_brand_name"
+   | "id"
 >;
 
 export type PostOrderProductsDto = {
-  product_articles: string[];
+  product_ids: string[];
   order_data: PostOrderProductsFormData 
 } 

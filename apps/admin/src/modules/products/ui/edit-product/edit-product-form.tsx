@@ -19,13 +19,14 @@ import { DiscFields } from './form/disc-fields';
 import { AddCarPartCharacteristicsModal } from './form/characteristics/add-car-part-characteristics/add-car-part-characteristics-modal';
 import { useCarPartCharacteristicsModal } from '../../model/hooks/products/use-car-part-characteristics-modal';
 import { ChoosedCharacteristics } from './form/characteristics/add-car-part-characteristics/choosed-characteristics';
-import { usePostProduct } from '../../model/api/queries';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { useResetForm } from '../../model/hooks/post-products/use-reset-form';
 import { TierFields } from '../post-product/form/tier-fields';
 
 import { IProduct } from '@autoball-frontend/shared-types';
 import { useSetDefualtValues } from '../../model/hooks/edit-products/use-set-defualt-values';
+import { useEditProduct } from '../../model/api/edit-query';
+import { useNavigation, useParams } from 'react-router-dom';
 
 type Props = Partial<IProduct> & { productType: 'car' | 'tire' | 'disc' };
 
@@ -48,14 +49,18 @@ export const EditProductForm: FC<Props> = (props) => {
     },
   });
 
+  const {id} = useParams<{id: string}>()
+
+  const removedPhotos = useRef<string[]>([]);
+
   const { isOpen, onToggleModal } = useCarPartCharacteristicsModal();
 
-  const { mutate, isSuccess } = usePostProduct();
+  const { mutate, isSuccess } = useEditProduct(id);
 
   const productType = methods.watch('productType');
 
   const onSubmit = methods.handleSubmit((data: ProductFormData) => {
-    mutate(data);
+    mutate({...data, removedPhotos: removedPhotos.current});
   });
 
   useResetForm(isSuccess, methods.reset);
@@ -63,7 +68,6 @@ export const EditProductForm: FC<Props> = (props) => {
   const { onSetValue } = useSetDefualtValues();
 
   useEffect(() => {
-    console.log(props);
     if (props) {
       methods.setValue('condition', 'used');
       methods.setValue('gearbox', props.gearbox);
@@ -87,7 +91,7 @@ export const EditProductForm: FC<Props> = (props) => {
           ? { series: { name: props.car_series_name, id: props.car_series_id } }
           : { series: null }),
         ...(props.car_part_id && props.car_part_name
-          ? { carPart: { name: props.car_part_name, id: props.car_part_name } }
+          ? { carPart: { name: props.car_part_name, id: props.car_part_id } }
           : { carPart: null }),
 
         tire:
@@ -160,10 +164,14 @@ export const EditProductForm: FC<Props> = (props) => {
     }
   }, [productType, methods]);
 
+  useEffect(() => {
+    console.log(methods.formState.errors)
+  },[methods.formState.errors])
+
   return (
     <>
       <FormProvider {...methods}>
-        <form onSubmit={onSubmit} className="space-y-4 p-4 mx-auto">
+        <form onSubmit={onSubmit} className="space-y-4 p-4">
           <div className="flex gap-2">
             <div className="max-w-[900px]">
               <h2 className="text-2xl font-bold">Редактирование продукта</h2>
@@ -299,6 +307,7 @@ export const EditProductForm: FC<Props> = (props) => {
             </div>
             <DndProvider backend={HTML5Backend}>
               <PhotoUploader
+                removedPhotos={removedPhotos}
                 existingPhotos={props.pictures}
                 name={'product_pictures'}
                 isClear={isSuccess}

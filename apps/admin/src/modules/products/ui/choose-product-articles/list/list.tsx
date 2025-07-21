@@ -34,6 +34,7 @@ export const ProductArticlesList: FC<IProps> = ({ states, data, libRef }) => {
             car_brand_name={item.car_brand_name}
             disc_brand_name={item.disc_brand_name}
             tire_brand_name={item.tire_brand_name}
+            id={item.id}
           />
         ))
       )}

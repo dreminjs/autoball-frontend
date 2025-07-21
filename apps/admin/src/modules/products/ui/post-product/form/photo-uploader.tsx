@@ -92,6 +92,8 @@ export const PhotoUploader: FC<IProps> = ({
 
   const handlePhotoRotate = 
     (id: string, newFile: File, newPreview: string) => {
+      console.log(newFile)
+      console.log(newPreview)
       setPhotos((prev) =>
         prev.map((photo) =>
           photo.id === id
@@ -99,7 +101,7 @@ export const PhotoUploader: FC<IProps> = ({
             : photo
         )
       );
-    }
+        }
 
   const handleDrop =
     (e: React.DragEvent<HTMLDivElement>) => {

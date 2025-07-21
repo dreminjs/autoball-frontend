@@ -15,6 +15,7 @@ type TProduct = Pick<
   | "tire_id"
   | 'price'
   | 'currency'
+  |  'id'
 >;
 
 type Props = TProduct;
@@ -43,7 +44,8 @@ export const OrderItem: FC<Props> = (props) => {
             car_part_name: props.car_part_name,
             car_series_name: props.car_series_name,
             disc_brand_name: props.disc_brand_name,
-            tire_brand_name: props.tire_brand_name
+            tire_brand_name: props.tire_brand_name,
+            id: props.id
           })
         }
         className={`w-full flex items-center justify-between text-left p-4 focus:outline-none focus:ring- rounded-md `}

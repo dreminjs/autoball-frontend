@@ -53,6 +53,9 @@ export const PhotoItem: FC<IProps> = ({
         type: 'image/jpeg',
         lastModified: Date.now(),
       });
+
+      console.log(rotatedFile)
+      
       onPhotoRotate(photo.id, rotatedFile, newPreview);
     }
   };

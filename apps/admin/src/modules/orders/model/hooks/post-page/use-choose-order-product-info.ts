@@ -21,7 +21,7 @@ export const useChooseOrderProductInfo = () => {
     0
   );
 
-  const articles = choosedOrderProductsInfo.map((el) => el.article);
+  const ids = choosedOrderProductsInfo.map(el => el.id)
 
   const handleRemove = (article: string) => {
     setChoosedOrderProductsInfo((prev) =>
@@ -40,7 +40,7 @@ export const useChooseOrderProductInfo = () => {
     totalPrice,
     onRemove: handleRemove,
     isProductSelected,
-    articles,
+    ids,
     onClearAll: handleClearAll,
   };
 };

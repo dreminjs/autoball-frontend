@@ -55,3 +55,22 @@ export interface PostProductDto {
   details: DiscDto | TireDto | EngineDto | null
   availability?: TAvailability
 }
+
+export interface EditProductDto {
+  OEM: string;
+  car_brand_id?: string;
+  car_series_id?: string;
+  car_part_id?: string;
+  currency: Currency
+  discount?: number;
+  year: number;
+  type_of_body?: BodyType
+  VIN?: string;
+  note?: string;
+  description?: string;
+  price: number;
+  condition: 'used'
+  count: number;
+  details: DiscDto | TireDto | EngineDto | null
+  availability?: TAvailability
+}
