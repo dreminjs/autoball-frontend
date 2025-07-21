@@ -17,7 +17,6 @@ export const PhotoItem: FC<IProps> = ({
   removePhoto,
   onPhotoRotate,
 }) => {
-  console.log(photo);
   const ref = useRef<HTMLDivElement>(null);
 
   const rotateImage = async (degrees: number) => {

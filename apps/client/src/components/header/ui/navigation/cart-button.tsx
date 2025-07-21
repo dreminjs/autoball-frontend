@@ -6,7 +6,7 @@ export const CartButton = () => {
 
   return (
     <NavigationItem
-      to={'/korzina'}
+      to={'korzina'}
       content={`Корзина ${cartInfo?.length ? `(${cartInfo?.length})` : ''}`}
     />
   );

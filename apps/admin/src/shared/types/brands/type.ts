@@ -1,3 +1,3 @@
 
 
-export type BrandType = 'tire' | 'disc' | "car"
+export type BrandType = 'tire' | 'disc' | "car" | "engine"

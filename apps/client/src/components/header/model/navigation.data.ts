@@ -2,7 +2,7 @@ import { INavItem } from './types';
 
 export const data: INavItem[] = [
   {
-    to: '/',
+    to: '',
     content: 'Главная',
   },
   {

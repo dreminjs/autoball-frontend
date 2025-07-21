@@ -94,6 +94,9 @@ export const toggleAvailibleStatus = async (dto: IToggleAvailableStatusDto) => {
 export const createOne = async (data: ProductFormData) => {
   const formData = new FormData()
 
+  console.log(data)
+  console.log(transformPostData(data))
+
   formData.append('product_data', JSON.stringify(transformPostData(data)));
 
   if (data.product_pictures && data.product_pictures.length > 0) {
@@ -106,5 +109,5 @@ export const createOne = async (data: ProductFormData) => {
 };
 
 export const findOne = async (id: string): Promise<IProduct> => {
-  return (await instance.get(`${SERVICE_URLS.product}/${id}`)).data
+  return (await instance.get(`${SERVICE_URLS.product}/private/${id}`)).data
 }

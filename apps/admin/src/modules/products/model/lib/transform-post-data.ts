@@ -15,15 +15,16 @@ export const transformPostData = (data: ProductFormData): PostProductDto => {
     price: data.price,
     condition: 'used',
     count: data.count,
+    details: null,
     ...(data.type_of_body && { type_of_body: data.type_of_body }),
   };
 
   switch (data.productType) {
-    case 'engine':
+    case "engine":
       if (data.engine_type && data.gearbox && data.fuel && data.volume) {
         return {
           ...baseDto,
-          engine: {
+          details: {
             engine_type: data.engine_type,
             gearbox: data.gearbox,
             fuel: data.fuel,
@@ -37,7 +38,7 @@ export const transformPostData = (data: ProductFormData): PostProductDto => {
     case 'tire':
       return {
         ...baseDto,
-        tire: {
+        details: {
           season: data.tires_season,
           car_type: data.tires_car_type,
           width: data.tires_width,
@@ -53,7 +54,7 @@ export const transformPostData = (data: ProductFormData): PostProductDto => {
     case 'disc':
       return {
         ...baseDto,
-        disc: {
+        details: {
           disc_brand_id: data.disc_brand_id,
           diametr: data.disc_diametr,
           width: data.disc_width,
@@ -64,9 +65,6 @@ export const transformPostData = (data: ProductFormData): PostProductDto => {
           model: data.disc_model,
         },
       };
-    case 'other': {
-      return { ...baseDto };
-    }
     default:
       return baseDto as PostProductDto;
   }

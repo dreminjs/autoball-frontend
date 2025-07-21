@@ -12,6 +12,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const data = await res.json();
     const products: IProduct[] = data.items || [];
 
+    console.log(products);
+
     const paths = products.map((product) => ({
       params: {
         id: product.id,
@@ -34,13 +36,27 @@ export const getStaticProps: GetStaticProps<IProps> = async (
   context: GetStaticPropsContext
 ) => {
   try {
-    // const { id } = context.params as { id: string };
+    const { id } = context.params as { id: string };
 
-    const res = await fetch(
-      `http://localhost:8000/product/${'4b6a5363-c08a-4876-9f4a-b4d3033fa73d'}`
-    );
+    const potentialId = id.substring(0, 36);
+    const uuidRegex =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+    const parsedId = uuidRegex.test(potentialId) ? potentialId : null;
+
+    console.log(parsedId);
+
+    if (!parsedId) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const res = await fetch(`http://localhost:8000/product/${parsedId}`);
 
     const product: IProduct = await res.json();
+
+    console.log(product);
 
     return {
       props: { product },
@@ -52,7 +68,10 @@ export const getStaticProps: GetStaticProps<IProps> = async (
     };
   }
 };
-function Index(props: {product: IProduct}) {
+
+
+function Index(props: { product: IProduct }) {
+  console.log("hello")
   return <ProductPage {...props.product} />;
 }
 

@@ -17,7 +17,11 @@ import { IProduct } from '@autoball-frontend/shared-types';
 import { IInfiteScrollResponse } from '../../../../shared';
 import { IToggleAvailableStatusDto } from '../types/toggle-availible-status.dto';
 import { IToggleScanStatusDto } from '../types/toggle-scan-status.dto';
-import { PAGE_URLS, QUERY_KEYS, SERVICE_URLS } from '../../../../shared/constants';
+import {
+  PAGE_URLS,
+  QUERY_KEYS,
+  SERVICE_URLS,
+} from '../../../../shared/constants';
 import { checkboxesAtom } from '../product-atoms-page';
 import { useSetAtom } from 'jotai';
 import { useNotificationActions } from '../../../notifications';
@@ -31,7 +35,6 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const useGetProducts = (categories: IGetProductsQueryParameters) => {
-
   return useInfiniteQuery<
     IInfiteScrollResponse<IProduct>,
     AxiosError<IServerError>
@@ -158,23 +161,9 @@ export const usePostProduct = () => {
 };
 
 export const useGetProduct = (id: string) => {
-
-  const navigate = useNavigate()
-
-  const {isError, ...props } =  useQuery({
+  return useQuery({
     queryKey: [SERVICE_URLS.product, id],
     queryFn: () => findOne(id),
     refetchOnWindowFocus: false,
-  })
-
-  useEffect(() => {
-    if(isError) {
-      navigate(`/${PAGE_URLS['product']}`)
-    }
-  },[isError, navigate])
-
-  return {
-    isError,
-    ...props
-  }
-}
+  });
+};

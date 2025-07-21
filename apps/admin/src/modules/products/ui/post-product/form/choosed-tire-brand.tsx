@@ -4,10 +4,14 @@ export const ChoosedTireBrand = () => {
   const { choosedTireBrand, onCancel } = useChooseTireBrand();
 
   return (
-    <div className="flex items-center gap-2 bg-white rounded-md">
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    <>
       {choosedTireBrand ? (
-        <div className="p-2 flex gap-2">
-          <span>{choosedTireBrand.name}</span>
+        <div className="p-2  flex">
+          <div className='flex flex-col'>
+            <span>Выбранная шина</span>
+            <span>{choosedTireBrand.name}</span>
+          </div>
           <button
             onClick={onCancel}
             className="text-red-500 hover:text-red-700"
@@ -21,6 +25,6 @@ export const ChoosedTireBrand = () => {
           Ничего не выбрано
         </div>
       )}
-    </div>
+    </>
   );
 };

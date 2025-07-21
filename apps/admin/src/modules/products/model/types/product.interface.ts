@@ -52,8 +52,6 @@ export interface PostProductDto {
   price: number;
   condition: 'used'
   count: number;
+  details: DiscDto | TireDto | EngineDto | null
   availability?: TAvailability
-  engine?: EngineDto;
-  tire?: TireDto;
-  disc?: DiscDto;
 }

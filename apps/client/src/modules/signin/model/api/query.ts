@@ -8,14 +8,14 @@ import { useRouter } from 'next/router';
 import { AuthForm } from '@/shared/types/auth.types';
 import { useSetAtom } from 'jotai';
 import { isAuthAtom } from '@/app/auth.atom';
-import { QUERY_KEYS } from '@/shared/constants';
+import { QUERY_KEYS, SERVICE_URLS } from '@/shared/constants';
 
 export const useSignin = () => {
   const { addError, addSuccess, remove, addInfo } = useNotificationActions();
   const { push: navigate } = useRouter();
-  const setIsAuth = useSetAtom(isAuthAtom)
-  const queryClient = useQueryClient()
-  
+  const setIsAuth = useSetAtom(isAuthAtom);
+  const queryClient = useQueryClient();
+
   const { mutate, ...props } = useMutation<
     ITokens,
     AxiosError<IServerError>,
@@ -24,14 +24,18 @@ export const useSignin = () => {
     mutationFn: (data: AuthForm) => signin(data),
     onSuccess: (data) => {
       remove('info');
-      setIsAuth(true)
+      setIsAuth(true);
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.me]
-      })
+        queryKey: [SERVICE_URLS.user, QUERY_KEYS.me],
+      });
       localStorage.setItem('accessToken', data.access_token);
       addSuccess({
         callbackFn: () => navigate('/'),
         duration: 3000,
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: [SERVICE_URLS.user, QUERY_KEYS.me],
       });
     },
     onError: (res) => {

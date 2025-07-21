@@ -8,7 +8,7 @@ import { TSignupForm } from '../signup.type';
 import { useRouter } from 'next/router';
 import { isAuthAtom } from '@/app/auth.atom';
 import { useSetAtom } from 'jotai';
-import { QUERY_KEYS } from '@/shared/constants';
+import { QUERY_KEYS, SERVICE_URLS } from '@/shared/constants';
 
 export const useSignup = () => {
   const { addError, addSuccess, remove, addInfo } = useNotificationActions();
@@ -17,7 +17,7 @@ export const useSignup = () => {
 
   const setIsAuth = useSetAtom(isAuthAtom);
 
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const { mutate, ...props } = useMutation<
     ITokens,
@@ -29,8 +29,8 @@ export const useSignup = () => {
       remove('info');
       setIsAuth(true);
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.me]
-      })
+        queryKey: [SERVICE_URLS.user, QUERY_KEYS.me],
+      });
       localStorage.setItem('accessToken', data.access_token);
       addSuccess({
         callbackFn: () => navigate('/'),

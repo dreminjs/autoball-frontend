@@ -18,24 +18,23 @@ export const NavigationList: FC<IProps> = ({
 }) => {
   const { data: user } = useGetMe();
 
-
   return (
     <nav className={clsx('bg-teal-500', navClassName)}>
       <Container>
         <ul className={clsx('flex', ulClassName)}>
           {data.map((el, idx) => (
-            <NavigationItem to={`/${el.to}`} content={el.content} key={idx} />
+            <NavigationItem to={`${el.to}`} content={el.content} key={idx} />
           ))}
           {user?.name ? (
             <>
-              <NavigationItem to={'/moi-zakazi'} content={'Мои заказы'} />
+              <NavigationItem to={'moi-zakazi'} content={'Мои заказы'} />
               <CartButton />
               <SignoutButton />
             </>
           ) : (
             <>
-              <NavigationItem to={'/signin'} content={'Вход'} />
-              <NavigationItem to={'/signup'} content={'Регистрация'} />
+              <NavigationItem to={'signin'} content={'Вход'} />
+              <NavigationItem to={'signup'} content={'Регистрация'} />
             </>
           )}
         </ul>

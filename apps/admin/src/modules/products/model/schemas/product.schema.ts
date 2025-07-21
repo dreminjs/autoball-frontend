@@ -55,7 +55,7 @@ export const productSchema = z
     price: z.number({ message: 'Обязательное поле' }).min(0),
     condition: z.enum(['used', 'new']),
     count: z.number().min(1, 'Минимальное количество: 1'),
-    productType: z.enum(['tire', 'disc', 'car'], {
+    productType: z.enum(['tire', 'disc', 'car',"engine"], {
       required_error: 'Выберите тип продукта',
     }),
     tires_diametr: z.enum([...diameterOptions, 'null']).optional(),

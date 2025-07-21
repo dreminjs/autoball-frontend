@@ -80,13 +80,6 @@ export const EditProductForm: FC<Props> = (props) => {
       methods.setValue('year', props.year || 2000);
 
       onSetValue({
-        disc:
-          props.disc_brand_name && props.disc_id
-            ? {
-                id: props.disc_id,
-                name: props.disc_brand_name,
-              }
-            : null,
         ...(props.car_brand_id && props.car_brand_name
           ? { carBrand: { name: props.car_brand_name, id: props.car_brand_id } }
           : { carBrand: null }),
@@ -102,6 +95,13 @@ export const EditProductForm: FC<Props> = (props) => {
             ? {
                 id: props.tire_id,
                 name: props.tire_brand_name,
+              }
+            : null,
+        disc:
+          props.disc_brand_name && props.disc_id
+            ? {
+                id: props.disc_id,
+                name: props.disc_brand_name,
               }
             : null,
       });
@@ -164,8 +164,8 @@ export const EditProductForm: FC<Props> = (props) => {
     <>
       <FormProvider {...methods}>
         <form onSubmit={onSubmit} className="space-y-4 p-4 mx-auto">
-          <div className='flex gap-2'>
-            <div className='max-w-[900px]'>
+          <div className="flex gap-2">
+            <div className="max-w-[900px]">
               <h2 className="text-2xl font-bold">Редактирование продукта</h2>
               <RadioGroup
                 label="Тип продукта"
@@ -177,7 +177,7 @@ export const EditProductForm: FC<Props> = (props) => {
                   { value: 'car', label: 'Другие детали' },
                 ]}
               />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
                 <TextInput
                   label="OEM номер"
                   name="OEM"
@@ -192,7 +192,7 @@ export const EditProductForm: FC<Props> = (props) => {
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
                 <SelectInput
                   label={'Выберите валюту'}
                   name={'currency'}
@@ -241,7 +241,7 @@ export const EditProductForm: FC<Props> = (props) => {
                   register={methods.register}
                 />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
                 <SelectInput
                   label="Тип кузова"
                   name="type_of_body"

@@ -12,7 +12,7 @@ import {
 import { SelectInput } from '../edit-product/form/select-input';
 import { TextInput } from './form/text-input';
 import { DndProvider } from 'react-dnd';
-import { Photo, PhotoUploader } from './form/photo-uploader';
+import { PhotoUploader } from './form/photo-uploader';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { RadioGroup } from './form/radio-group';
 import { DiscFields } from './form/disc-fields';
@@ -27,9 +27,11 @@ import { useChooseDiscBrand } from '../../model/hooks/post-products/disc/use-cho
 import { useChooseTireBrand } from '../../model/hooks/post-products/tire/use-choose-tire';
 
 export const PostProductForm = () => {
-  const { choosedDiscBrand, onCancel: onCancelDiscBrand } = useChooseDiscBrand();
+  const { choosedDiscBrand, onCancel: onCancelDiscBrand } =
+    useChooseDiscBrand();
 
-  const { choosedTireBrand, onCancel: onCancelTireBrand } = useChooseTireBrand();
+  const { choosedTireBrand, onCancel: onCancelTireBrand } =
+    useChooseTireBrand();
 
   const methods = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
@@ -61,8 +63,8 @@ export const PostProductForm = () => {
   useResetForm(isSuccess, methods.reset);
 
   useEffect(() => {
-    onCancelDiscBrand()
-    onCancelTireBrand()
+    onCancelDiscBrand();
+    onCancelTireBrand();
     if (productType !== 'disc') {
       const discFields = [
         'disc_diametr',
@@ -119,7 +121,7 @@ export const PostProductForm = () => {
       <FormProvider {...methods}>
         <form onSubmit={onSubmit} className="space-y-4 p-4 mx-auto">
           <div className="flex gap-2 flex-wrap">
-            <div className='max-w-[780px]'>
+            <div className="max-w-[780px]">
               <h2 className="text-2xl font-bold">Создание нового продукта</h2>
               <RadioGroup
                 label="Тип продукта"
@@ -128,6 +130,7 @@ export const PostProductForm = () => {
                 options={[
                   { value: 'tire', label: 'Шины' },
                   { value: 'disc', label: 'Диски' },
+                  { value: 'engine', label: 'Мотор' },
                   { value: 'car', label: 'Другие детали' },
                 ]}
               />
@@ -186,6 +189,8 @@ export const PostProductForm = () => {
                   error={methods.formState.errors.year?.message}
                   register={methods.register}
                 />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
                 <TextInput
                   label="Объем двигателя"
                   name="volume"
@@ -201,8 +206,6 @@ export const PostProductForm = () => {
                   error={methods.formState.errors.volume?.message}
                   register={methods.register}
                 />
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
                 <SelectInput
                   label="Тип кузова"
                   name="type_of_body"

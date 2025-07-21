@@ -1,13 +1,11 @@
-import { useChooseCarBrand } from '../../../../../model/hooks/post-products/car/use-choose-car-brand';
-import { useChooseCarPart } from '../../../../../model/hooks/post-products/car/use-choose-car-part';
-import { useChooseSeries } from '../../../../../model/hooks/post-products/car/use-choose-series';
+import { useChooseCarBrand } from "../../../../../model/hooks/edit-products/car/use-choose-car-brand";
+import { useChooseCarPart } from "../../../../../model/hooks/edit-products/car/use-choose-car-part";
+import { useChooseSeries } from "../../../../../model/hooks/edit-products/car/use-choose-series";
 
 export const ChoosedCharacteristics = () => {
-  const { onChooseBrand, brand } = useChooseCarBrand();
-
-  const { onChooseCarPart, choosedCarPart } = useChooseCarPart();
-
   const { onChooseSeries, choosedSeries } = useChooseSeries();
+  const { onChooseCarPart, choosedCarPart } = useChooseCarPart();
+  const { onChooseBrand, brand } = useChooseCarBrand();
 
   return (
     <div className="flex items-center gap-2">

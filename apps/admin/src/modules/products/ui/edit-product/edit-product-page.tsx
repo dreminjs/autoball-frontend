@@ -25,6 +25,12 @@ export const EditProductPage = () => {
           isDisc: data?.disc_brand_name ? true : false,
           isTire: data?.tire_brand_name ? true : false,
         })}
+        car_brand_name={data?.car_brand_name}
+        car_brand_id={data?.car_brand_id}
+        car_part_name={data?.car_part_name}
+        car_part_id={data?.car_part_id}
+        car_series_name={data?.car_series_name}
+        car_series_id={data?.car_series_id}
         pictures={data?.pictures}
       />
     </div>
